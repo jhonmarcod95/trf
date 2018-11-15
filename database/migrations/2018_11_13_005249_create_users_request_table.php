@@ -19,11 +19,10 @@ class CreateUsersRequestTable extends Migration
     {
         Schema::create('users_request', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('form_number');
             $table->integer('company_name');
             $table->date('request_date');
             $table->string('purpose_of_travel');
-            $table->integer('contact_number');
+            $table->string('contact_number');
             $table->integer('destination');
             $table->date('date_from');
             $table->date('date_to');
@@ -34,7 +33,9 @@ class CreateUsersRequestTable extends Migration
             $table->string('gl_account');
             $table->integer('requestor_id');
             $table->integer('status');
-            
+            $table->string('traveler_name');
+            $table->string('approved_by');
+            $table->string('cost_center');
             $table->timestamps();
         });
         

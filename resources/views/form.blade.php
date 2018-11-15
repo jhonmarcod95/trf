@@ -69,7 +69,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        
                                         Destination:
                                         &nbsp;<h6>&nbsp; </h6>
                                         <select  name='destination'  class="chosen form-control"  autocomplete="off"  required>
@@ -154,7 +153,7 @@
                                             </select>
                                         </td>
                                         <td><input class="form-control" type='date' name='date_of_travel[]' required/></td>
-                                        <td colspan='2'><input class="form-control" type='text' name='appointment[]' required/></td>
+                                        <td colspan='2'><input class="form-control" type='time' name='appointment[]' required/></td>
                                     </tr>
                                     <tr class='case'>
                                         <td style='width:30%;'>
@@ -174,7 +173,7 @@
                                             </select>
                                         </td>
                                         <td><input class="form-control" type='date' name='date_of_travel[]' required/></td>
-                                        <td colspan='2'><input class="form-control" type='text' name='appointment[]' required/></td>
+                                        <td colspan='2'><input class="form-control" type='time' name='appointment[]' required/></td>
                                     </tr>
                                 </table>
                                 <button type="button" class='btn btn-success addmore'>+ add new origin</button><br>  
@@ -193,7 +192,7 @@
                                 $(".addmore").on('click', function () {
                                     var count = $('table tr').length;
                                     var data = "<tr id='data' class='case'>";
-                                        data += "<td style='width:30%;'><select  name='origin[]'  class='chosen form-control'  autocomplete='off'  required><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td style='width:30%;'><select  name='destinationall[]'  class='chosen form-control'  autocomplete='off'  required><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input class='form-control' type='date' name='date_of_travel[]' required/></td><td colspan='1'><input class='form-control' type='text' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='../public/login_css/remove.png'/></a></td></tr>";
+                                        data += "<td style='width:30%;'><select  name='origin[]'  class='chosen form-control'  autocomplete='off'  required><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td style='width:30%;'><select  name='destinationall[]'  class='chosen form-control'  autocomplete='off'  required><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input class='form-control' type='date' name='date_of_travel[]' required/></td><td colspan='1'><input class='form-control' type='time' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='../public/login_css/remove.png'/></a></td></tr>";
                                         $('#form_table').append(data);
                                         count++;
                                     });

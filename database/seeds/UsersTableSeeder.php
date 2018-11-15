@@ -20,8 +20,9 @@ class UsersTableSeeder extends Seeder
             'company_id' => '1',
             'register' => '1',
             'role' => '1',
+            'activate' => '1',
             'email' => 'renzchristian.cabato@lafilgroup.com',
-            'password' => bcrypt('admin123456'),
+            'password' => bcrypt('P@ssw0rd'),
         ]);
     }
 }

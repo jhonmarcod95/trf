@@ -18,7 +18,6 @@ class approver
         
         if ( $request->user()->role != 3)
         {
-            
             return redirect('/');
         }
         return $next($request);

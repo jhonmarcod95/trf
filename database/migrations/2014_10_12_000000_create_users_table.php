@@ -21,11 +21,12 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->date('birth_date');
-            $table->integer('contact_number');
+            $table->string('contact_number');
             $table->integer('employee_id');
-            $table->integer('company_id');
+            $table->integer('company_name');
             $table->integer('register');
             $table->integer('role');
+            $table->integer('activate');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
