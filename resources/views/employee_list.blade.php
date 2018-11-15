@@ -59,10 +59,10 @@
                                 </td>
                                 @else
                                 <td>
-                                    {{-- <a href="edit-account/{{$account->id}}"  class="btn btn-info">
+                                    <a href="edit-account/{{$account->id}}"  class="btn btn-info">
                                         <span class="pe-7s-edit"></span>
                                         Edit
-                                    </a> --}}
+                                    </a>
                                     <a  href="reset-account/{{$account->id}}"  class="btn btn-success">
                                         <i class='pe-7s-refresh'></i> Reset
                                     </a>

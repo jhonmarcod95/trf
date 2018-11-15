@@ -70,6 +70,7 @@ Route::get('/deactivate-account/{id}', 'AccountController@deactivate_account');
 Route::get('/activate-account/{id}', 'AccountController@activate_account');
 Route::get('/reset-account/{id}', 'AccountController@reset_account');
 Route::get('/edit-account/{id}', 'AccountController@edit_account');
+Route::post('/edit-account/{id}', 'AccountController@save_edit_account');
 Route::get('/new-account', 'AccountController@new_account');
 Route::post('/new-account', 'AccountController@save_new_account');
 Route::get('/employee-list', 'AccountController@employee_list');

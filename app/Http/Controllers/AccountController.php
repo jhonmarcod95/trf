@@ -194,19 +194,82 @@ class AccountController extends Controller
     }
     public function edit_account($id)
     {
-        
-        $accounts = User::where('role','=','3')
-        ->where('id','!=',auth()->user()->id)
-        ->orderBy('name','asc')
-        ->get();
-       
-        
-        $approver = User_approver::where('user_id','=',$id)->get();
-
-        dd($users->company_name);
-        $companies = Company::orderBy('company_name','asc')
-        ->get(['id','company_name']);
         $users = User::findOrFail($id);
-        return view('edit_account',['destination' => $destination ]);
+        $approver = User_approver::leftJoin('users', 'user_approvers.approver_id', '=', 'users.id')
+        ->where('user_id','=',$id)->first();
+        if($approver!=null){
+            $accounts = User::where('role','=','3')
+            ->where('id','!=',auth()->user()->id)
+            ->where('id','!=',$approver->approver_id)
+            ->orderBy('name','asc')
+            ->get();
+            
+        }
+        else
+        {
+            $accounts = User::where('role','=','3')
+            ->where('id','!=',$id)
+            ->orderBy('name','asc')
+            ->get();
+            $approver = [];
+            
+        }   
+        $company_edit= Company::where('id','=',$users->company_name)->first();
+        $companies = Company::where('id','!=',$users->company_name)
+        ->orderBy('company_name','asc')
+        ->get(['id','company_name']);
+        return view('edit_account',array (
+            'companies' => $companies,
+            'approver' => $approver,
+            'users' => $users,
+            'accounts' => $accounts,
+            'company_edit' => $company_edit,
+        )); 
+    }
+    public function save_edit_account(Request $request, $id)
+    {
+        $this->validate(request(),[
+            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'user_type' => 'required',
+            'employee_id' => 'required|string|numeric',
+            'contact_number' => 'required|string|numeric',
+            'birth_date' => 'required',
+            'company_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            ]    
+        );
+        
+        $data =  User::find($id);
+        $input = $request->all();
+        
+        $data->fill($input)->save();
+        
+        $data1 =  User_approver::where('user_id',$id)->first();
+        if($data1!=null){
+            if($request->approver != null){
+                $data2 =  User_approver::find($data1->id);
+                $approver = $request->approver;
+                $data2->approver_id = $approver;
+                $data2->save();
+            }
+            else
+            {
+                $delete_data = User_approver::find($data1->id);
+                $delete_data->delete();
+            }
+        }
+        else
+        {
+            $data1 = new User_approver;
+            $data1->user_id = $id;
+            $data1->approver_id = $request->approver;
+            $data1->save();
+        }
+        
+        
+        
+        $request->session()->flash('status', ''.$data->name.' Successfully Edited!');
+        return redirect('/employee-list');
+        
     }
 }
