@@ -102,7 +102,7 @@ class RequestController extends Controller
         if($user_approver){
             foreach($user_approver as $approver){
                 $pending_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-                ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+                ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
                 ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
                 ->where('requestor_id','=', $approver->user_id)
                 ->where('status','=','1')
@@ -114,7 +114,7 @@ class RequestController extends Controller
     public function cancelled_request()
     {
         $cancelled_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-        ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
         ->where('requestor_id','=',auth()->user()->id)
         ->where('status','=','3')
@@ -124,7 +124,7 @@ class RequestController extends Controller
     public function pending_list()
     {
         $pending_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-        ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
         ->where('requestor_id','=',auth()->user()->id)
         ->where('status','=','1')
@@ -134,7 +134,7 @@ class RequestController extends Controller
     public function approved()
     {
         $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-        ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
         ->where('requestor_id','=',auth()->user()->id)
         ->where('status','=','2')
@@ -144,7 +144,7 @@ class RequestController extends Controller
     public function pdf ($id)
     {
         $data_list= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-        ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
         ->where('user_requests.id','=',$id)
         ->get();
