@@ -31,8 +31,7 @@ $(document).ready(function(){
     // Init navigation toggle for small screens
     lbd.initRightMenu();
 
-    //  Activate the tooltips
-    $('[rel="tooltip"]').tooltip();
+ 
 
     $('.form-control').on("focus", function(){
         $(this).parent('.input-group').addClass("input-group-focus");

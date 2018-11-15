@@ -16,9 +16,9 @@ class approver
     public function handle($request, Closure $next)
     {
         
-        if ($request->user() && $request->user()->role != 3)
+        if ( $request->user()->role != 3)
         {
-            dd($request->user()->role);
+            
             return redirect('/');
         }
         return $next($request);

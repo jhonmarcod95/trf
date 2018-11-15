@@ -26,7 +26,7 @@ class AccountController extends Controller
             return view('login');
         }
         else{
-            if(auth()->user()->id!=1){
+            if(auth()->user()->role!=1){
                 $pending_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
                 ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
                 ->select('user_requests.*', 'destinations.destination', 'companies.company_name')

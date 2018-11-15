@@ -38,17 +38,32 @@ Route::get('/edit-account/{id}', 'AccountController@edit_account');
 
 
 //Request
-Route::get('/pending-request', 'RequestController@pending_list');
+
+Route::group( ['middleware' => ['approver']], function()
+{
+Route::get('/for-approval', 'RequestController@for_approval');
 Route::get('/new-request', 'RequestController@login');
+Route::get('/pending-request', 'RequestController@pending_list');
 Route::get('/cancelled-request', 'RequestController@cancelled_request');
 Route::get('/approved', 'RequestController@approved');
 Route::post('/new-request', 'RequestController@new_form');
 Route::post('/save-new-request', 'RequestController@save_new_request');
-Route::get('/for-approval', 'RequestController@for_approval');
 Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::get('/approve-request/{id}', 'RequestController@approve_request');
 Route::get('/disapprove-request/{id}', 'RequestController@disapprove_request');
-
+}
+);
+Route::group( ['middleware' => ['user']], function()
+{
+Route::get('/new-request', 'RequestController@login');
+Route::get('/pending-request', 'RequestController@pending_list');
+Route::get('/cancelled-request', 'RequestController@cancelled_request');
+Route::get('/approved', 'RequestController@approved');
+Route::post('/new-request', 'RequestController@new_form');
+Route::post('/save-new-request', 'RequestController@save_new_request');
+Route::get('/show-pdf/{id}', 'RequestController@pdf');
+}
+);
 
 Route::group( ['middleware' => 'admin'], function()
 {
@@ -66,4 +81,6 @@ Route::post('/new-company', 'CompanyController@save_new_company');
 Route::get('/edit-company/{id}', 'CompanyController@edit_company');
 Route::post('/edit-company/{id}', 'CompanyController@save_edit_company');
 });
+
+
 });
