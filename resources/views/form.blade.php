@@ -13,6 +13,7 @@
                         <div class="content">
                             <form method='POST' action='save-new-request' target="">
                                 {{ csrf_field() }}
+                                
                                 <div class="row">
                                     <div class="col-md-4">
                                         Company Name:
@@ -34,7 +35,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         Requestor Name:
-                                        <input type='text' class="form-control"  name='requestor_name' value={{Auth::user()->name}}   autocomplete="off"  readonly>
+                                        <input type='text' class="form-control"  name='requestor_name' value='{{ Auth::user()->name }}'  readonly>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -203,6 +204,8 @@
                             </script>
                             <script >
                                 $(".chosen").chosen();
+                            </script>
+                            <script>
                             </script>
                             
                         </div>

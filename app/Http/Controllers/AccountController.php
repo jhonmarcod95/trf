@@ -28,7 +28,7 @@ class AccountController extends Controller
         else{
             if(auth()->user()->role!=1){
                 $pending_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-                ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+                ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
                 ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
                 ->where('requestor_id','=',auth()->user()->id)
                 ->where('status','=','1')
@@ -73,7 +73,7 @@ class AccountController extends Controller
                 // return Redirect::to('secure');
                 // for now we'll just echo success (even though echoing in a controller is bad)
                 $pending_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-                ->leftJoin('destinations', 'User_requests.destination', '=', 'destinations.id')
+                ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
                 ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
                 ->where('requestor_id','=',auth()->user()->id)
                 ->where('status','=','1')
