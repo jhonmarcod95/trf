@@ -4,20 +4,16 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersRequestTable extends Migration
+class CreateUserRequestsTable extends Migration
 {
     /**
-    * Run the migrations.
-    *
-    * @return void
-    */
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
-    }
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('users_request', function (Blueprint $table) {
+        Schema::create('user_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('company_name');
             $table->date('request_date');
@@ -38,16 +34,15 @@ class CreateUsersRequestTable extends Migration
             $table->string('cost_center');
             $table->timestamps();
         });
-        
     }
-    
+
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('users_request');
+        Schema::dropIfExists('user_requests');
     }
 }
