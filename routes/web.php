@@ -36,6 +36,8 @@ Route::post('/save-new-request', 'RequestController@save_new_request');
 Route::get('/pending-request', 'RequestController@pending_list');
 Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::get('/pending-request', 'RequestController@pending_list');
+Route::get('/edit-request/{id}', 'RequestController@edit_request');
+Route::post('/edit-request/{id}', 'RequestController@save_edit_request');
 Route::group( ['middleware' => ['user']], function()
 {
 
@@ -47,6 +49,9 @@ Route::get('/for-approval', 'RequestController@for_approval');
 Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::get('/approve-request/{id}', 'RequestController@approve_request');
 Route::get('/disapprove-request/{id}', 'RequestController@disapprove_request');
+Route::post('/disapprove-request/{id}', 'RequestController@save_disapprove_request');
+Route::get('/approved-history', 'RequestController@approved_history');
+Route::get('/disapproved-history', 'RequestController@disapproved_history');
 }
 );
 Route::group( ['middleware' => 'admin'], function()

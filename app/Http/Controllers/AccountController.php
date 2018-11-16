@@ -240,9 +240,17 @@ class AccountController extends Controller
         );
         
         $data =  User::find($id);
+
         $input = $request->all();
-        
-        $data->fill($input)->save();
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->role = $request->user_type;
+        $data->employee_id = $request->employee_id;
+        $data->contact_number = $request->contact_number;
+        $data->birth_date = $request->birth_date;
+        $data->company_name = $request->company_name;
+        $data->save();
+
         
         $data1 =  User_approver::where('user_id',$id)->first();
         if($data1!=null){
@@ -260,16 +268,16 @@ class AccountController extends Controller
         }
         else
         {
-            $data1 = new User_approver;
-            $data1->user_id = $id;
-            $data1->approver_id = $request->approver;
-            $data1->save();
+            if($request->approver != null){
+                $data1 = new User_approver;
+                $data1->user_id = $id;
+                $data1->approver_id = $request->approver;
+                $data1->save();
+            }
         }
-        
-        
-        
         $request->session()->flash('status', ''.$data->name.' Successfully Edited!');
         return redirect('/employee-list');
         
     }
+    
 }

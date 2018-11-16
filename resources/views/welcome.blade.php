@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>Laravel</title>
-    
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('/login_css/images/icons/logo.ico')}}"/>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
     
@@ -95,9 +94,9 @@
             
             <div class="links">
                 <a href="{{ url('/new-request') }}" target="_">New Request</a>
-                <a href="{{ url('/#')}}"  target="_">Request Status</a>
+                {{-- <a href="{{ url('/#')}}"  target="_">Request Status</a> --}}
                 <a href="{{ url('/inbox') }}" target="_">Inbox</a>
-                <a href="">Manual</a>
+                {{-- <a href="">Manual</a> --}}
                 @if (Route::has('login'))
                 @auth
                 <a href="{{ route('logout') }}"  onclick="event.preventDefault();

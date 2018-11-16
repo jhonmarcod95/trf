@@ -18,11 +18,13 @@ class DisapproveNotif extends Notification
      */
     protected $users_request;
     protected $new_destination;
-    public function __construct($users_request,$new_destination)
+    protected $remarks;
+    public function __construct($users_request,$new_destination,$remarks)
     {
         //
         $this->users_request = $users_request;
         $this->new_destination =$new_destination;
+        $this->remarks =$remarks;
     }
 
     /**
@@ -49,6 +51,7 @@ class DisapproveNotif extends Notification
         ->line('Your Travel Request has been CANCELLED ')
         ->line('Traveler Name: '.$this->users_request->traveler_name)
         ->line('Destination : '.$this->new_destination)
+        ->line('Remarks : '.$this->remarks)
         ->action('Cancelled Request', url('/cancelled-request'))
         ->line('Thank you for using our application!');
     }

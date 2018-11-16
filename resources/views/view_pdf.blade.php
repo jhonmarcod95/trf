@@ -151,7 +151,7 @@
                     @foreach($origin as $key => $value)
                     <tr class="wrapword" style='padding:0px;margin:0px'>
                         <td>
-                            <h6>{{$value->origin.' To '.$value->destination}}} </h6>
+                            <h6>{{$origing_new_new[$key][0]->destination. ' To ' .$value->destination}} </h6>
                         </td>
                         <td>
                             <h6>{{date ("M j, Y",strtotime($value->date_of_travel))}}</h6>

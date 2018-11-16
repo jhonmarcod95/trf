@@ -4,7 +4,7 @@
     <ul class="nav navbar-nav navbar-left">
         <li>
             <a>
-                <p>For Approval</p>
+                <p>Disapproved User Request</p>
             </a>
         </li>
     </ul>
@@ -17,13 +17,6 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="content table-responsive table-full-width">
-                        @if(session()->has('status'))
-                        <div class="form-group">
-                            <div class="alert alert-info">
-                                {{session()->get('status')}}
-                            </div>
-                        </div>
-                        @endif
                         <table id="example" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <td>Traveler</td>
@@ -32,21 +25,23 @@
                                 <td>From</td>
                                 <td>To</td>
                                 <td>Purpose</td>
+                                <td>Date Request</td>
+                                <td>Date Disapproved</td>
                                 <td>Action</td>
                             </thead>
                             <tbody>
-                                @foreach($pending_requests as $pending_request)
+                                @foreach($approved_requests as $approved_request)
                                 <tr>
-                                    <td>{{$pending_request->traveler_name}}</td>
-                                    <td>{{$pending_request->company_name}}</td>
-                                    <td>{{$pending_request->destination}}</td>
-                                    <td>{{$pending_request->date_from}}</td>
-                                    <td>{{$pending_request->date_to}}</td>
-                                    <td>{{$pending_request->purpose_of_travel}}</td>
+                                    <td>{{$approved_request->traveler_name}}</td>
+                                    <td>{{$approved_request->company_name}}</td>
+                                    <td>{{$approved_request->destination}}</td>
+                                    <td>{{$approved_request->date_from}}</td>
+                                    <td>{{$approved_request->date_to}}</td>
+                                    <td>{{$approved_request->purpose_of_travel}}</td>
+                                    <td>{{date ("M j, Y",strtotime($approved_request->created_at))}}</td>
+                                    <td>{{date ("M j, Y",strtotime($approved_request->updated_at))}}</td>
                                     <td>
-                                        <a href="show-pdf"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
-                                        <a href="approve-request/{{$pending_request->id}}" class="btn btn-success"> <span class="pe-7s-check"></span>Approve</a>
-                                        <a href="disapprove-request/{{$pending_request->id}}"  class="btn btn-danger"><span class="pe-7s-close"></span>Disapprove</a>
+                                        <a href="show-pdf/{{$approved_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach

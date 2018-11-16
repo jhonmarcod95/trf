@@ -39,7 +39,7 @@
                                     <td>{{$pending_request->date_to}}</td>
                                     <td>{{$pending_request->purpose_of_travel}}</td>
                                     <td>
-                                        <a href=""  class="btn btn-info btn-sl">
+                                        <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl">
                                             <i class='pe-7s-edit'></i> Edit
                                         </a>
                                     </td>

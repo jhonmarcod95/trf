@@ -2,12 +2,8 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="{{ asset('/login_css/images/icons/logo.ico')}}">
-    
-    <title>LFUGGOC</title>
-    
-    
-    
+    <link rel="icon" type="image/png" href="{{ asset('/login_css/images/icons/logo.ico')}}"/>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Bootstrap core CSS     -->
     <link href="{{ asset('/login_css/assets/css/bootstrap.min.css')}}" rel="stylesheet" />
     
@@ -28,9 +24,6 @@
     
     <script type="text/javascript" src="{{ asset('/login_css/jquery-2.1.1.min.js')}}"></script>
     <script src="{{ asset('/login_css/jquery-ui.min.js')}}"></script>
-    
-    
-    
     
     <style>
         .content input[type="search"] {
