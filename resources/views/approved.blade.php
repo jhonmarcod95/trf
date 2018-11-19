@@ -25,6 +25,7 @@
                                 <td>From</td>
                                 <td>To</td>
                                 <td>Purpose</td>
+                                <td>Approved By</td>
                                 <td>Action</td>
                             </thead>
                             <tbody>
@@ -33,9 +34,10 @@
                                     <td>{{$approved_request->traveler_name}}</td>
                                     <td>{{$approved_request->company_name}}</td>
                                     <td>{{$approved_request->destination}}</td>
-                                    <td>{{$approved_request->date_from}}</td>
-                                    <td>{{$approved_request->date_to}}</td>
+                                    <td>{{date ("M j, Y",strtotime($approved_request->date_from))}}</td>
+                                    <td>{{date ("M j, Y",strtotime($approved_request->date_to))}}</td>
                                     <td>{{$approved_request->purpose_of_travel}}</td>
+                                    <td>{{$approved_request->name}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approved_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>

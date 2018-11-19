@@ -12,7 +12,7 @@
 </div>
 </div>
 </nav>
-<a href='{{ url('/new-destination') }}'><button type="button" data-target="#addnew" class="btn btn-primary pull-left" style='margin-left:28px;margin-bottom:10px;margin-top:10px'><i class="pe-7s-plus"></i> New Destination</button></a>
+<a href='#new_destination'  data-toggle="modal"  ><button type="button" data-target="#addnew" class="btn btn-primary pull-left" style='margin-left:28px;margin-bottom:10px;margin-top:10px'><i class="pe-7s-plus"></i> New Destination</button></a>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -34,20 +34,27 @@
                                 <td>{{$destination->id}}</td>
                                 <td>{{$destination->destination}}</td>
                                 <td>{{$destination->code}}</td>
-                                <td><a href="edit-destination/{{$destination->id}}"  class="btn btn-danger">
+                                {{-- <td><a href="edit-destination/{{$destination->id}}"  class="btn btn-danger">
                                     <span class="pe-7s-edit"></span>
                                     Edit</a>
+                                </td> --}}
+                                <td>
+                                    <a href="#destination_edit{{$destination->id}}" data-toggle="modal"  class="btn btn-danger">
+                                        <span class="pe-7s-edit"></span>
+                                        Edit
+                                    </a>
+                                    @include('destination_modal')
                                 </td>
                             </tr>
-                                @endforeach
-                                @include('error')
-                            </tfoot>
-                        </table>
-                    </div>
+                            @endforeach
+                            @include('error')
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 <script src="{{ asset('/datable/js/jquery.dataTables.min.js')}}"></script>

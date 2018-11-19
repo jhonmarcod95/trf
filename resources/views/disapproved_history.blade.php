@@ -34,8 +34,8 @@
                                 <tr>
                                     <td>{{$approved_request->traveler_name}}</td>
                                     <td>{{$approved_request->company_name}}</td>
-                                    <td>{{$approved_request->destination}}</td>
-                                    <td>{{$approved_request->date_from}}</td>
+                                    <td>{{date ("M j, Y",strtotime($approved_request->date_from))}}</td>
+                                    <td>{{date ("M j, Y",strtotime($approved_request->date_to))}}</td>
                                     <td>{{$approved_request->date_to}}</td>
                                     <td>{{$approved_request->purpose_of_travel}}</td>
                                     <td>{{date ("M j, Y",strtotime($approved_request->created_at))}}</td>

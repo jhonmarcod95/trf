@@ -17,6 +17,7 @@ use App\Company;
 use App\User;
 use App\User_approver;
 use App\User_request;
+use App\Role;
 class AccountController extends Controller
 {
     //
@@ -121,7 +122,7 @@ class AccountController extends Controller
         $data->password = bcrypt($request->input('password'));
         $data->save();
         $request->session()->flash('status', ''.$data->name.' Successfully Updated Your Password!');
-        return redirect('/change-password');
+        return redirect('/user-account');
         
     }
     public function save_new_account(Request $request)
@@ -203,7 +204,6 @@ class AccountController extends Controller
             ->where('id','!=',$approver->approver_id)
             ->orderBy('name','asc')
             ->get();
-            
         }
         else
         {
@@ -212,8 +212,7 @@ class AccountController extends Controller
             ->orderBy('name','asc')
             ->get();
             $approver = [];
-            
-        }   
+        }
         $company_edit= Company::where('id','=',$users->company_name)->first();
         $companies = Company::where('id','!=',$users->company_name)
         ->orderBy('company_name','asc')
@@ -279,5 +278,35 @@ class AccountController extends Controller
         return redirect('/employee-list');
         
     }
-    
+    public function view_account()
+    {
+        $id=auth()->user()->id;
+        $users =User::findOrFail($id);
+        $approver = User_approver::leftJoin('users', 'user_approvers.approver_id', '=', 'users.id')
+        ->where('user_id','=',$id)->first();
+        $company_edit= Company::findOrFail($users->company_name);
+        $role= Role::findOrFail($users->role);
+       
+        if(auth()->user()->role=3)
+        {
+            $requestor_list=User_approver::leftJoin('users', 'user_approvers.user_id', '=', 'users.id')
+            ->where('approver_id','=',$id)->get();
+            return view('view_account',array (
+                'requestor_list' => $requestor_list,
+                'users' => $users,
+                'company_edit' => $company_edit,
+                'approver' => $approver,
+            )); 
+        }
+        else
+        {
+            $requestor_list=User_approver::leftJoin('users', 'user_approvers.user_id', '=', 'users.id')
+            ->where('approver_id','=',$id)->get();
+            return view('view_account',array (
+                'users' => $users,
+                'company_edit' => $company_edit,
+                'approver' => $approver,
+            )); 
+        }
+    }
 }

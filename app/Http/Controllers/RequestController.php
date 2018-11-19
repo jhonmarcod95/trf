@@ -25,6 +25,7 @@ use App\Notifications\RequestNotif;
 use App\Notifications\ForApprovalNotif;
 use App\Notifications\ApproveNotif;
 use App\Notifications\DisapproveNotif;
+use App\Notifications\CancelRequest;
 
 
 class RequestController extends Controller
@@ -115,7 +116,8 @@ class RequestController extends Controller
     {
         $cancelled_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-        ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
+        ->leftJoin('users', 'user_requests.approved_by', '=', 'users.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
         ->where('requestor_id','=',auth()->user()->id)
         ->where('status','=','3')
         ->get();
@@ -135,7 +137,8 @@ class RequestController extends Controller
     {
         $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-        ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
+        ->leftJoin('users', 'user_requests.approved_by', '=', 'users.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
         ->where('requestor_id','=',auth()->user()->id)
         ->where('status','=','2')
         ->get();
@@ -445,5 +448,28 @@ class RequestController extends Controller
         $user->notify(new DisapproveNotif($users_request,$new_destination, $remarks));
         $request->session()->flash('status', ''.$users_request->traveler_name.'Request has been disapproved!');
         return redirect('/for-approval');
+    }
+    public function cancel_request($id)
+    {
+        $users_request = User_request::findOrFail($id);
+        return view('cancel_remarks',['users_request' => $users_request ]);
+    }
+    public function save_cancel_request(Request $request, $id)
+    {
+        $remarks  = $request->remarks;
+        $users_request = User_request::findOrFail($id);
+        $user_id=$users_request->requestor_id;
+        $user = User::findOrFail($user_id);
+        if($users_request) {
+            $users_request->status = 3;
+            $users_request->remarks = $request->remarks;
+            $users_request->approved_by = auth()->user()->id;
+            $users_request->save();
+        }
+        $destination_name = Destination::where('id','=',$users_request->destination)->get();
+        $new_destination = $destination_name[0]->destination;
+        $user->notify(new CancelRequest($users_request,$new_destination, $remarks));
+        $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been Cancelled!');
+        return redirect('/pending-request');
     }
 }

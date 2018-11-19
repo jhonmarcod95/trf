@@ -24,27 +24,22 @@
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
-        
         .full-height {
             height: 100vh;
         }
-        
         .flex-center {
             align-items: center;
             display: flex;
             justify-content: center;
         }
-        
         .position-ref {
             position: relative;
         }
-        
         .top-right {
             position: absolute;
             right: 10px;
             top: 18px;
         }
-        
         .content {
             text-align: center;
             color:white;
@@ -52,13 +47,10 @@
         }
         .background-color{
             background:rgba(1,1,1,0.5);
-            
         }
-        
         .title {
             font-size: 84px;
         }
-        
         .links > a {
             color: #636b6f;
             padding: 0 25px;
@@ -77,7 +69,6 @@
         .links > a:hover {
             background-color: grey;
         }
-        
         .m-b-md {
             margin-bottom: 30px;
         }
@@ -85,17 +76,14 @@
 </head>
 <body>
     <div class="flex-center position-ref full-height">
-        
-        
         <div class="content background-color">
             <div class="title m-b-md">
                 Online Travel Portal 
             </div>
-            
             <div class="links">
-                <a href="{{ url('/new-request') }}" target="_">New Request</a>
+                <a href="{{ url('/new-request') }}" >New Request</a>
                 {{-- <a href="{{ url('/#')}}"  target="_">Request Status</a> --}}
-                <a href="{{ url('/inbox') }}" target="_">Inbox</a>
+                <a href="{{ url('/inbox') }}" >Inbox</a>
                 {{-- <a href="">Manual</a> --}}
                 @if (Route::has('login'))
                 @auth
@@ -106,10 +94,9 @@
                     {{ csrf_field() }}
                 </form>
                 @endauth
+                @endif
             </div>
-            
         </div>
-        @endif
     </div>
 </div>
 </body>

@@ -44,9 +44,10 @@
                                     <td>{{$pending_request->date_to}}</td>
                                     <td>{{$pending_request->purpose_of_travel}}</td>
                                     <td>
-                                        <a href="show-pdf"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                         <a href="approve-request/{{$pending_request->id}}" class="btn btn-success"> <span class="pe-7s-check"></span>Approve</a>
-                                        <a href="disapprove-request/{{$pending_request->id}}"  class="btn btn-danger"><span class="pe-7s-close"></span>Disapprove</a>
+                                        <a href="#disapprove{{$pending_request->id}}"   data-toggle="modal" class="btn btn-danger"><span class="pe-7s-close"></span>Disapprove</a>
+                                    @include('modal')
                                     </td>
                                 </tr>
                                 @endforeach

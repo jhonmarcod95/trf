@@ -38,6 +38,10 @@ Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::get('/pending-request', 'RequestController@pending_list');
 Route::get('/edit-request/{id}', 'RequestController@edit_request');
 Route::post('/edit-request/{id}', 'RequestController@save_edit_request');
+Route::get('/cancel-request/{id}', 'RequestController@cancel_request');
+Route::get('/user-account', 'AccountController@view_account');
+Route::post('/cancel-request/{id}', 'RequestController@save_cancel_request');
+
 Route::group( ['middleware' => ['user']], function()
 {
 

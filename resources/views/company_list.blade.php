@@ -6,13 +6,12 @@
             <a>
                 <p>Company List</p>
             </a>
-            
         </li>
     </ul>
 </div>
 </div>
 </nav>
-<a href='{{ url('/new-company') }}'><button type="button" data-target="#addnew" class="btn btn-primary pull-left" style='margin-left:28px;margin-bottom:10px;margin-top:10px'><i class="pe-7s-plus"></i> New Company</button></a>
+<a href='#new_company'  data-toggle="modal"><button type="button" data-target="#addnew" class="btn btn-primary pull-left" style='margin-left:28px;margin-bottom:10px;margin-top:10px'><i class="pe-7s-plus"></i> New Company</button></a>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -32,11 +31,17 @@
                             <tr>
                                 <td>{{$company->id}}</td>
                                 <td>{{$company->company_name}}</td>
-                                <td><a href="edit-company/{{$company->id}}"  class="btn btn-danger">
+                                {{-- <td><a href="edit-company/{{$company->id}}"   class="btn btn-danger">
                                     <span class="pe-7s-edit"></span>
                                     Edit</a>
-                                </td>
-                            </tr>
+                                </td> --}}
+                                <td>
+                                    <a href="#company_edit{{$company->id}}" data-toggle="modal"  class="btn btn-danger">
+                                        <span class="pe-7s-edit"></span> Edit
+                                    </a>
+                                        @include('company_modal')
+                                    </td>
+                                </tr>
                                 @endforeach
                                 @include('error')
                             </tfoot>

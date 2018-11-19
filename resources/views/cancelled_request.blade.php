@@ -26,6 +26,8 @@
                                 <td>From</td>
                                 <td>To</td>
                                 <td>Purpose</td>
+                                <td>Cancelled By</td>
+                                <td>Remarks</td>
                                 <td>Action</td>
                             </thead>
                             <tbody>
@@ -34,9 +36,11 @@
                                     <td>{{$cancel_request->traveler_name}}</td>
                                     <td>{{$cancel_request->company_name}}</td>
                                     <td>{{$cancel_request->destination}}</td>
-                                    <td>{{$cancel_request->date_from}}</td>
-                                    <td>{{$cancel_request->date_to}}</td>
+                                    <td>{{date ("M j, Y",strtotime($cancel_request->date_from))}}</td>
+                                    <td>{{date ("M j, Y",strtotime($cancel_request->date_to))}}</td>
                                     <td>{{$cancel_request->purpose_of_travel}}</td>
+                                    <td>{{$cancel_request->name}}</td>
+                                    <td>{{$cancel_request->remarks}}</td>
                                     <td>
                                         <a href="show-pdf/{{$cancel_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
