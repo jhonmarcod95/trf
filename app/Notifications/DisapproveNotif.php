@@ -47,6 +47,7 @@ class DisapproveNotif extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+        ->subject('Disapproved Notification')
         ->greeting('Good day,')
         ->line('Your Travel Request has been CANCELLED ')
         ->line('Traveler Name: '.$this->users_request->traveler_name)

@@ -200,8 +200,8 @@ class AccountController extends Controller
         ->where('user_id','=',$id)->first();
         if($approver!=null){
             $accounts = User::where('role','=','3')
-            ->where('id','!=',auth()->user()->id)
             ->where('id','!=',$approver->approver_id)
+            ->where('id','!=',$id)
             ->orderBy('name','asc')
             ->get();
         }

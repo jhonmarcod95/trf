@@ -35,7 +35,9 @@
                                 <td>Action</td>
                             </thead>
                             <tbody>
-                                @foreach($pending_requests as $pending_request)
+                                @foreach($pending_requests as $request)
+                                @if(!$request->isEmpty())
+                                @foreach($request as $pending_request)
                                 <tr>
                                     <td>{{$pending_request->traveler_name}}</td>
                                     <td>{{$pending_request->company_name}}</td>
@@ -47,9 +49,11 @@
                                         <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                         <a href="approve-request/{{$pending_request->id}}" class="btn btn-success"> <span class="pe-7s-check"></span>Approve</a>
                                         <a href="#disapprove{{$pending_request->id}}"   data-toggle="modal" class="btn btn-danger"><span class="pe-7s-close"></span>Disapprove</a>
-                                    @include('modal')
+                                        @include('modal')
                                     </td>
                                 </tr>
+                                @endforeach
+                                @endif
                                 @endforeach
                             </tfoot>
                         </table>

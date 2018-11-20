@@ -84,7 +84,7 @@
                 <a href="{{ url('/new-request') }}" >New Request</a>
                 {{-- <a href="{{ url('/#')}}"  target="_">Request Status</a> --}}
                 <a href="{{ url('/inbox') }}" >Inbox</a>
-                {{-- <a href="">Manual</a> --}}
+                <a href="{{ asset('/manual.pdf') }}" target="_">Manual</a>
                 @if (Route::has('login'))
                 @auth
                 <a href="{{ route('logout') }}"  onclick="event.preventDefault();

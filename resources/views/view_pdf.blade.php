@@ -39,7 +39,7 @@
     <table cellspacing='0'  width="100%" >
         <tr>
             <td class="wrapword">
-                TRAVEL REQUEST FORM<br>
+                <b>TRAVEL REQUEST FORM<b><br>
                 <h6><i>LFHR-F-001 rev. 00 Effective date: 01 July 2013</i>
                 </h6>
             </td>
@@ -56,7 +56,7 @@
         </tr>
         <tr>
             <td colspan='2'>
-                Request Date:  {{date ("M j, Y",strtotime($data_list[0]->request_date))}}
+                Request Date:  {{date ("F j, Y",strtotime($data_list[0]->request_date))}}
             </td>
         </tr>
         <tr>
@@ -65,7 +65,7 @@
             </td>
             
             <td colspan='1'>
-                Birth Date: {{date ("M j, Y",strtotime($data_list[0]->birth_date))}}
+                Birth Date: {{date ("F j, Y",strtotime($data_list[0]->birth_date))}}
             </td>
         </tr>
         <tr>
@@ -73,7 +73,7 @@
                 Purpose of Travel:  {{ $data_list[0]->purpose_of_travel}}
             </td>
             <td colspan='1'>
-                Contact Number:{{ $data_list[0]->contact_number}}
+                Contact Number: {{ $data_list[0]->contact_number}}
             </td>
         </tr>
         <tr>
@@ -82,12 +82,12 @@
             </td>
             
             <td colspan='1'>
-                From: {{date ("M j, Y",strtotime($data_list[0]->date_from))}} To: {{date ("M j, Y",strtotime($data_list[0]->date_to))}}
+              Dates of Travel : {{date ("M. j, Y",strtotime($data_list[0]->date_from))}} - {{date ("M. j, Y",strtotime($data_list[0]->date_to))}}
             </td>
         </tr>
         <tr>
             <td colspan='3'>
-                Baggage Allowance:{{ $data_list[0]->baggage_allowance}} KG
+                Baggage Allowance: {{ $data_list[0]->baggage_allowance}} Kg
             </td >
             
         </tr>
@@ -154,7 +154,7 @@
                             <h6>{{$origing_new_new[$key][0]->destination. ' To ' .$value->destination}} </h6>
                         </td>
                         <td>
-                            <h6>{{date ("M j, Y",strtotime($value->date_of_travel))}}</h6>
+                            <h6>{{date ("F j, Y",strtotime($value->date_of_travel))}}</h6>
                         </td>
                         <td>
                             <h6>{{$value->time_appointment}} </h6>

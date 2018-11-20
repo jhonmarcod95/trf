@@ -45,6 +45,7 @@ class ApproveNotif extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+        ->subject('Approve Notification')
         ->greeting('Good day,')
         ->line('Your Travel Request has been APPROVED !')
         ->line('Traveler Name: '.$this->users_request->traveler_name)

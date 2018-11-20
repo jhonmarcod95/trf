@@ -46,6 +46,7 @@ class RequestNotif extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+        ->subject('Request Notification')
         ->greeting('Good day,')
         ->line('Your Request Successfully Submitted!.')
         ->line('Traveler Name: '.$this->data->traveler_name)

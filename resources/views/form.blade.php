@@ -141,7 +141,7 @@
                                             <select  name='origin[]'  class="chosen form-control"  autocomplete="off" >
                                                 <option value=''>Choose Origin</option>
                                                 @foreach($destinations as $destination)
-                                                <option value='{{$destination->id}}'  {{ (Input::old("origin.*") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
+                                                <option value='{{$destination->id}}'  {{ (Input::old("origin.0") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -149,19 +149,19 @@
                                             <select  name='destinationall[]'  class="chosen form-control"  autocomplete="off" >
                                                 <option value=''>Choose Destination</option>
                                                 @foreach($destinations as $destination)
-                                                <option value='{{$destination->id}}' {{ (Input::old("destinationall.*") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
+                                                <option value='{{$destination->id}}' {{ (Input::old("destinationall.0") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input id='date_travel' onkeydown='return false' value="{{ old('date_of_travel.*') }}"  class="form-control travel_date" type='date' name='date_of_travel[]' required/></td>
-                                        <td colspan='2'><input class="form-control" type='time' value="{{ old('appointment.*') }}"  name='appointment[]' required/></td>
+                                        <td><input id='date_travel' onkeydown='return false' value="{{ old('date_of_travel.0') }}"  class="form-control travel_date" type='date' name='date_of_travel[]' required/></td>
+                                        <td colspan='2'><input class="form-control" type='time' value="{{ old('appointment.0') }}"  name='appointment[]' required/></td>
                                     </tr>
                                     <tr class='case'>
                                         <td style='width:30%;'>
                                             <select  name='origin[]'  class="chosen form-control"  autocomplete="off"  >
                                                 <option value=''>Choose Origin</option>
                                                 @foreach($destinations as $destination)
-                                                <option value='{{$destination->id}}' {{ (Input::old("origin.*") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
+                                                <option value='{{$destination->id}}' {{ (Input::old("origin.1") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -169,12 +169,12 @@
                                             <select  name='destinationall[]'  class="chosen form-control"  autocomplete="off"  >
                                                 <option value=''>Choose Destination</option>
                                                 @foreach($destinations as $destination)
-                                                <option value='{{$destination->id}}' {{ (Input::old("destinationall.*") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
+                                                <option value='{{$destination->id}}' {{ (Input::old("destinationall.1") == $destination->id ? "selected":"") }}>{{$destination->destination.'('.$destination->code.')'}}</option>
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input id='date_travel' value="{{ old('date_of_travel.*') }}"    onkeydown='return false' class="form-control travel_date" type='date' name='date_of_travel[]' required/></td>
-                                        <td colspan='2'><input class="form-control" type='time'  value="{{ old('appointment.*') }}" name='appointment[]' required/></td>
+                                        <td><input id='date_travel' value="{{ old('date_of_travel.1') }}"    onkeydown='return false' class="form-control travel_date" type='date' name='date_of_travel[]' required/></td>
+                                        <td colspan='2'><input class="form-control" type='time'  value="{{ old('appointment.1') }}" name='appointment[]' required/></td>
                                     </tr>
                                 </table>
                                 <button type="button" class='btn btn-success addmore'>+ add new origin</button><br>  
@@ -239,8 +239,9 @@
                                 });
                                 $(".addmore").on('click', function () {
                                     var count = $('table tr').length;
+                                    var count_old = $('table tr').length-1;
                                     var data = "<tr id='data' class='case'>";
-                                        data += "<td style='width:30%;'><select  name='origin[]'  class='chosen form-control'  autocomplete='off'  ><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td style='width:30%;'><select  name='destinationall[]'  class='chosen form-control'  autocomplete='off' ><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input id='date_travel'  onkeydown='return false' class='form-control travel_date' type='date' name='date_of_travel[]' required/></td><td colspan='1'><input class='form-control' type='time' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='{{URL::asset('login_css/remove.png')}}'/></a></td></tr>";
+                                        data += "<td style='width:30%;'><select  name='origin[]' class='chosen form-control'  autocomplete='off'  ><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td style='width:30%;'><select  name='destinationall[]'  class='chosen form-control'  autocomplete='off' ><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input id='date_travel'  onkeydown='return false' class='form-control travel_date' type='date' name='date_of_travel[]' required/></td><td colspan='1'><input class='form-control' type='time' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='{{URL::asset('login_css/remove.png')}}'/></a></td></tr>";
                                         $('#form_table').append(data);
                                         count++;
                                     });
