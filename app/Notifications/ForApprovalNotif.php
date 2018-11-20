@@ -45,7 +45,7 @@ class ForApprovalNotif extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->greeting('')
+        ->greeting('Good day,')
         ->line('Request for Approval.')
         ->line('Traveler Name: '.$this->data->traveler_name)
         ->line('Destination : '.$this->new_destination)

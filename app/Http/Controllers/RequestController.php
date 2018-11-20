@@ -193,7 +193,6 @@ class RequestController extends Controller
             ]    
         );
         $data = new User_request;
-        dd('renz');
         $user_id=auth()->user()->id;
         $company_name=$request->input('company_name');
         $date_request=$request->input('date_request');
