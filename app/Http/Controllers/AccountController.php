@@ -286,8 +286,7 @@ class AccountController extends Controller
         ->where('user_id','=',$id)->first();
         $company_edit= Company::findOrFail($users->company_name);
         $role= Role::findOrFail($users->role);
-       
-        if(auth()->user()->role=3)
+        if(auth()->user()->role == 3)
         {
             $requestor_list=User_approver::leftJoin('users', 'user_approvers.user_id', '=', 'users.id')
             ->where('approver_id','=',$id)->get();
