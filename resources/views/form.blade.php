@@ -12,7 +12,7 @@
                             <small><i>LFHR-F-001 rev. 00 Effective date: 01 July 2013</i></small>
                         </div>
                         <div class="content">
-                            <form method='POST' action='save-new-request' target="">
+                            <form method='POST' action='save-new-request' target="" onsubmit="show()">
                                 {{ csrf_field() }}
                                 @include('error')
                                 <div class="row">
@@ -183,7 +183,7 @@
                                     <br><small>***ETD Origin minimum of two (2) hours from appointment time at destination</small>
                                     <br><small>****Miscellaneous Other Charges, if any like ASP, CCF</small>
                                 </div>
-                                <a href="{{ URL::previous() }}" class="btn btn-info  btn-danger pull-right">Cancel</a>
+                                <a href="{{ URL::previous() }}" onclick="show()" class="btn btn-info  btn-danger pull-right">Cancel</a>
                                 <button type="submit"  class="btn btn-info btn-fill pull-right">Submit</button> 
                                 <div class="clearfix"></div>
                             </form>

@@ -1,4 +1,5 @@
-@include('layouts.app1')
+@extends('layouts.app1')
+@section('content')
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-left">
         <li>
@@ -51,3 +52,4 @@
         </div>
     </div>
 </div>
+@endsection

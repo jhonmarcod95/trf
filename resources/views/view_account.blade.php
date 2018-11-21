@@ -11,6 +11,7 @@
 </div>
 </div>
 </nav>
+@include('error')
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -31,16 +32,7 @@
                         </div>     
                     </div>
                     <div class="content">
-                            {{ csrf_field() }}
-                            @if(session()->has('status'))
-                            <div class="form-group">
-                                <div class="alert alert-danger">
-                                    {{session()->get('status')}}
-                                    
-                                </div>
-                            </div>
-                            @endif
-                            @include('error')
+                            
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">

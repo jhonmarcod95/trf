@@ -26,6 +26,7 @@ use App\Notifications\ForApprovalNotif;
 use App\Notifications\ApproveNotif;
 use App\Notifications\DisapproveNotif;
 use App\Notifications\CancelRequest;
+use App\Notifications\EditRequestNotif;
 
 
 class RequestController extends Controller
@@ -194,10 +195,7 @@ class RequestController extends Controller
             'budget_line_code' => 'required',
             'date_of_travel' => 'required',
             'appointment' => 'required',
-            ] ,[   
-                'destinationall.*.different'    => 'Destination and Origin must be different.',
-                
-            ]
+            ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
         );
         $data = new User_request;
         $user_id=auth()->user()->id;
@@ -279,204 +277,218 @@ class RequestController extends Controller
         $destination_name = Destination::where('id','=',$users_request->destination)->get();
         $new_destination = $destination_name[0]->destination;
         $user->notify(new ApproveNotif($users_request,$new_destination));
-        $request->session()->flash('status', ''.$users_request->traveler_name.'Request has been Approved!');
+        $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been Approved!');
         return redirect('/for-approval');
     }
     public function disapprove_request($id)
     {
         $users_request = User_request::findOrFail($id);
         return view('disapproved_remarks',['users_request' => $users_request ]);
+    }
+    public function edit_request($id)
+    {
         
-        // $user_id=$users_request->requestor_id;
-        // $user = User::findOrFail($user_id);
-        // if($users_request) {
-            //     $users_request->status = 3;
-            //     $users_request->approved_by = auth()->user()->id;
-            //     $users_request->save();
-            // }
-            // $destination_name = Destination::where('id','=',$users_request->destination)->get();
-            // $new_destination = $destination_name[0]->destination;
-            // $user->notify(new DisapproveNotif($users_request,$new_destination));
-            // $request->session()->flash('status', ''.$users_request->traveler_name.'Request has been disapproved!');
-            // return redirect('/for-approval');
-        }
-        public function edit_request($id)
-        {
-            
-            $company_name = User_request::leftJoin('companies','user_requests.company_name','=','companies.id')
-            ->findOrFail($id);
-            $destination_name = User_request::leftJoin('destinations','user_requests.destination','=','destinations.id')
-            ->findOrFail($id);
-            
-            $users_request = User_request::findOrFail($id);
-            $companies = Company::where('id' , '!=' , $users_request->company_name)
-            ->orderBy('company_name','asc')
+        $company_name = User_request::leftJoin('companies','user_requests.company_name','=','companies.id')
+        ->findOrFail($id);
+        $destination_name = User_request::leftJoin('destinations','user_requests.destination','=','destinations.id')
+        ->findOrFail($id);
+        
+        $users_request = User_request::findOrFail($id);
+        $companies = Company::where('id' , '!=' , $users_request->company_name)
+        ->orderBy('company_name','asc')
+        ->get();
+        
+        $destinations = Destination::where('id' , '!=' , $users_request->destination)
+        ->orderBy('destination','asc')
+        ->get(['id','destination','code']);
+        
+        $origin_list= User_destination::where('request_id','=',$id)
+        ->get();
+        foreach($origin_list as $origin){
+            $origin_new = Destination::where('id',$origin->origin)
             ->get();
-            
-            $destinations = Destination::where('id' , '!=' , $users_request->destination)
-            ->orderBy('destination','asc')
-            ->get(['id','destination','code']);
-            
-            $origin_list= User_destination::where('request_id','=',$id)
+            $destination_new = Destination::where('id',$origin->destination)
             ->get();
-            foreach($origin_list as $origin){
-                $origin_new = Destination::where('id',$origin->origin)
-                ->get();
-                $destination_new = Destination::where('id',$origin->destination)
-                ->get();
-                $origin_new_new[]=$origin_new;
-                $destination_new_new[]=$destination_new;
-            }
-            
-            return view('edit_request',array
-            (
-                'companies' => $companies,
-                'destinations' => $destinations,
-                'users_request' => $users_request,
-                'company_name' => $company_name,
-                'destination_name' => $destination_name,
-                'origin_list' => $origin_list,
-                'origin_new_new' => $origin_new_new,
-                'destination_new_new' => $destination_new_new,
-                
-            )); 
+            $origin_new_new[]=$origin_new;
+            $destination_new_new[]=$destination_new;
         }
-        public function save_edit_request(Request $request, $id)
-        {
-            $data =  User_request::find($id); 
-            $company_name=$request->input('company_name');
-            $date_request=$request->input('date_request');
-            $birthdate=$request->input('birthdate');
-            $purpose_of_travel=$request->input('purpose_of_travel');
-            $traveler_name=$request->input('traveler_name');
-            $contact_number=$request->input('contact_number');
-            $destination=$request->input('destination');
-            $date_from=$request->input('date_from');
-            $date_to=$request->input('date_to');
-            $baggage=$request->input('baggage');
-            $kg=$request->input('kg');
-            $budget_line_code=$request->input('budget_line_code');
-            $budget_approved=$request->input('budget_approved');
-            $budget_available=$request->input('budget_available');
-            $gl_account=$request->input('gl_account');
-            $cost_center=$request->input('cost_center');
-            $origins=$request->input('origin');
-            $destinationalls=$request->input('destinationall');
-            $date_of_travels=$request->input('date_of_travel');
-            $appointments=$request->input('appointment');
+        
+        return view('edit_request',array
+        (
+            'companies' => $companies,
+            'destinations' => $destinations,
+            'users_request' => $users_request,
+            'company_name' => $company_name,
+            'destination_name' => $destination_name,
+            'origin_list' => $origin_list,
+            'origin_new_new' => $origin_new_new,
+            'destination_new_new' => $destination_new_new,
             
-            $data->company_name = $company_name;
-            $data->request_date = $date_request;
-            $data->birth_date = $birthdate;
-            $data->purpose_of_travel = $purpose_of_travel;
-            $data->contact_number = $contact_number;
-            $data->destination = $destination;
-            $data->date_from = $date_from;
-            $data->date_to = $date_to;
-            $data->baggage_allowance = $kg;
-            $data->budget_code_line = $budget_line_code;
-            $data->budget_code_approved = $budget_approved;
-            $data->budget_available = $budget_available;
-            $data->gl_account = $gl_account;
-            $data->cost_center = $cost_center;
-            $data->traveler_name = $traveler_name;
-            $data->save();
-            
-            
-            $delete_data = User_destination::where('request_id',$id)->get();
-            
-            foreach($delete_data as $delete_d){
-                $delete_data1 = User_destination::find($delete_d->id);
-                $delete_data1->delete();
-            }
-            
-            
-            foreach($origins as $key => $origin)
-            {   
-                
-                $data1 = new User_destination;
-                $data1->origin = $origin;
-                $data1->destination = $destinationalls[$key];
-                $data1->date_of_travel = $date_of_travels[$key];
-                $data1->time_appointment = $appointments[$key];
-                $data1->request_id = $id;
-                $data1->save();
-            }
-            $user = auth()->user();
-            $destination_name = Destination::where('id','=',$data->destination)->get();
-            $new_destination = $destination_name[0]->destination;
-            $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
-            if($approver1){
-                $approver= User::where('id','=',$approver1[0]->approver_id)->get();
-                
-                $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
-            }
-            
-            $user->notify(new RequestNotif($data, $new_destination));
-            
-            return redirect('/pending-request');
-            
+        )); 
+    }
+    public function save_edit_request(Request $request, $id)
+    {
+        $data =  User_request::find($id); 
+        $company_name=$request->input('company_name');
+        $date_request=$request->input('date_request');
+        $birthdate=$request->input('birthdate');
+        $purpose_of_travel=$request->input('purpose_of_travel');
+        $traveler_name=$request->input('traveler_name');
+        $contact_number=$request->input('contact_number');
+        $destination=$request->input('destination');
+        $date_from=$request->input('date_from');
+        $date_to=$request->input('date_to');
+        $baggage=$request->input('baggage');
+        $kg=$request->input('kg');
+        $budget_line_code=$request->input('budget_line_code');
+        $budget_approved=$request->input('budget_approved');
+        $budget_available=$request->input('budget_available');
+        $gl_account=$request->input('gl_account');
+        $cost_center=$request->input('cost_center');
+        $origins=$request->input('origin');
+        $destinationalls=$request->input('destinationall');
+        $date_of_travels=$request->input('date_of_travel');
+        $appointments=$request->input('appointment');
+        
+        $data->company_name = $company_name;
+        $data->request_date = $date_request;
+        $data->birth_date = $birthdate;
+        $data->purpose_of_travel = $purpose_of_travel;
+        $data->contact_number = $contact_number;
+        $data->destination = $destination;
+        $data->date_from = $date_from;
+        $data->date_to = $date_to;
+        $data->baggage_allowance = $kg;
+        $data->budget_code_line = $budget_line_code;
+        $data->budget_code_approved = $budget_approved;
+        $data->budget_available = $budget_available;
+        $data->gl_account = $gl_account;
+        $data->cost_center = $cost_center;
+        $data->traveler_name = $traveler_name;
+        $data->save();
+        
+        
+        $delete_data = User_destination::where('request_id',$id)->get();
+        
+        foreach($delete_data as $delete_d){
+            $delete_data1 = User_destination::find($delete_d->id);
+            $delete_data1->delete();
         }
-        public function approved_history()
-        {
-            $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-            ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-            ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
-            ->where('approved_by','=',auth()->user()->id)
-            ->where('status','=','2')
-            ->get();
-            return view('approved_history',['approved_requests' => $approved_requests ]);
+        
+        
+        foreach($origins as $key => $origin)
+        {   
+            
+            $data1 = new User_destination;
+            $data1->origin = $origin;
+            $data1->destination = $destinationalls[$key];
+            $data1->date_of_travel = $date_of_travels[$key];
+            $data1->time_appointment = $appointments[$key];
+            $data1->request_id = $id;
+            $data1->save();
         }
-        public function disapproved_history()
-        {
-            $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-            ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-            ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
-            ->where('approved_by','=',auth()->user()->id)
-            ->where('status','=','3')
-            ->get();
-            return view('disapproved_history',['approved_requests' => $approved_requests ]);
+        $user = auth()->user();
+        $destination_name = Destination::where('id','=',$data->destination)->get();
+        $new_destination = $destination_name[0]->destination;
+        $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
+        if($approver1){
+            $approver= User::where('id','=',$approver1[0]->approver_id)->get();
+            
+            $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
         }
-        public function save_disapprove_request(Request $request, $id)
+        
+        $user->notify(new EditRequestNotif($data, $new_destination));
+        
+        return redirect('/pending-request');
+        
+    }
+    public function approved_history()
+    {
+        $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
+        ->where('approved_by','=',auth()->user()->id)
+        ->where('status','=','2')
+        ->get();
+        return view('approved_history',['approved_requests' => $approved_requests ]);
+    }
+    public function disapproved_history()
+    {
+        $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
+        ->where('approved_by','=',auth()->user()->id)
+        ->where('status','=','3')
+        ->get();
+        return view('disapproved_history',['approved_requests' => $approved_requests ]);
+    }
+    public function save_disapprove_request(Request $request, $id)
+    {
+        $remarks  = $request->remarks;
+        $users_request = User_request::findOrFail($id);
+        $user_id=$users_request->requestor_id;
+        $user = User::findOrFail($user_id);
+        if($users_request) {
+            $users_request->status = 3;
+            $users_request->remarks = $request->remarks;
+            $users_request->approved_by = auth()->user()->id;
+            $users_request->save();
+        }
+        $destination_name = Destination::where('id','=',$users_request->destination)->get();
+        $new_destination = $destination_name[0]->destination;
+        $user->notify(new DisapproveNotif($users_request,$new_destination, $remarks));
+        $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been disapproved!');
+        return redirect('/for-approval');
+    }
+    public function cancel_request($id)
+    {
+        $users_request = User_request::findOrFail($id);
+        return view('cancel_remarks',['users_request' => $users_request ]);
+    }
+    public function save_cancel_request(Request $request, $id)
+    {
+        $remarks  = $request->remarks;
+        $users_request = User_request::findOrFail($id);
+        $user_id=$users_request->requestor_id;
+        $user = User::findOrFail($user_id);
+        if($users_request) {
+            $users_request->status = 3;
+            $users_request->remarks = $request->remarks;
+            $users_request->approved_by = auth()->user()->id;
+            $users_request->save();
+        }
+        $destination_name = Destination::where('id','=',$users_request->destination)->get();
+        $new_destination = $destination_name[0]->destination;
+        $user->notify(new CancelRequest($users_request,$new_destination, $remarks));
+        $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been Cancelled!');
+        return redirect('/pending-request');
+    }
+    public function save_for_approval(Request $request)
+    {
+        
+        if($request->array)
         {
-            $remarks  = $request->remarks;
-            $users_request = User_request::findOrFail($id);
-            $user_id=$users_request->requestor_id;
-            $user = User::findOrFail($user_id);
-            if($users_request) {
-                $users_request->status = 3;
-                $users_request->remarks = $request->remarks;
-                $users_request->approved_by = auth()->user()->id;
-                $users_request->save();
-            }
-            $destination_name = Destination::where('id','=',$users_request->destination)->get();
-            $new_destination = $destination_name[0]->destination;
-            $user->notify(new DisapproveNotif($users_request,$new_destination, $remarks));
-            $request->session()->flash('status', ''.$users_request->traveler_name.'Request has been disapproved!');
+                foreach($request->array as $arr)
+                {
+                    $users_request = User_request::findOrFail($arr);
+                    $user_id=$users_request->requestor_id;
+                    $user = User::findOrFail($user_id);
+                    if($users_request) {
+                        $users_request->status = 2;
+                        $users_request->approved_by = auth()->user()->id;
+                        $users_request->save();
+                    }
+                    $destination_name = Destination::where('id','=',$users_request->destination)->get();
+                    $new_destination = $destination_name[0]->destination;
+                    $user->notify(new ApproveNotif($users_request,$new_destination));
+                }
+                $request->session()->flash('status', 'Request has been Approved!');
+                return redirect('/for-approval');
+        }
+        else
+        {
+            $request->session()->flash('error', 'Please select atleast one checkbox!');
             return redirect('/for-approval');
         }
-        public function cancel_request($id)
-        {
-            $users_request = User_request::findOrFail($id);
-            return view('cancel_remarks',['users_request' => $users_request ]);
-        }
-        public function save_cancel_request(Request $request, $id)
-        {
-            $remarks  = $request->remarks;
-            $users_request = User_request::findOrFail($id);
-            $user_id=$users_request->requestor_id;
-            $user = User::findOrFail($user_id);
-            if($users_request) {
-                $users_request->status = 3;
-                $users_request->remarks = $request->remarks;
-                $users_request->approved_by = auth()->user()->id;
-                $users_request->save();
-            }
-            $destination_name = Destination::where('id','=',$users_request->destination)->get();
-            $new_destination = $destination_name[0]->destination;
-            $user->notify(new CancelRequest($users_request,$new_destination, $remarks));
-            $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been Cancelled!');
-            return redirect('/pending-request');
-        }
     }
-    
+}

@@ -24,7 +24,8 @@
     
     <script type="text/javascript" src="{{ asset('/login_css/jquery-2.1.1.min.js')}}"></script>
     <script src="{{ asset('/login_css/jquery-ui.min.js')}}"></script>
-    
+    <script src="{{ asset('jquery.min.js')}}"></script>
+	
     <style>
         .content input[type="search"] {
             width:300px;
@@ -43,15 +44,30 @@
             -webkit-appearance: none; 
             margin: 0; 
         }
+        .loader {
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+			background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
+			opacity: .8;
+		}
     </style>
     <script src="{{ asset('/login_css/jquery.js')}}"></script>
     <script src="{{ asset('/login_css/choosen.js')}}"></script>
 </head>
 <body>
-    
-    
+    <div id = "myDiv" style="display:none;" class="loader">
+    </div>
     <div class="wrapper">
         @yield('content')
+        <script type = "text/javascript">
+            function show() {
+                document.getElementById("myDiv").style.display="block";
+            }
+        </script>
     </body>
     </html>
     

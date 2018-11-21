@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST' action='edit-destination/{{$destination->id}}' >
+            <form  method='POST' action='edit-destination/{{$destination->id}}' onsubmit='show()'>
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <label style="position:relative; top:7px;">Destination:</label>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST' action='new-destination' >
+            <form  method='POST' action='new-destination' onsubmit='show()' >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <label style="position:relative; top:7px;">Destination:</label>

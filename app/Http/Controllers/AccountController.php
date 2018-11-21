@@ -190,7 +190,7 @@ class AccountController extends Controller
             $users->password = bcrypt('123456');
             $users->save();
         }
-        $request->session()->flash('status', ''.$users->name.' Successfully Reset(123456)!');
+        $request->session()->flash('status', ''.$users->name.' Successfully Reset new password->(123456)!');
         return redirect('/employee-list');
     }
     public function edit_account($id)
@@ -274,7 +274,7 @@ class AccountController extends Controller
                 $data1->save();
             }
         }
-        $request->session()->flash('status', ''.$data->name.' Successfully Edited!');
+        $request->session()->flash('status', ''.$data->name.' Successfully Updated!');
         return redirect('/employee-list');
         
     }

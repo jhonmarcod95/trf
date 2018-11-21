@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST' action='change-password' >
+            <form  method='POST' action='change-password' onsubmit='show()' >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <label style="position:relative; top:7px;">New Password:</label>

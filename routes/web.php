@@ -50,6 +50,7 @@ Route::group( ['middleware' => ['user']], function()
 Route::group( ['middleware' => ['approver']], function()
 {
 Route::get('/for-approval', 'RequestController@for_approval');
+Route::post('/for-approval', 'RequestController@save_for_approval');
 Route::get('/approve-request/{id}', 'RequestController@approve_request');
 Route::get('/disapprove-request/{id}', 'RequestController@disapprove_request');
 Route::post('/disapprove-request/{id}', 'RequestController@save_disapprove_request');

@@ -12,7 +12,17 @@
 </div>
 </div>
 </nav>
-<a href='#new_destination'  data-toggle="modal"  ><button type="button" data-target="#addnew" class="btn btn-primary pull-left" style='margin-left:28px;margin-bottom:10px;margin-top:10px'><i class="pe-7s-plus"></i> New Destination</button></a>
+<div class='row col-md-12'>
+    <div class = 'col-md-6'>
+        <a href='#new_destination'  data-toggle="modal"  ><button type="button" data-target="#addnew" class="btn btn-primary pull-left" style='margin-left:28px;margin-bottom:10px;margin-top:10px'><i class="pe-7s-plus"></i> New Destination</button></a>
+    </div>
+    @if(Session::has('message'))
+    <div class="alert alert-success fade in col-md-6" style='margin-left:28px;margin-bottom:10px;margin-top:10px;'>
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong> {{Session::get('message')}}</strong>
+    </div>
+    @endif
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -26,9 +36,7 @@
                             <td>Action</td>
                         </thead>
                         <tbody>
-                            @if(Session::has('message'))
-                            {{Session::get('message')}}
-                            @endif
+                            
                             @foreach($destinations as $destination)
                             <tr>
                                 <td>{{$destination->id}}</td>

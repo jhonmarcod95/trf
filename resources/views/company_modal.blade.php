@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST' action='edit-company/{{$company->id}}' >
+            <form  method='POST' action='edit-company/{{$company->id}}' onsubmit='show()' >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <label style="position:relative; top:7px;">Company Name:</label>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST' action='new-company' >
+            <form  method='POST' action='new-company' onsubmit='show()' >
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <label style="position:relative; top:7px;">Company Name:</label>

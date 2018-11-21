@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="{{ asset('/login_css/images/icons/logo.ico')}}"/>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-    
+    <script src="{{ asset('jquery.min.js')}}"></script>
     <!-- Styles -->
     <style>
         html, body {
@@ -72,23 +72,35 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+        .loader {
+			position: fixed;
+			left: 0px;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+			background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
+			opacity: .8;
+		}
     </style>
+    
 </head>
 <body>
+    <div id = "myDiv" style="display:none;" class="loader">
+    </div>
     <div class="flex-center position-ref full-height">
         <div class="content background-color">
             <div class="title m-b-md">
                 Online Travel Portal 
             </div>
             <div class="links">
-                <a href="{{ url('/new-request') }}" >New Request</a>
+                <a href="{{ url('/new-request') }}"  onclick = "show()">New Request</a>
                 {{-- <a href="{{ url('/#')}}"  target="_">Request Status</a> --}}
-                <a href="{{ url('/inbox') }}" >Inbox</a>
+                <a href="{{ url('/inbox') }}"  onclick = "show()" >Inbox</a>
                 <a href="{{ asset('/manual.pdf') }}" target="_">Manual</a>
                 @if (Route::has('login'))
                 @auth
-                <a href="{{ route('logout') }}"  onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
+                <a href="{{ route('logout') }}"  onclick="show(); logout();">
                 Log Out</a>
                 <form id="logout-form" action="{{ route('logout') }}"  method="POST" style="display: none;">
                     {{ csrf_field() }}
@@ -96,6 +108,15 @@
                 @endauth
                 @endif
             </div>
+            <script type = "text/javascript">
+                function show() {
+                    document.getElementById("myDiv").style.display="block";
+                }
+                function logout(){
+                                event.preventDefault();
+                                document.getElementById('logout-form').submit();
+                            }
+            </script>
         </div>
     </div>
 </div>

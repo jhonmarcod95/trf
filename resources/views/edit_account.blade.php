@@ -1,4 +1,5 @@
-@include('layouts.app1')
+@extends('layouts.app1')
+@section('content')
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-left">
         <li>
@@ -20,7 +21,7 @@
                         <h4 class="title">Edit Account of {{$users->name}}</h4>
                     </div>
                     <div class="content">
-                        <form  method="POST" action="">
+                        <form  method="POST" action="" onsubmit="show()">
                             {{ csrf_field() }}
                             @if(session()->has('status'))
                             <div class="form-group">
@@ -133,3 +134,4 @@
 <script >
     $(".chosen").chosen();
 </script>
+@endsection

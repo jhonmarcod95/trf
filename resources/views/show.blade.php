@@ -11,20 +11,22 @@
     </ul>
 </div>
 </div>
-</nav>		
+</nav>	
+<div class='row col-md-12'>
+    @if(session()->has('status'))
+    <div class="alert alert-danger fade in col-md-6" style='margin-left:28px;margin-bottom:10px;margin-top:10px;'>
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>{{session()->get('status')}}</strong>
+    </div>
+    @endif
+</div>
 <div class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="content table-responsive table-full-width">
-                        @if(session()->has('status'))
-                        <div class="form-group">
-                            <div class="alert alert-info">
-                                {{session()->get('status')}}
-                            </div>
-                        </div>
-                        @endif  
+                        
                         <table id="example" class="table table-striped table-bordered" style="width:100%;">
                             <thead>
                                 <td>Traveler</td>
@@ -41,11 +43,11 @@
                                     <td>{{$pending_request->traveler_name}}</td>
                                     <td>{{$pending_request->company_name}}</td>
                                     <td>{{$pending_request->destination}}</td>
-                                    <td>{{date ("M j, Y",strtotime($pending_request->date_from))}}</td>
-                                    <td>{{date ("M j, Y",strtotime($pending_request->date_to))}}</td>
+                                    <td>{{date ("M. j, Y",strtotime($pending_request->date_from))}}</td>
+                                    <td>{{date ("M. j, Y",strtotime($pending_request->date_to))}}</td>
                                     <td>{{$pending_request->purpose_of_travel}}</td>
                                     <td>
-                                        <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl">
+                                        <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl" onclick='show()'>
                                             <i class='pe-7s-edit'></i> Edit
                                         </a>
                                         {{-- <a href="#cancel-request/{{$pending_request->id}}"  data-toggle="modal"  data-target="#exampleModalCenter"  class="btn btn-danger"><span class="pe-7s-close"></span>
