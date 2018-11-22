@@ -15,11 +15,11 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST'  action='cancel-request/{{$pending_request->id}}'  onsubmit='show()>
+            <form  method='POST'  action='cancel-request/{{$pending_request->id}}'  onsubmit='show()'>
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <label style="position:relative; top:7px;">Remarks:</label>
-                    <input type="text" name="remarks" placeholder='Remarks....' class="form-control" >
+                    <input type="text" name="remarks" placeholder="Remarks...." class="form-control" >
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
