@@ -91,9 +91,6 @@
         /* The alert message box */
         
         /* The close button */
-      
-        
-        
     </style>    
     <script src="{{ asset('/login_css/jquery.js')}}"></script>
     <script src="{{ asset('/login_css/choosen.js')}}"></script>

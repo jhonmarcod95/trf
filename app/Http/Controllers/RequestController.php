@@ -184,16 +184,14 @@ class RequestController extends Controller
             'date_request' => 'required',
             'birthdate' => 'required',
             'contact_number' => 'required|min:11|max:11',
-            'purpose_of_travel' => 'required',
+            'purpose_of_travel' => 'required|max:255',
             'traveler_name' => 'required',
             'destination' => 'required',
-            'date_from' => 'required',
-            'date_to' => 'required',
             'kg' => 'required',
             'origin.*' => 'required',
             'destinationall.*' => 'required|different:origin.*',
             'budget_line_code' => 'required',
-            'date_of_travel' => 'required',
+            'date_of_travel.*' => 'required|after_or_equal:date_of_travel.*',
             'appointment' => 'required',
             ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
         );
@@ -206,8 +204,6 @@ class RequestController extends Controller
         $traveler_name=$request->input('traveler_name');
         $contact_number=$request->input('contact_number');
         $destination=$request->input('destination');
-        $date_from=$request->input('date_from');
-        $date_to=$request->input('date_to');
         $kg=$request->input('kg');
         $budget_line_code=$request->input('budget_line_code');
         $budget_approved=$request->input('budget_approved');
@@ -218,7 +214,8 @@ class RequestController extends Controller
         $destinationalls=$request->input('destinationall');
         $date_of_travels=$request->input('date_of_travel');
         $appointments=$request->input('appointment');
-        
+        $firstEle = $date_of_travels[0];
+        $lastEle = $date_of_travels[count($date_of_travels) - 1];
         $data->requestor_id = $user_id;
         $data->company_name = $company_name;
         $data->request_date = $date_request;
@@ -226,8 +223,8 @@ class RequestController extends Controller
         $data->purpose_of_travel = $purpose_of_travel;
         $data->contact_number = $contact_number;
         $data->destination = $destination;
-        $data->date_from = $date_from;
-        $data->date_to = $date_to;
+        $data->date_from = $firstEle;
+        $data->date_to = $lastEle;
         $data->baggage_allowance = $kg;
         $data->budget_code_line = $budget_line_code;
         $data->budget_code_approved = $budget_approved;

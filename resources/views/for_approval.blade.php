@@ -42,10 +42,10 @@
                                     <td>Traveler</td>
                                     <td>Company</td>
                                     <td>Destination</td>
-                                    <td>From</td>
-                                    <td>To</td>
-                                    <td>Purpose</td>
-                                    <td>Action</td>
+                                    <td width='12%'>From</td>
+                                    <td width='12%'>To</td>
+                                    <td width='15%'>Purpose</td>
+                                    <td width='280px'>Action</td>
                                     
                                 </thead>
                                 
@@ -54,7 +54,7 @@
                                     @foreach($pending_requests as $request)
                                     
                                     @if(!$request->isEmpty())
-                                    @foreach($request as $pending_request)
+                                    @foreach($request as $key => $pending_request)
                                     <tr>
                                         <td><input class="checkbox1" type="checkbox" name="array[]" value='{{$pending_request->id}}' ></td>
                                         <td>{{$pending_request->traveler_name}}</td>
@@ -62,11 +62,11 @@
                                         <td>{{$pending_request->destination}}</td>
                                         <td>{{date ("M. j, Y",strtotime($pending_request->date_from))}}</td>
                                         <td>{{date ("M. j, Y",strtotime($pending_request->date_to))}}</td>
-                                        <td>{{$pending_request->purpose_of_travel}}</td>
+                                        <td width='15%'>{{$pending_request->purpose_of_travel}}</td>
                                         <td>
-                                            <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
-                                            <a href="approve-request/{{$pending_request->id}}" class="btn btn-success" onclick='show()'> <span class="pe-7s-check"></span>Approve</a>
-                                            <a href="#disapprove{{$pending_request->id}}"   data-toggle="modal" class="btn btn-danger"><span class="pe-7s-close"></span>Disapprove</a>
+                                        <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" target="_{{$key+1}}"><i class='pe-7s-monitor'></i> View</a>
+                                            <a href="approve-request/{{$pending_request->id}}" class="btn btn-success btn-sm" onclick='show()'> <span class="pe-7s-check"></span>Approve</a>
+                                            <a href="#disapprove{{$pending_request->id}}"   data-toggle="modal" class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>Disapprove</a>
                                             @include('modal')
                                         </td>
                                     </tr>

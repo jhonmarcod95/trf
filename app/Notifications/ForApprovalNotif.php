@@ -50,7 +50,7 @@ class ForApprovalNotif extends Notification
         ->line('Request for Approval.')
         ->line('Traveler Name: '.$this->data->traveler_name)
         ->line('Destination : '.$this->new_destination)
-        ->line('Please Click the link Provided for faster transaction')
+        ->line('Please click the link provided for faster transaction')
         ->action('Pending For Approval', url('/for-approval'))
         ->line('Thank you for using our application!');
     }

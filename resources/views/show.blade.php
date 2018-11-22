@@ -32,10 +32,10 @@
                                 <td>Traveler</td>
                                 <td>Company</td>
                                 <td>Destination</td>
-                                <td>From</td>
-                                <td>To</td>
-                                <td>Purpose</td>
-                                <td>Action</td>
+                                <td width='12%'>From</td>
+                                <td width='12%'>To</td>
+                                <td width='20%'>Purpose</td>
+                                <td width='200px'>Action</td>
                             </thead>
                             <tbody>
                                 @foreach($pending_requests as $pending_request)
@@ -47,13 +47,13 @@
                                     <td>{{date ("M. j, Y",strtotime($pending_request->date_to))}}</td>
                                     <td>{{$pending_request->purpose_of_travel}}</td>
                                     <td>
-                                        <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl" onclick='show()'>
+                                        <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" onclick='show()'>
                                             <i class='pe-7s-edit'></i> Edit
                                         </a>
                                         {{-- <a href="#cancel-request/{{$pending_request->id}}"  data-toggle="modal"  data-target="#exampleModalCenter"  class="btn btn-danger"><span class="pe-7s-close"></span>
                                             Cancel
                                         </a> --}}
-                                        <a href="#cancel_request{{$pending_request->id}}"  data-toggle="modal"  class="btn btn-danger"><span class="pe-7s-close"></span>
+                                        <a href="#cancel_request{{$pending_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
                                             Cancel
                                         </a>
                                         @include('modal')
