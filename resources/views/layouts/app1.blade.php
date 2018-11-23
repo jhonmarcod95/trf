@@ -213,41 +213,45 @@
                             <i class="pe-7s-cloud-upload"></i>
                             <p>Log Out</p>
                         </a>
+                        @if(Auth::user())
                         <form id="logout-form"  action="{{ route('logout') }}"  method="POST" style="display: none;">
-                            {{ csrf_field() }}</form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- Modal -->
-            
-            <div class="main-panel">
-                <nav class="navbar navbar-default navbar-fixed">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <!--   Core JS Files   -->
-                        <script src="{{ asset('/inside_css/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
-                        <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-                        <script src="{{ asset('/inside_css/assets/js/light-bootstrap-dashboard.js?v=1.4.0')}}"></script>
-                        <script src="{{ asset('/login_css/jquery.js')}}"></script>
-                        <script src="{{ asset('/login_css/choosen.js')}}"></script> 
-                        @yield('content')
-                        <script type = "text/javascript">
-                            function show() {
-                                document.getElementById("myDiv").style.display="block";
-                            }
-                            function logout(){
-                                event.preventDefault();
-                                document.getElementById('logout-form').submit();
-                            }
-                        </script>
-                    </body>
-                    </html>
+                            {{ csrf_field() }}
+                        </form>
+                        @endif
+                    </li>
                     
+                </ul>
+            </div>
+        </div>
+        <!-- Modal -->
+        
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!--   Core JS Files   -->
+                    <script src="{{ asset('/inside_css/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
+                    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+                    <script src="{{ asset('/inside_css/assets/js/light-bootstrap-dashboard.js?v=1.4.0')}}"></script>
+                    <script src="{{ asset('/login_css/jquery.js')}}"></script>
+                    <script src="{{ asset('/login_css/choosen.js')}}"></script> 
+                    @yield('content')
+                    <script type = "text/javascript">
+                        function show() {
+                            document.getElementById("myDiv").style.display="block";
+                        }
+                        function logout(){
+                            event.preventDefault();
+                            document.getElementById('logout-form').submit();
+                        }
+                    </script>
+                </body>
+                </html>
+                

@@ -9,6 +9,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('logout', function(){
+    return redirect('/');
+  });
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,9 +20,7 @@ Auth::routes();
 Route::get('/home', function () {
     return view('welcome');
 });
-Route::get('/logout', function () {
-    return view('welcome');
-});
+
 
 Route::group( ['middleware' => 'auth'], function()
 {

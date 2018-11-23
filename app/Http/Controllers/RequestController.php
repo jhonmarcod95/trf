@@ -40,7 +40,7 @@ class RequestController extends Controller
         else{
             $companies = Company::orderBy('company_name','asc')->get(['id','company_name']);
             $destinations = Destination::orderBy('destination','asc')->get(['id','destination','code']);
-            return view('form',array
+            return view('form1',array
             (
                 'companies' => $companies,
                 'destinations' => $destinations
@@ -81,8 +81,9 @@ class RequestController extends Controller
                 
                 $companies = Company::orderBy('company_name','asc')->get(['id','company_name']);
                 $destinations = Destination::orderBy('destination','asc')->get(['id','destination','code']);
-                return view('form',array
+                return view('form1',array
                 (
+                    
                     'companies' => $companies,
                     'destinations' => $destinations
                 )); 
@@ -183,7 +184,7 @@ class RequestController extends Controller
             'company_name' => 'required',
             'date_request' => 'required',
             'birthdate' => 'required',
-            'contact_number' => 'required|min:11|max:11',
+            'contact_number' => 'required|digits:10|numeric',
             'purpose_of_travel' => 'required|max:255',
             'traveler_name' => 'required',
             'destination' => 'required',
@@ -195,6 +196,17 @@ class RequestController extends Controller
             'appointment' => 'required',
             ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
         );
+        foreach($request->input('origin') as $key => $origin)
+        {
+            if($key != 0)
+            {
+                $new_key = $key - 1 ;
+                $this->validate(request(),[
+                    'date_of_travel.'.$key => 'after_or_equal:date_of_travel.'.$new_key,
+                    ] ,['date_of_travel.'.$key.'.after_or_equal' => 'Please Check Date of Travel Bellow. The Origin Date must be Equal or After the Next Date/s',]
+                );
+            }
+        }
         $data = new User_request;
         $user_id=auth()->user()->id;
         $company_name=$request->input('company_name');
@@ -235,7 +247,6 @@ class RequestController extends Controller
         $data->traveler_name = $traveler_name;
         $data->approved_by = 0;
         $data->save();
-        
         $id = User_request::all()->last();
         foreach($origins as $key => $origin)
         {
@@ -256,7 +267,6 @@ class RequestController extends Controller
             
             $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
         }
-        
         $user->notify(new RequestNotif($data, $new_destination));
         
         return redirect('/pending-request');
@@ -325,6 +335,33 @@ class RequestController extends Controller
     }
     public function save_edit_request(Request $request, $id)
     {
+        $this->validate(request(),[
+            'company_name' => 'required',
+            'date_request' => 'required',
+            'birthdate' => 'required',
+            'contact_number' => 'required|digits:10|numeric',
+            'purpose_of_travel' => 'required|max:255',
+            'traveler_name' => 'required',
+            'destination' => 'required',
+            'kg' => 'required',
+            'origin.*' => 'required',
+            'destinationall.*' => 'required|different:origin.*',
+            'budget_line_code' => 'required',
+            'date_of_travel.*' => 'required|after_or_equal:date_of_travel.*',
+            'appointment' => 'required',
+            ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
+        );
+        foreach($request->input('origin') as $key => $origin)
+        {
+            if($key != 0)
+            {
+                $new_key = $key - 1 ;
+                $this->validate(request(),[
+                    'date_of_travel.'.$key => 'after_or_equal:date_of_travel.'.$new_key,
+                    ] ,['date_of_travel.'.$key.'.after_or_equal' => 'Please Check Date of Travel Bellow. The Origin Date must be Equal or After the Next Date/s',]
+                );
+            }
+        }
         $data =  User_request::find($id); 
         $company_name=$request->input('company_name');
         $date_request=$request->input('date_request');
@@ -333,8 +370,6 @@ class RequestController extends Controller
         $traveler_name=$request->input('traveler_name');
         $contact_number=$request->input('contact_number');
         $destination=$request->input('destination');
-        $date_from=$request->input('date_from');
-        $date_to=$request->input('date_to');
         $baggage=$request->input('baggage');
         $kg=$request->input('kg');
         $budget_line_code=$request->input('budget_line_code');
@@ -346,15 +381,16 @@ class RequestController extends Controller
         $destinationalls=$request->input('destinationall');
         $date_of_travels=$request->input('date_of_travel');
         $appointments=$request->input('appointment');
-        
+        $firstEle = $date_of_travels[0];
+        $lastEle = $date_of_travels[count($date_of_travels) - 1];
         $data->company_name = $company_name;
         $data->request_date = $date_request;
         $data->birth_date = $birthdate;
         $data->purpose_of_travel = $purpose_of_travel;
         $data->contact_number = $contact_number;
         $data->destination = $destination;
-        $data->date_from = $date_from;
-        $data->date_to = $date_to;
+        $data->date_from = $firstEle;
+        $data->date_to = $lastEle;
         $data->baggage_allowance = $kg;
         $data->budget_code_line = $budget_line_code;
         $data->budget_code_approved = $budget_approved;
@@ -363,19 +399,13 @@ class RequestController extends Controller
         $data->cost_center = $cost_center;
         $data->traveler_name = $traveler_name;
         $data->save();
-        
-        
         $delete_data = User_destination::where('request_id',$id)->get();
-        
         foreach($delete_data as $delete_d){
             $delete_data1 = User_destination::find($delete_d->id);
             $delete_data1->delete();
         }
-        
-        
         foreach($origins as $key => $origin)
         {   
-            
             $data1 = new User_destination;
             $data1->origin = $origin;
             $data1->destination = $destinationalls[$key];
@@ -465,22 +495,22 @@ class RequestController extends Controller
         
         if($request->array)
         {
-                foreach($request->array as $arr)
-                {
-                    $users_request = User_request::findOrFail($arr);
-                    $user_id=$users_request->requestor_id;
-                    $user = User::findOrFail($user_id);
-                    if($users_request) {
-                        $users_request->status = 2;
-                        $users_request->approved_by = auth()->user()->id;
-                        $users_request->save();
-                    }
-                    $destination_name = Destination::where('id','=',$users_request->destination)->get();
-                    $new_destination = $destination_name[0]->destination;
-                    $user->notify(new ApproveNotif($users_request,$new_destination));
+            foreach($request->array as $arr)
+            {
+                $users_request = User_request::findOrFail($arr);
+                $user_id=$users_request->requestor_id;
+                $user = User::findOrFail($user_id);
+                if($users_request) {
+                    $users_request->status = 2;
+                    $users_request->approved_by = auth()->user()->id;
+                    $users_request->save();
                 }
-                $request->session()->flash('status', 'Request has been Approved!');
-                return redirect('/for-approval');
+                $destination_name = Destination::where('id','=',$users_request->destination)->get();
+                $new_destination = $destination_name[0]->destination;
+                $user->notify(new ApproveNotif($users_request,$new_destination));
+            }
+            $request->session()->flash('status', 'Request has been Approved!');
+            return redirect('/for-approval');
         }
         else
         {
