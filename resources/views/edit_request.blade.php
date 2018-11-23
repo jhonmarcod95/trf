@@ -10,6 +10,7 @@
                             <h4 class="title">EDIT TRAVEL REQUEST </h4>
                             <small><i>LFHR-F-001 rev. 00 Effective date: 01 July 2013</i></small>
                         </div>
+                        @include('error')
                         <div class="content">
                             <form method='POST' action='' target="" onsubmit='show()'>
                                 {{ csrf_field() }}

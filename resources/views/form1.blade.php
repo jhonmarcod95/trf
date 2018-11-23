@@ -164,7 +164,7 @@
                                         <td colspan='2'><input id='appointment2' class="form-control" type='time'  value="{{ old('appointment.1') }}" name='appointment[]' required/></td>
                                     </tr>
                                 </table>
-                                <button type="button" class='btn btn-success addmore'>+ add new origin</button><br>  
+                                <button type="button" id='add_more' class='btn btn-success addmore'>+ add new origin</button><br>  
                                 <div class="header">
                                     <small>**HRD to file Approved Official Business Authorization (OBA) in Payroll Clerk File</small>
                                     <br><small>***ETD Origin minimum of two (2) hours from appointment time at destination</small>
@@ -194,6 +194,10 @@
                                     
                                     
                                     var count = $('table tr').length;
+                                    if( count == 10)
+                                    {
+                                        document.getElementById("add_more").disabled = true;
+                                    }
                                     var data = "<tr id='data' class='case'>";
                                         data += "<td style='width:30%;'><select  name='origin[]' class='chosen form-control'  autocomplete='off'  ><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td style='width:30%;'><select  name='destinationall[]'  class='form-control chosen'  data-live-search='true' autocomplete='off' ><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input  onkeydown='return false'   class='form-control travel_date' type='date' min='"+ maxDate + "' name='date_of_travel[]' required/></td><td colspan='1'><input class='form-control' type='time' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='{{URL::asset('login_css/remove.png')}}'/></a></td></tr>";
                                         $('#form_table').append(data);
@@ -202,6 +206,7 @@
                                     });
                                     $('#form_table').on('click', '.removeButton', function(){
                                         $("#data").remove();
+                                        document.getElementById("add_more").disabled = false;
                                     });
                                     function addZero(i) {
                                         if (i < 10) {

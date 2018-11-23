@@ -26,7 +26,6 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="content table-responsive table-full-width">
-                        
                         <table id="example" class="table table-striped table-bordered" style="width:100%;">
                             <thead>
                                 <td>Traveler</td>

@@ -189,11 +189,12 @@ class RequestController extends Controller
             'traveler_name' => 'required',
             'destination' => 'required',
             'kg' => 'required',
-            'origin.*' => 'required',
+            'origin' => 'required|array|between:2,10',
+            'destinationall' => 'required|array|between:2,10',
             'destinationall.*' => 'required|different:origin.*',
             'budget_line_code' => 'required',
-            'date_of_travel.*' => 'required|after_or_equal:date_of_travel.*',
-            'appointment' => 'required',
+            'date_of_travel' => 'required|array|between:2,10',
+            'appointment' => 'required|array|between:2,10',
             ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
         );
         foreach($request->input('origin') as $key => $origin)
@@ -268,7 +269,6 @@ class RequestController extends Controller
             $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
         }
         $user->notify(new RequestNotif($data, $new_destination));
-        
         return redirect('/pending-request');
     }
     public function approve_request(Request $request, $id)
@@ -344,11 +344,12 @@ class RequestController extends Controller
             'traveler_name' => 'required',
             'destination' => 'required',
             'kg' => 'required',
-            'origin.*' => 'required',
+            'origin' => 'required|array|between:2,10',
+            'destinationall' => 'required|array|between:2,10',
             'destinationall.*' => 'required|different:origin.*',
             'budget_line_code' => 'required',
-            'date_of_travel.*' => 'required|after_or_equal:date_of_travel.*',
-            'appointment' => 'required',
+            'date_of_travel' => 'required|array|between:2,10',
+            'appointment' => 'required|array|between:2,10',
             ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
         );
         foreach($request->input('origin') as $key => $origin)
@@ -425,7 +426,7 @@ class RequestController extends Controller
         }
         
         $user->notify(new EditRequestNotif($data, $new_destination));
-        
+        $request->session()->flash('status', ''.$data->traveler_name.' Request has been Updated');
         return redirect('/pending-request');
         
     }
