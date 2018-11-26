@@ -39,6 +39,7 @@
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <td><input type="checkbox" id="select_all" /></td>
+                                    <td>Requestor</td>
                                     <td>Traveler</td>
                                     <td>Company</td>
                                     <td>Destination</td>
@@ -57,6 +58,7 @@
                                     @foreach($request as $key => $pending_request)
                                     <tr>
                                         <td><input class="checkbox1" type="checkbox" name="array[]" value='{{$pending_request->id}}' ></td>
+                                        <td>{{$pending_request->name}}</td>
                                         <td>{{$pending_request->traveler_name}}</td>
                                         <td>{{$pending_request->company_name}}</td>
                                         <td>{{$pending_request->destination}}</td>

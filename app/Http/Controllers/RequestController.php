@@ -107,7 +107,8 @@ class RequestController extends Controller
             foreach($user_approver as $approver){
                 $pending_request= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
                 ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-                ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
+                ->leftJoin('users', 'user_requests.requestor_id', '=', 'users.id')
+                ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
                 ->where('requestor_id','=', $approver->user_id)
                 ->where('status','=','1')
                 ->get();
@@ -156,7 +157,8 @@ class RequestController extends Controller
     {
         $data_list= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-        ->select('user_requests.*', 'destinations.destination', 'companies.company_name')
+        ->leftJoin('users', 'user_requests.requestor_id', '=', 'users.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
         ->where('user_requests.id','=',$id)
         ->get();
         
@@ -190,12 +192,16 @@ class RequestController extends Controller
             'destination' => 'required',
             'kg' => 'required',
             'origin' => 'required|array|between:2,10',
+            'origin.*' => 'required',
             'destinationall' => 'required|array|between:2,10',
             'destinationall.*' => 'required|different:origin.*',
             'budget_line_code' => 'required',
             'date_of_travel' => 'required|array|between:2,10',
             'appointment' => 'required|array|between:2,10',
-            ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
+            ] ,[
+            'destinationall.*.different'    => 'Destination and Origin must be different.',
+            'destinationall.*.required'    => 'Please check destination bellow. Destination is required',
+            'origin.*.required'    => 'Please check origin bellow. Destination is required',]
         );
         foreach($request->input('origin') as $key => $origin)
         {

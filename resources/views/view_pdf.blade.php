@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{ asset('/login_css/images/icons/logo.ico')}}">
-    
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>New-Travel-Request</title>
     <style>
@@ -65,10 +64,17 @@
         </tr>
         <tr>
             <td colspan='2'  width='50%' class="aligntop">
+                Request By: {{ $data_list[0]->name}}
+            </td>
+            <td colspan='2'  class="aligntop">
+                Destination: {{ $data_list[0]->destination}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'  width='50%' class="aligntop">
                 Purpose of Travel:  {{ $data_list[0]->purpose_of_travel}}
             </td>
             <td colspan='2'  class="aligntop">
-                Destination: {{ $data_list[0]->destination}}<br>
                 Baggage Allowance: {{ $data_list[0]->baggage_allowance}} Kg
             </td>
         </tr>
