@@ -7,7 +7,7 @@
                 {{ csrf_field() }}
                 
                 <span class="login100-form-avatar">
-                    <img src="{{URL::asset('/images/logo.jpg')}}" alt="AVATAR">
+                    <img src="{{URL::asset('/images/logo.png')}}" alt="AVATAR">
                     
                 </span>
                 <div class="wrap-input100 validate-input m-t-15 m-b-35" data-validate = "Enter username">
