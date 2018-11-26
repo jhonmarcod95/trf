@@ -13,7 +13,7 @@
         html, body {
             background-color: #fff;
             color: #636b6f;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Nunito', sans-serif;  
             font-weight: 200;
             height: 100vh;
             margin: 0;
@@ -115,8 +115,7 @@
                 }
                 function logout(){
                                 event.preventDefault();
-                                document.getElementById('logout-form').submit();
-                            }
+                                document.getElementById('logout-form').submit();}
             </script>
         </div>
     </div>
