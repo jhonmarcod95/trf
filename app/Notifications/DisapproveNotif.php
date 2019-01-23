@@ -26,7 +26,6 @@ class DisapproveNotif extends Notification
         $this->new_destination =$new_destination;
         $this->remarks =$remarks;
     }
-
     /**
      * Get the notification's delivery channels.
      *
@@ -37,7 +36,6 @@ class DisapproveNotif extends Notification
     {
         return ['mail'];
     }
-
     /**
      * Get the mail representation of the notification.
      *
@@ -56,7 +54,6 @@ class DisapproveNotif extends Notification
         ->action('Cancelled Request', url('/cancelled-request'))
         ->line('Thank you for using our application!');
     }
-
     /**
      * Get the array representation of the notification.
      *

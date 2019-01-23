@@ -5,10 +5,8 @@
         <div class="wrap-login100 p-t-15 p-b-50">
             <form class="login100-form validate-form" method="POST" action="">
                 {{ csrf_field() }}
-                
                 <span class="login100-form-avatar">
                     <img src="{{URL::asset('/images/logo.png')}}" alt="AVATAR">
-                    
                 </span>
                 <div class="wrap-input100 validate-input m-t-15 m-b-35" data-validate = "Enter username">
                     <input id="email" type="email"class="input100" name="email" value="{{ old('email') }}" required autofocus>

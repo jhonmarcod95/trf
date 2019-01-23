@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
             'birth_date' => '19960101',
             'contact_number' => '00000000000',
             'employee_id' => '000',
-            'company_id' => '1',
+            'company_name' => '1',
             'register' => '1',
             'role' => '1',
             'activate' => '1',

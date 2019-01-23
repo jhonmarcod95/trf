@@ -36,8 +36,6 @@
                                         Date Request:
                                         <input type='date'  class="form-control"  name='date_request'  value="{{ date('Y-m-d') }}"  autocomplete="off"  readonly>
                                     </div>
-                                    
-                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
@@ -64,7 +62,6 @@
                                             <option value='B'>B</option>
                                             <option value='C'>C</option>
                                             <option value='D'>D</option>
-                                            
                                         </select> --}}
                                         <input type='text' class="form-control"  value="{{ old('purpose_of_travel') }}" name='purpose_of_travel'   autocomplete="off"  required>
                                     </div>

@@ -101,8 +101,7 @@
                 <a href="{{ asset('/manual.pdf') }}" target="_">Manual</a>
                 @if (Route::has('login'))
                 @auth
-                <a href="{{ route('logout') }}"  onclick="show(); logout();">
-                Log Out</a>
+                <a href="{{ route('logout') }}"  onclick="show(); logout();">Log Out</a>
                 <form id="logout-form" action="{{ route('logout') }}"  method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
@@ -110,12 +109,15 @@
                 @endif
             </div>
             <script type = "text/javascript">
-                function show() {
+                function show()
+                {
                     document.getElementById("myDiv").style.display="block";
                 }
-                function logout(){
-                                event.preventDefault();
-                                document.getElementById('logout-form').submit();}
+                function logout()
+                {
+                    event.preventDefault();
+                    document.getElementById('logout-form').submit();
+                }
             </script>
         </div>
     </div>

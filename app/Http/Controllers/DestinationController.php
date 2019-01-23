@@ -46,7 +46,7 @@ class DestinationController extends Controller
         $data->destination = $request->input('destination');
         $data->code = $request->input('code');
         $data->save();
-        $request->session()->flash('status', ''.$data->name.' Successfully Added!');
+        $request->session()->flash('message', ''.$data->name.' Successfully Added!');
         return redirect('/destination-list');
     }
 }

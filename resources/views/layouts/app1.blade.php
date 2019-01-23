@@ -5,7 +5,6 @@
     <link rel="icon" type="image/png" href="{{ asset('/login_css/images/icons/logo.ico')}}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Bootstrap core CSS     -->
-    
     <link href="{{ asset('/login_css/assets/css/bootstrap.min.css')}}" rel="stylesheet" />
     <!-- Animation library for notifications   -->
     <link href="{{ asset('/login_css/assets/css/animate.min.css')}}" rel="stylesheet'"/>
@@ -19,7 +18,6 @@
     <script type="text/javascript" src="{{ asset('/login_css/jquery-2.1.1.min.js')}}"></script>
     <script src="{{ asset('/login_css/jquery-ui.min.js')}}"></script>
     <script src="{{ asset('jquery.min.js')}}"></script>
-	
     <style>
         .content input[type="search"] {
             width:300px;
@@ -88,6 +86,18 @@
         {
             float: right;
         }
+        .logo1
+        {
+            color: white;
+        }
+        .logo1:hover
+        {
+            cursor : pointer;
+            color: #FFFFFF;
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.23);
+            
+        }
         /* The alert message box */
         
         /* The close button */
@@ -101,7 +111,7 @@
     <div class="wrapper">
         <div class="sidebar"  data-image="{{ asset('/login_css/assets/img/sidebar-6.jpg')}}">
             <div class="sidebar-wrapper">
-                <a href="{{ url('/') }}" style='color:white;'  onclick = "show()">
+                <a  href="{{ url('/') }}" class='logo1'  onclick = "show()">
                     <div class="logo">
                         <img class="rounded-circle" src="{{URL::asset('/images/front-logo.png')}}" alt="profile Pic" height="40" width="45" >
                         Travel Portal
@@ -219,7 +229,6 @@
                         </form>
                         @endif
                     </li>
-                    
                 </ul>
             </div>
         </div>
