@@ -203,6 +203,8 @@ class RequestController extends Controller
             'destinationall.*.required'    => 'Please check destination bellow. Destination is required',
             'origin.*.required'    => 'Please check origin bellow. Destination is required',]
         );
+
+        
         foreach($request->input('origin') as $key => $origin)
         {
             if($key != 0)
@@ -267,11 +269,11 @@ class RequestController extends Controller
         }
         $user = auth()->user();
         $destination_name = Destination::where('id','=',$data->destination)->get();
+        
         $new_destination = $destination_name[0]->destination;
         $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
-        if($approver1){
+        if(!$approver1->isEmpty()){
             $approver= User::where('id','=',$approver1[0]->approver_id)->get();
-            
             $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
         }
         $user->notify(new RequestNotif($data, $new_destination));
@@ -425,12 +427,10 @@ class RequestController extends Controller
         $destination_name = Destination::where('id','=',$data->destination)->get();
         $new_destination = $destination_name[0]->destination;
         $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
-        if($approver1){
+        if(!$approver1->isEmpty()){
             $approver= User::where('id','=',$approver1[0]->approver_id)->get();
-            
             $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
         }
-        
         $user->notify(new EditRequestNotif($data, $new_destination));
         $request->session()->flash('status', ''.$data->traveler_name.' Request has been Updated');
         return redirect('/pending-request');

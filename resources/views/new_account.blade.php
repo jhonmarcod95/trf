@@ -48,11 +48,11 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         User Type
-                                        <select id="user_type" class="form-control" name="user_type" >
-                                            <option ></option>
-                                            <option value='1'>ADMIN</option>
-                                            <option value='2'>USER</option>
-                                            <option value='3'>APPROVER</option>
+                                        <select id="user_type" class="chosen form-control" placeholder="" name="user_type" >
+                                            <option >Select Role</option>
+                                            @foreach($roles as $role)
+                                            <option value='{{$role->id}}'>{{$role->role}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                     <div class="form-group">
                                         Approver
                                         <select  name='approver'  class="chosen form-control" width='100%'  autocomplete="off"  >
-                                            <option value=''>Choose Approver</option>
+                                            <option value=''>Select Approver</option>
                                             @foreach($accounts as $account)
                                             <option value='{{$account->id}}'>{{$account->name}}</option>
                                             @endforeach

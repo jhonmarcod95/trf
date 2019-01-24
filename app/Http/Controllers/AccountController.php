@@ -97,10 +97,12 @@ class AccountController extends Controller
     {
         $accounts = User::where('role','=','3')->orderBy('name','asc')->get();
         $companies = Company::orderBy('company_name','asc')->get(['id','company_name']);
+        $roles = Role::orderBy('id','asc')->get();
         return view('new_account',array
         (
             'companies' => $companies,
-            'accounts' => $accounts
+            'accounts' => $accounts,
+            'roles' => $roles
         )); 
     }
     public function employee_list()
