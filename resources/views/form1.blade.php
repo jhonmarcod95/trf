@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         Contact Number:
-                                        <input id="contact_number" type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
+                                        <input id="contact_number" placeholder='965123xxxx' type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
                                     </div>
                                     <div class="col-md-2">
                                         Birthdate:
