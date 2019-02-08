@@ -103,7 +103,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         Approver 
                                         <select  name='approver'  class="chosen form-control" width='100%'  autocomplete="off"  >
@@ -115,11 +115,19 @@
                                             @foreach($accounts as $account)
                                             <option value='{{$account->id}}'>{{$account->name}}</option>
                                             @endforeach
-                                        </select></div>
+                                        </select>
                                     </div>
                                 </div>
-                                
-                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Department 
+                                        <select id='department'  name='department_name'  class="chosen form-control" width='100%'  autocomplete="off"  required>
+                                            @foreach($departments as $department)
+                                            <option value='{{$department->id}}'  {{ ($department->id == auth()->user()->department ? "selected":"") }}>{{$department->department_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <button type="submit" class="btn btn-info btn-fill pull-right">Save </button>
                                 </div>

@@ -89,7 +89,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         Approver
                                         <select  name='approver'  class="chosen form-control" width='100%'  autocomplete="off"  >
@@ -97,39 +97,54 @@
                                             @foreach($accounts as $account)
                                             <option value='{{$account->id}}'>{{$account->name}}</option>
                                             @endforeach
-                                        </select></div>
+                                        </select>
                                     </div>
                                 </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">Password
-                                            <input id="password" type="password" class="form-control" name="password" required>
-                                            <p style="font-size:9px;color:red">Passwords must be at least 8 characters long.
-                                                <br>Passwords must contain:
-                                                <br> minimum of 1 lower case letter [a-z] 
-                                                <br> minimum of 1 upper case letter [A-Z] 
-                                                <br> minimum of 1 numeric character [0-9]
-                                            </p>
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Department
+                                        <select  name='department'  class="chosen form-control" width='100%'  autocomplete="off"  >
+                                            <option value=''>Select Department</option>
+                                            @foreach($departments as $department)
+                                            <option value='{{$department->id}}'>{{$department->department_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            Confirm Password
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Register </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">Password
+                                        <input id="password" type="password" class="form-control" name="password" required>
+                                        <p style="font-size:9px;color:red">Passwords must be at least 8 characters long.
+                                            <br>Passwords must contain:
+                                            <br> minimum of 1 lower case letter [a-z] 
+                                            <br> minimum of 1 upper case letter [A-Z] 
+                                            <br> minimum of 1 numeric character [0-9]
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        Confirm Password
+                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style='float:right;'>
+                                    
+                                        <div class="form-group">
+                                                <button type="submit" class="btn btn-info btn-fill pull-right">Register </button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script >
     $(".chosen").chosen();

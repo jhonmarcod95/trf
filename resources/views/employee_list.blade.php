@@ -35,6 +35,7 @@
                             <td>Name</td>
                             <td>Company</td>
                             <td>Role</td>
+                            <td>Department</td>
                             <td>Email</td>
                             <td>Action</td>
                         </thead>
@@ -43,8 +44,9 @@
                             <tr>
                                 <td>{{$account->employee_id}}</td>
                                 <td>{{$account->name}}</td>
-                                <td>{{$account->company_name}}</td>
+                                <td><span title='{{$account->company_name}}'>{{str_limit($account->company_name, 15)}}</span></td>
                                 <td>{{$account->role}}</td>
+                                <td>{{$account->department_name}}</td>
                                 <td>{{$account->email}}</td>
                                 @if($account->id == Auth::user()->id)
                                 <td>

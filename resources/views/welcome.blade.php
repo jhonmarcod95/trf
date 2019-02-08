@@ -107,6 +107,12 @@
                 </form>
                 @endauth
                 @endif
+                
+                @if (Auth::check())
+                @else
+                {{isset($user)}}
+                <a href="{{ url('/sign-up') }}"  onclick = "show()" >Sign Up</a>
+                @endif
             </div>
             <script type = "text/javascript">
                 function show()

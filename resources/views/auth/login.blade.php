@@ -17,7 +17,7 @@
                     <span class="focus-input100" data-placeholder="Password"></span>
                 </div>
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" >
+                    <button class="login100-form-btn" type='submit'  >
                         Login
                     </button>
                     @if ($errors->has('email'))

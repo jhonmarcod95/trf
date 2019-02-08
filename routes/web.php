@@ -20,7 +20,8 @@ Auth::routes();
 Route::get('/home', function () {
     return view('welcome');
 });
-
+Route::get('/sign-up', 'AccountController@sign_up');
+Route::post('/sign-up', 'AccountController@save_sign_up');
 
 Route::group( ['middleware' => 'auth'], function()
 {
@@ -40,6 +41,7 @@ Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::get('/pending-request', 'RequestController@pending_list');
 Route::get('/edit-request/{id}', 'RequestController@edit_request');
 Route::post('/edit-request/{id}', 'RequestController@save_edit_request');
+Route::post('/save-edit-profile', 'AccountController@save_edit_profile');
 Route::get('/cancel-request/{id}', 'RequestController@cancel_request');
 Route::get('/user-account', 'AccountController@view_account');
 Route::post('/cancel-request/{id}', 'RequestController@save_cancel_request');

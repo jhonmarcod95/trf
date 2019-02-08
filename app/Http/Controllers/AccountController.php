@@ -5,6 +5,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
+use App\EmployeeHr;
 use IlluminateSupportFacadesValidator;
 use IlluminateFoundationBusDispatchesJobs;
 use IlluminateRoutingController as BaseController;
@@ -18,6 +19,9 @@ use App\User;
 use App\User_approver;
 use App\User_request;
 use App\Role;
+use App\Department;
+use DB;
+use App\Employee;
 class AccountController extends Controller
 {
     //
@@ -97,10 +101,12 @@ class AccountController extends Controller
     {
         $accounts = User::where('role','=','3')->orderBy('name','asc')->get();
         $companies = Company::orderBy('company_name','asc')->get(['id','company_name']);
+        $departments = Department::orderBy('department_name','asc')->get();
         $roles = Role::orderBy('id','asc')->get();
         return view('new_account',array
         (
             'companies' => $companies,
+            'departments' => $departments,
             'accounts' => $accounts,
             'roles' => $roles
         )); 
@@ -109,7 +115,8 @@ class AccountController extends Controller
     {
         $accounts = User::leftJoin('companies', 'users.company_name', '=', 'companies.id')
         ->leftJoin('roles', 'users.role', '=', 'roles.id')
-        ->select('users.*', 'companies.company_name', 'roles.role')
+        ->leftJoin('departments', 'users.department', '=', 'departments.id')
+        ->select('users.*', 'companies.company_name', 'roles.role', 'departments.department_name')
         ->get();
         return view('employee_list')->with('accounts', $accounts);
     }
@@ -130,12 +137,13 @@ class AccountController extends Controller
     public function save_new_account(Request $request)
     {
         $this->validate(request(),[
-            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'name' => 'required|string|max:255',
             'user_type' => 'required',
             'employee_id' => 'required|string|numeric|unique:users',
             'contact_number' => 'required|string|numeric',
             'birth_date' => 'required',
             'company_name' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|confirmed',
             ]    
@@ -145,6 +153,7 @@ class AccountController extends Controller
         $data->name =$request->name;
         $data->email =$request->email;
         $data->role =$request->user_type;
+        $data->department =$request->department;
         $data->employee_id =$request->employee_id;
         $data->contact_number =$request->contact_number;
         $data->birth_date =$request->birth_date;
@@ -200,6 +209,7 @@ class AccountController extends Controller
         $users = User::findOrFail($id);
         $approver = User_approver::leftJoin('users', 'user_approvers.approver_id', '=', 'users.id')
         ->where('user_id','=',$id)->first();
+        $departments = Department::orderBy('department_name','asc')->get();
         if($approver!=null){
             $accounts = User::where('role','=','3')
             ->where('id','!=',$approver->approver_id)
@@ -225,12 +235,13 @@ class AccountController extends Controller
             'users' => $users,
             'accounts' => $accounts,
             'company_edit' => $company_edit,
+            'departments' => $departments,
         )); 
     }
     public function save_edit_account(Request $request, $id)
     {
         $this->validate(request(),[
-            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'name' => 'required|string|max:255',
             'user_type' => 'required',
             'employee_id' => 'required|string|numeric',
             'contact_number' => 'required|string|numeric',
@@ -286,8 +297,12 @@ class AccountController extends Controller
         $users =User::findOrFail($id);
         $approver = User_approver::leftJoin('users', 'user_approvers.approver_id', '=', 'users.id')
         ->where('user_id','=',$id)->first();
-        $company_edit= Company::findOrFail($users->company_name);
+        $company_edit = Company::findOrFail($users->company_name);
+        $department = Department::findOrFail($users->department);
         $role= Role::findOrFail($users->role);
+        $departments = Department::orderBy('department_name','asc')->get();
+        $companies = Company::orderBy('company_name','asc')->get();
+        $accounts = User::where('role','=','3')->orderBy('name','asc')->get();
         if(auth()->user()->role == 3)
         {
             $requestor_list=User_approver::leftJoin('users', 'user_approvers.user_id', '=', 'users.id')
@@ -297,6 +312,11 @@ class AccountController extends Controller
                 'users' => $users,
                 'company_edit' => $company_edit,
                 'approver' => $approver,
+                'department' => $department,
+                'departments' => $departments,
+                'companies' => $companies,
+                'accounts' => $accounts,
+
             )); 
         }
         else
@@ -307,7 +327,128 @@ class AccountController extends Controller
                 'users' => $users,
                 'company_edit' => $company_edit,
                 'approver' => $approver,
+                'department' => $department,
+                'departments' => $departments,
+                'companies' => $companies,
+                'accounts' => $accounts,
             )); 
         }
+    }
+    public function save_edit_profile(Request $request)
+    {
+        $this->validate(request(),[
+            'name' => 'required|string|max:255',
+            'employee_id' => 'required|string|numeric',
+            'contact_number' => 'required|string|numeric',
+            'birth_date' => 'required',
+            'company_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            ]    
+        );
+        
+        $data =  User::find(Auth()->user()->id);
+
+        $input = $request->all();
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->employee_id = $request->employee_id;
+        $data->contact_number = $request->contact_number;
+        $data->birth_date = $request->birth_date;
+        $data->company_name = $request->company_name;
+        $data->department = $request->department_name;
+        $data->save();
+
+        
+        $data1 =  User_approver::where('user_id',Auth()->user()->id)->first();
+        if($data1!=null){
+            if($request->approver != null){
+                $data2 =  User_approver::find($data1->id);
+                $approver = $request->approver;
+                $data2->approver_id = $approver;
+                $data2->save();
+            }
+            else
+            {
+                $delete_data = User_approver::find($data1->id);
+                $delete_data->delete();
+            }
+        }
+        else
+        {
+            if($request->approver != null){
+                $data1 = new User_approver;
+                $data1->user_id = $id;
+                $data1->approver_id = $request->approver;
+                $data1->save();
+            }
+        }
+        $request->session()->flash('status', 'Your Profile Successfully Updated!');
+        return back();
+        
+    }
+    public function sign_up()
+    {
+        $accounts = User::where('role','=','3')->orderBy('name','asc')->get();
+        $companies = Company::orderBy('company_name','asc')->get(['id','company_name']);
+        $departments = Department::orderBy('department_name','asc')->get();
+        $roles = Role::orderBy('id','asc')->get();
+        return view('sign_up',array
+        (
+            'companies' => $companies,
+            'departments' => $departments,
+            'accounts' => $accounts,
+            'roles' => $roles
+        )); 
+    }
+    public function save_sign_up(Request $request)
+    {
+        $this->validate(request(),[
+            'name' => 'required|string|max:255',
+            'employee_id' => 'required|string|numeric|unique:users',
+            'contact_number' => 'required|string|numeric',
+            'birth_date' => 'required',
+            'company_name' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|confirmed',
+            ]    
+        );
+
+
+        // $employee_number_v = $request->employee_id ; OPTION 1
+        // $email_v = $request->email;
+        // $results = EmployeeHr::select('call verification(\''.$email_v.'\',\''.$employee_number_v .'\')');
+        // $results = DB::select('call verification(\'jovie.cano@amigoagro.com\',\'051168\')');
+        // dd($results);
+
+        $employee_list = Employee::leftJoin('users','employees.user_id','=','users.id')
+        ->where('users.email',$request->email)
+        ->where('employee_number',$request->employee_id)
+        ->select('users.email as employee_name','employees.employee_number')
+        ->get();
+        
+        $data = new User;
+        $data->name =$request->name;
+        $data->email =$request->email;
+        $data->role = 2;
+        $data->department =$request->department;
+        $data->employee_id =$request->employee_id;
+        $data->contact_number =$request->contact_number;
+        $data->birth_date =$request->birth_date;
+        $data->company_name =$request->company_name;
+        $data->password =bcrypt($request->password);
+        $data->register = 1;
+        $data->activate = 1;
+        
+        $data->save();
+        $id = User::all()->last();
+        if($request->approver!=null){
+            $data1 = new User_approver;
+            $data1->user_id = $id->id;
+            $data1->approver_id = $request->approver;
+            $data1->save();
+        }
+        $request->session()->flash('status', 'Your Account Successfully Registered. '.$data->email);
+        return back();
     }
 }

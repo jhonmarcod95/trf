@@ -22,7 +22,7 @@
                                         <select  name='company_name'  class="chosen1 form-control" width='100%'  autocomplete="off">
                                             <option value=''></option>
                                             @foreach($companies as $company)
-                                            <option value='{{$company->id}}' {{ (Input::old("company_name") == $company->id ? "selected":"") }}>{{$company->company_name}}</option>
+                                            <option value='{{$company->id}}' {{ (Auth::user()->company_name == $company->id ? "selected":"") }}>{{$company->company_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -40,17 +40,17 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         Traveler Name:
-                                        <input type='name' class="form-control"  value="{{ old('traveler_name') }}"  name='traveler_name' autocomplete="off"  required>
+                                        <input type='name'  class="form-control"  value="{{ Auth::user()->name }}"  name='traveler_name' autocomplete="off"  required>
                                     </div>
                                     <div class="col-md-1">
                                     </div>
                                     <div class="col-md-3">
                                         Contact Number:
-                                        <input id="contact_number" placeholder='965123xxxx' type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
+                                        <input id="contact_number" value='{{ Auth::user()->contact_number }}' placeholder='965123xxxx' type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
                                     </div>
                                     <div class="col-md-2">
                                         Birthdate:
-                                        <input id='date_birth' type='date' value="{{ old('birthdate') }}" class="form-control"  name='birthdate'   autocomplete="off"  required>
+                                        <input id='date_birth' type='date' value="{{ Auth::user()->birth_date }}" class="form-control"  name='birthdate'   autocomplete="off"  required>
                                     </div>
                                     
                                 </div>
@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         Budget Line Code:
-                                        <input type='text' class="form-control"  value="{{ old('budget_line_code') }}"  name='budget_line_code' autocomplete="off"  required>
+                                        <input type='text' class="form-control"  value="{{Auth::user()->BL}}"  name='budget_line_code' autocomplete="off"  required>
                                     </div>
                                     <div class="col-md-2">
                                         Budget Approved:
@@ -187,9 +187,6 @@
                                     day = '0' + day.toString();
                                     var maxDate = year + '-' + month + '-' + day;
                                     $('body .travel_date').attr('min', maxDate);
-                                    
-                                    
-                                    
                                     var count = $('table tr').length;
                                     if( count == 10)
                                     {

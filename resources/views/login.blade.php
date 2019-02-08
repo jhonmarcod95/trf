@@ -17,9 +17,9 @@
                     <span class="focus-input100" data-placeholder="Password"></span>
                 </div>
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type='submit' onclick = "show()" >
+                    <button class="login50-form-btn" type='submit' onclick = "show()" >
                         Login
-                    </button>
+                    </button>            
                     @if ($errors->has('email'))
                     <span class="help-block">
                         <strong style='color:red;'>{{ $errors->first('email') }}</strong>
