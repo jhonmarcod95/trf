@@ -414,7 +414,6 @@ class AccountController extends Controller
             ]    
         );
 
-
         // $employee_number_v = $request->employee_id ; OPTION 1
         // $email_v = $request->email;
         // $results = EmployeeHr::select('call verification(\''.$email_v.'\',\''.$employee_number_v .'\')');
@@ -427,28 +426,37 @@ class AccountController extends Controller
         ->select('users.email as employee_name','employees.employee_number')
         ->get();
         
-        $data = new User;
-        $data->name =$request->name;
-        $data->email =$request->email;
-        $data->role = 2;
-        $data->department =$request->department;
-        $data->employee_id =$request->employee_id;
-        $data->contact_number =$request->contact_number;
-        $data->birth_date =$request->birth_date;
-        $data->company_name =$request->company_name;
-        $data->password =bcrypt($request->password);
-        $data->register = 1;
-        $data->activate = 1;
-        
-        $data->save();
-        $id = User::all()->last();
-        if($request->approver!=null){
-            $data1 = new User_approver;
-            $data1->user_id = $id->id;
-            $data1->approver_id = $request->approver;
-            $data1->save();
+        if (!$employee_list->isEmpty())
+        {
+            $data = new User;
+            $data->name =$request->name;
+            $data->email =$request->email;
+            $data->role = 2;
+            $data->department =$request->department;
+            $data->employee_id =$request->employee_id;
+            $data->contact_number =$request->contact_number;
+            $data->birth_date =$request->birth_date;
+            $data->company_name =$request->company_name;
+            $data->password =bcrypt($request->password);
+            $data->register = 1;
+            $data->activate = 1;
+            
+            $datsa->save();
+            $id = User::all()->last();
+            if($request->approver!=null){
+                $data1 = new User_approver;
+                $data1->user_id = $id->id;
+                $data1->approver_id = $request->approver;
+                $data1->save();
+            }
+            $request->session()->flash('status', 'Your Account Successfully Registered. '.$data->email);
+            return back();
         }
-        $request->session()->flash('status', 'Your Account Successfully Registered. '.$data->email);
-        return back();
+        else
+        {
+            $request->session()->flash('notstatus', 'The information you entered is not valid! Please review your credentials.');
+            return back();
+        }
+       
     }
 }

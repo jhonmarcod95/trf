@@ -109,6 +109,14 @@
                 </div>
             </div>
             @endif
+            @if(session()->has('notstatus'))
+            <div class='row col-md-12'>
+                <div class="alert alert-danger fade in col-md-6" style='margin-left:28px;margin-bottom:10px;margin-top:10px;'>
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>  {{session()->get('notstatus')}}</strong>
+                </div>
+            </div>
+            @endif
             <form  method="POST" action="">
                 {{ csrf_field() }}
                 <div class="content">
@@ -124,7 +132,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 E-Mail
-                                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" autocomplete="off" required>
+                                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -132,7 +140,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 Employee ID
-                                                <input id="employee_id" type="text" class="form-control" name="employee_id" autocomplete="off" value="{{ old('employee_id') }}" required >
+                                                <input id="employee_id" type="text" class="form-control" name="employee_id"   value="{{ old('employee_id') }}" required >
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +148,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 Name
-                                                <input id="name" type="text" class="form-control" name="name" autocomplete="off" value="{{ old('name') }}" required >
+                                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required >
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -148,7 +156,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 Approver
-                                                <select  name='approver'  class="chosen form-control" width='100%'  autocomplete="off"  required>
+                                                <select  name='approver'  class="chosen form-control" width='100%'   required>
                                                     <option value=''>Select Approver</option>
                                                     @foreach($accounts as $account)
                                                     <option value='{{$account->id}}'{{ (old('approver') == $account->id ? "selected":"") }}>{{$account->name}}</option>
@@ -162,7 +170,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 Contact Number
-                                                <input id="contact_number" autocomplete="off" type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
+                                                <input id="contact_number"  type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -178,7 +186,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 Company
-                                                <select  name='company_name' style='width:200px'   class="chosen form-control"   autocomplete="off"  required>
+                                                <select  name='company_name' style='width:200px'   class="chosen form-control"  required>
                                                     <option value=''></option>
                                                     @foreach($companies as $company)
                                                     <option value='{{$company->id}}' {{ (old('company_name') == $company->id ? "selected":"") }}>{{$company->company_name}}</option>
@@ -191,7 +199,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 Department
-                                                <select  name='department' style='width:200px'   class="chosen form-control"   autocomplete="off"  required>
+                                                <select  name='department' style='width:200px'   class="chosen form-control"  required>
                                                     <option value=''></option>
                                                     @foreach($departments as $department)
                                                     <option value='{{$department->id}}' {{ (old('department') == $department->id ? "selected":"") }}>{{$department->department_name}}</option>
