@@ -248,6 +248,7 @@ class AccountController extends Controller
             'birth_date' => 'required',
             'company_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
+            'email' => 'unique:users,email,'.$id
             ]    
         );
         
@@ -343,11 +344,11 @@ class AccountController extends Controller
             'birth_date' => 'required',
             'company_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
+            'email' => 'unique:users,email,'.Auth()->user()->id
             ]    
         );
         
         $data =  User::find(Auth()->user()->id);
-
         $input = $request->all();
         $data->name = $request->name;
         $data->email = $request->email;
@@ -357,8 +358,7 @@ class AccountController extends Controller
         $data->company_name = $request->company_name;
         $data->department = $request->department_name;
         $data->save();
-
-        
+                                                             
         $data1 =  User_approver::where('user_id',Auth()->user()->id)->first();
         if($data1!=null){
             if($request->approver != null){
