@@ -357,10 +357,9 @@ class AccountController extends Controller
         $data->birth_date = $request->birth_date;
         $data->company_name = $request->company_name;
         $data->department = $request->department_name;
-        $data->save();
-                                                             
+        $data->save();                                   
         $data1 =  User_approver::where('user_id',Auth()->user()->id)->first();
-        if($data1!=null){
+        if($data1 != null){
             if($request->approver != null){
                 $data2 =  User_approver::find($data1->id);
                 $approver = $request->approver;
@@ -377,7 +376,7 @@ class AccountController extends Controller
         {
             if($request->approver != null){
                 $data1 = new User_approver;
-                $data1->user_id = $id;
+                $data1->user_id = Auth()->user()->id;
                 $data1->approver_id = $request->approver;
                 $data1->save();
             }

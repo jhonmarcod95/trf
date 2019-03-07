@@ -57,9 +57,9 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'tqmmnl-ilogroup@lafiladmin.com'),
-        'name' => env('MAIL_FROM_NAME', 'Online Travel Request'),
+        'name' => env('MAIL_FROM_NAME', 'Online Travel Portal'),
     ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
