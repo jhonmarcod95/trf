@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'tqmmnl-ilogroup@lafiladmin.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'trfadmin@lafiladmin.com'),
         'name' => env('MAIL_FROM_NAME', 'Online Travel Portal'),
     ],
     

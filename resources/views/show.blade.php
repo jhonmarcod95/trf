@@ -6,9 +6,11 @@
             <a>
                 <p>Pending Request</p>
             </a>
-            
         </li>
     </ul>
+    <a href="{{ url('/new-request') }}"  onclick = "show()" class="btn btn-success btn-sm"><span class="pe-7s-plus"></span>
+        New Request
+    </a>
 </div>
 </div>
 </nav>	
