@@ -15,12 +15,15 @@
             @component('mail::subcopy')
                 {{ $subcopy }}
             @endcomponent
+
+           
         @endslot
     @endisset
-
+    
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
+            @lang('This is a system-generated e-mail. Please do not reply.')<br>
             © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
         @endcomponent
     @endslot
