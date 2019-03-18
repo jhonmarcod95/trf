@@ -19,7 +19,6 @@
     <link href="{{ asset('/login_css/style.css')}}" rel="stylesheet" />
     <script type="text/javascript" src="{{ asset('/login_css/jquery-2.1.1.min.js')}}"></script>
     <script src="{{ asset('/login_css/jquery-ui.min.js')}}"></script>
-    <script src="{{ asset('jquery.min.js')}}"></script>
     <!-- Styles -->
     <style>
         html, body {
@@ -120,19 +119,16 @@
             <form  method="POST" action="">
                 {{ csrf_field() }}
                 <div class="content">
-                    <div class="container-fluid" >
-                        <div class="row" >
-                            <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-12" style='text-align:center;padding-bottom:10px;'>
                                         <span class='title' >Sign Up<span>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
+                                    <div class="row border">
+                                        <div class="col-md-3 border">
                                             <div class="form-group">
                                                 E-Mail
-                                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                                <input id="email" type="email" class="form-control border" name="email" value="{{ old('email') }}" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">

@@ -51,9 +51,6 @@
                                         <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" onclick='show()'>
                                             <i class='pe-7s-edit'></i> Edit
                                         </a>
-                                        {{-- <a href="#cancel-request/{{$pending_request->id}}"  data-toggle="modal"  data-target="#exampleModalCenter"  class="btn btn-danger"><span class="pe-7s-close"></span>
-                                            Cancel
-                                        </a> --}}
                                         <a href="#cancel_request{{$pending_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
                                             Cancel
                                         </a>
