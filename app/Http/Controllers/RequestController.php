@@ -24,6 +24,7 @@ use App\User;
 use App\Notifications\RequestNotif;
 use App\Notifications\ForApprovalNotif;
 use App\Notifications\ApproveNotif;
+use App\Notifications\ApprovedBooking;
 use App\Notifications\DisapproveNotif;
 use App\Notifications\CancelRequest;
 use App\Notifications\EditRequestNotif;
@@ -269,10 +270,11 @@ class RequestController extends Controller
         }
         $user = auth()->user();
         $destination_name = Destination::where('id','=',$data->destination)->get();
-        
         $new_destination = $destination_name[0]->destination;
+        
         $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
-        if(!$approver1->isEmpty()){
+        if(!$approver1->isEmpty())
+        {
             $approver= User::where('id','=',$approver1[0]->approver_id)->get();
             $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
         }
@@ -292,6 +294,8 @@ class RequestController extends Controller
         $destination_name = Destination::where('id','=',$users_request->destination)->get();
         $new_destination = $destination_name[0]->destination;
         $user->notify(new ApproveNotif($users_request,$new_destination));
+        $user_book = User::where('cebu_email',1)->first();
+        $user_book->notify(new ApprovedBooking($users_request,$new_destination));
         $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been Approved!');
         return redirect('/for-approval');
     }
@@ -317,7 +321,7 @@ class RequestController extends Controller
         ->orderBy('destination','asc')
         ->get(['id','destination','code']);
         
-        $origin_list= User_destination::where('request_id','=',$id)
+        $origin_list = User_destination::where('request_id','=',$id)
         ->get();
         foreach($origin_list as $origin){
             $origin_new = Destination::where('id',$origin->origin)

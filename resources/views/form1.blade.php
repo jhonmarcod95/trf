@@ -176,7 +176,6 @@
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $(".addmore").on('click', function () {
-                                    
                                     var dtToday = new Date();
                                     var month = dtToday.getMonth() + 1;
                                     var day = dtToday.getDate();

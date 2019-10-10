@@ -18,7 +18,7 @@
     <script type="text/javascript" src="{{ asset('/login_css/jquery-2.1.1.min.js')}}"></script>
     <script src="{{ asset('/login_css/jquery-ui.min.js')}}"></script>
     <script src="{{ asset('jquery.min.js')}}"></script>
-	
+    
     <style>
         .content input[type="search"] {
             width:300px;
@@ -36,16 +36,16 @@
             margin: 0; 
         }
         .loader {
-			position: fixed;
-			left: 0px;
-			top: 0px;
-			width: 100%;
-			height: 100%;
-			z-index: 9999;
-			background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
-			opacity: .8;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
+            opacity: .8;
             background-size:200px 120px;
-		}
+        }
     </style>
     <script src="{{ asset('/login_css/jquery.js')}}"></script>
     <script src="{{ asset('/login_css/choosen.js')}}"></script>
@@ -55,16 +55,14 @@
     </div>
     <div class="wrapper">
         @yield('content')
-        <script type = "text/javascript">
-            function show() {
-                document.getElementById("myDiv").style.display="block";
-            }
-        </script>
-        <script src="{{ asset('/inside_css/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
-        <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-        <script src="{{ asset('/inside_css/assets/js/light-bootstrap-dashboard.js?v=1.4.0')}}"></script>
-        <script src="{{ asset('/login_css/jquery.js')}}"></script>
-        <script src="{{ asset('/login_css/choosen.js')}}"></script> 
-    </body>
-    </html>
-    
+    </div>
+    <script type = "text/javascript">
+        function show() {
+            document.getElementById("myDiv").style.display="block";
+        }
+    </script>
+    <script src="{{ asset('/inside_css/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+    <script src="{{ asset('/inside_css/assets/js/light-bootstrap-dashboard.js?v=1.4.0')}}"></script>
+</body>
+</html>
