@@ -40,8 +40,14 @@
                                     <td>{{$approved_request->name}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approved_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        @if($approved_request->date_booked != null)
+                                        <a data-toggle="modal" data-target="#reference{{$approved_request->id}}"  class="btn btn-danger btn-sl" target="_1">✓ Reference Number</a>
+                                        @else
+                                        <a data-toggle="modal" data-target="#reference{{$approved_request->id}}"  class="btn btn-success btn-sl" target="_1">✓ Reference Number</a>
+                                        @endif
                                     </td>
                                 </tr>
+                                @include('reference')
                                 @endforeach
                             </tfoot>
                         </table>

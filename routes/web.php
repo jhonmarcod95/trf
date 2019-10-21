@@ -87,7 +87,8 @@ Route::post('/edit-account/{id}', 'AccountController@save_edit_account');
 Route::get('/new-account', 'AccountController@new_account');
 Route::post('/new-account', 'AccountController@save_new_account');
 Route::get('/employee-list', 'AccountController@employee_list');
-});
 
+});
+Route::post('/reference/{requestID}', 'RequestController@reference');
 
 });

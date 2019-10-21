@@ -529,4 +529,15 @@ class RequestController extends Controller
             return redirect('/for-approval');
         }
     }
+    public function reference (Request $request,$requestID)
+    {
+        $users_request = User_request::findOrFail($requestID);
+        $users_request->reference_id = $request->reference_id;
+        $users_request->date_booked = $request->date_booked;
+        $users_request->amount = $request->amount;
+        $users_request->save();
+
+        $request->session()->flash('status','Successfully Enter reference number.');
+        return redirect('/approved');
+    }
 }
