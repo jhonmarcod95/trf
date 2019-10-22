@@ -75,19 +75,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         Employee ID
-                                        <input id="employee_id" type="text" class="form-control" name="employee_id" value="{{$users->employee_id}}" required >
-                                    </div>
+                                        <input id="employee_id" type="text" class="form-control" name="employee_id" value="{{$users->employee_id}}" >
+                                    </div   >
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         Contact Number
-                                        <input id="contact_number" type="number" class="form-control" name="contact_number" value="{{$users->contact_number}}" required>
+                                        <input id="contact_number" type="number" class="form-control" name="contact_number" value="{{$users->contact_number}}" >
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         Birth Date
-                                        <input id="birth_date" type="date" class="form-control" name="birth_date" value="{{$users->birth_date}}" required>
+                                        <input id="birth_date" type="date" class="form-control" name="birth_date" value="{{$users->birth_date}}" >
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +95,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         Company
-                                        <select  name='company_name'  class="chosen form-control" width='100%'  autocomplete="off"  required>
-                                            <option value='{{$users->company_name}}'>{{$company_edit->company_name}}</option>
+                                        <select  name='company_name'  class="chosen form-control" width='100%'  autocomplete="off"  >
+                                            <option value=''></option>
+                                            @if($company_edit != null)<option value='{{$users->company_name}}'>{{$company_edit->company_name}}</option>@endif
                                             @foreach($companies as $company)
                                             <option value='{{$company->id}}'>{{$company->company_name}}</option>
                                             @endforeach
@@ -121,9 +122,10 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         Department 
-                                        <select id='department'  name='department_name'  class="chosen form-control" width='100%'  autocomplete="off"  required>
+                                        <select id='department'  name='department_name'  class="chosen form-control" width='100%'  autocomplete="off"  >
+                                         <option value=''> Select Department</option>
                                             @foreach($departments as $department)
-                                            <option value='{{$department->id}}'  {{ ($department->id == auth()->user()->department ? "selected":"") }}>{{$department->department_name}}</option>
+                                                <option value='{{$department->id}}'  {{ ($department->id == auth()->user()->department ? "selected":"") }}>{{$department->department_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
