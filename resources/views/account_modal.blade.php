@@ -96,7 +96,7 @@
                             </div>
                             <div class='col-md-3'>
                                 <label style="position:relative; top:7px;">Contact Number:</label>
-                                <input type='text'  class="form-control" value='{{auth()->user()->contact_number}}'  name='contact_number' id='contact_number' required>
+                                <input type='text'  class="form-control" value='{{auth()->user()->contact_number}}'  name='contact_number' id='contact_number' placeholder="977xxxxxxxx" required>
                             </div>
                             <div class='col-md-7'>
                                 <label style="position:relative; top:7px;">Company:</label>
