@@ -139,11 +139,6 @@ class AccountController extends Controller
         $this->validate(request(),[
             'name' => 'required|string|max:255',
             'user_type' => 'required',
-            'employee_id' => 'required|string|numeric|unique:users',
-            'contact_number' => 'required|string|numeric',
-            'birth_date' => 'required',
-            'company_name' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|confirmed',
             ]    
@@ -260,7 +255,7 @@ class AccountController extends Controller
         $data->birth_date = $request->birth_date;
         $data->company_name = $request->company_name;
         $data->save();
-        
+
         $data1 =  User_approver::where('user_id',$id)->first();
         if($data1!=null){
             if($request->approver != null){

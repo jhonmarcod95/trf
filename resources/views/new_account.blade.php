@@ -61,19 +61,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         Employee ID
-                                        <input id="employee_id" type="text" class="form-control" name="employee_id" value="{{ old('employee_id') }}" required >
+                                        <input id="employee_id" type="text" class="form-control" name="employee_id" value="{{ old('employee_id') }}"  >
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         Contact Number
-                                        <input id="contact_number" type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
+                                        <input id="contact_number" type="number" class="form-control" name="contact_number" value="{{ old('contact_number') }}" >
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         Birth Date
-                                        <input id="birth_date" type="date" class="form-control" name="birth_date" value="{{ old('birth_date') }}" required>
+                                        <input id="birth_date" type="date" class="form-control" name="birth_date" value="{{ old('birth_date') }}" >
                                     </div>
                                 </div>
                             </div>
