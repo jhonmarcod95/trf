@@ -296,14 +296,18 @@ class AccountController extends Controller
     {
         $id=auth()->user()->id;
         $users =User::findOrFail($id);
+  
         $approver = User_approver::leftJoin('users', 'user_approvers.approver_id', '=', 'users.id')
         ->where('user_id','=',$id)->first();
-        $company_edit = Company::findOrFail($users->company_name);
-        $department = Department::findOrFail($users->department);
+        // dd($approver);
+        $company_edit = Company::where('id',$users->company_name)->first();
+    
+        $department = Department::where('id',$users->department)->first();
         $role= Role::findOrFail($users->role);
         $departments = Department::orderBy('department_name','asc')->get();
         $companies = Company::orderBy('company_name','asc')->get();
         $accounts = User::where('role','=','3')->orderBy('name','asc')->get();
+     
         if(auth()->user()->role == 3)
         {
             $requestor_list=User_approver::leftJoin('users', 'user_approvers.user_id', '=', 'users.id')

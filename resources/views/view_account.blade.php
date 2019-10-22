@@ -66,7 +66,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     Department
-                                    <input  type="text" class="form-control" name="department" value="{{$department->department_name}}" readonly >
+                                    <input  type="text" class="form-control" name="department" value="@if($department != null){{$department->department_name}} @endif" readonly >
                                 </div>
                             </div>
                             
@@ -95,7 +95,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     Company
-                                    <input  type="text" class="form-control" name="birth_date" value="{{$company_edit->company_name }}" readonly>
+                                    <input  type="text" class="form-control" name="birth_date" value="@if($company_edit != null){{$company_edit->company_name }}@endif" readonly>
                                 </div>
                             </div>
                             <div class="col-md-5">
