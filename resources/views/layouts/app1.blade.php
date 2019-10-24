@@ -188,6 +188,12 @@
                     </li> --}}
                     @elseif(Auth::user()->role =='1')
                     <li>
+                        <a href="{{ url('/request') }}"  onclick = "show()">
+                            <i class="pe-7s-plane"></i>
+                            <p>All Request</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/company-list') }}"  onclick = "show()">
                             <i class="pe-7s-note2"></i>
                             <p>Company List</p>
@@ -205,6 +211,7 @@
                             <p>Employee List</p>
                         </a>
                     </li>
+                   
                     @endif
                     {{-- <li>
                         <a href="{{ url('/change-password') }}">

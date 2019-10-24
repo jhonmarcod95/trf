@@ -540,4 +540,14 @@ class RequestController extends Controller
         $request->session()->flash('status','Successfully Enter reference number.');
         return redirect('/approved');
     }
+    public function request()
+    {
+        $pending_requests= User_request::leftJoin('users','user_requests.requestor_id','=','users.id')
+        ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name')
+        ->orderBy('id','desc')
+        ->get();
+        return view('request',['pending_requests' => $pending_requests ]);
+    }
 }
