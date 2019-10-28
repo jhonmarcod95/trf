@@ -121,7 +121,7 @@
                                         <th colspan='2'>Appointment Time</th>
                                     </tr>
                                     <tr class='case'>
-                                        <td>
+                                        <td  style='width:30%;'>
                                             <select  name='origin[]'  class="chosen form-control"  autocomplete="off" >
                                                 <option value=''>Choose Origin</option>
                                                 @foreach($destinations as $destination)
@@ -129,7 +129,7 @@
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td>
+                                        <td  style='width:30%;'>
                                             <select  name='destinationall[]'  class="chosen form-control"  autocomplete="off" >
                                                 <option value=''>Choose Destination</option>
                                                 @foreach($destinations as $destination)
@@ -140,7 +140,7 @@
                                         <td><input id='origin_date' onkeydown='return false' value="{{ old('date_of_travel.0') }}"  class="form-control" type='date' name='date_of_travel[]' required/></td>
                                         <td colspan='2'><input id='appointment' class="form-control" type='time' value="{{ old('appointment.0') }}"  name='appointment[]' required/></td>
                                     </tr>
-                                    <tr class='case'>
+                                    {{-- <tr class='case'>
                                         <td style='width:30%;'>
                                             <select  name='origin[]'  class="chosen form-control"  autocomplete="off"  >
                                                 <option value=''>Choose Origin</option>
@@ -159,7 +159,7 @@
                                         </td>
                                         <td><input id='destination' value="{{ old('date_of_travel.1') }}"    onkeydown='return false' class="form-control travel_date" type='date' name='date_of_travel[]' required/></td>
                                         <td colspan='2'><input id='appointment2' class="form-control" type='time'  value="{{ old('appointment.1') }}" name='appointment[]' required/></td>
-                                    </tr>
+                                    </tr> --}}
                                 </table>
                                 <button type="button" id='add_more' class='btn btn-success addmore'>+ add new origin</button><br>  
                                 <div class="header">

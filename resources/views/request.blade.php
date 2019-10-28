@@ -22,18 +22,13 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="content table-responsive table-full-width">
                         <table id="example" class="table table-striped table-bordered" style="width:100%;">
                             <thead>
                                 <td>Requestor </td>
-                                <td>Traveler</td>
-                                <td>Company</td>
                                 <td>Destination</td>
-                                <td width='12%'>From</td>
-                                <td width='12%'>To</td>
-                                <td width='20%'>Purpose</td>
                                 <td width='20%'>Status</td>
                                 <td width='200px'>Action</td>
                             </thead>
@@ -41,12 +36,7 @@
                                 @foreach($pending_requests as $pending_request)
                                 <tr>
                                     <td>{{$pending_request->name}}</td>
-                                    <td>{{$pending_request->traveler_name}}</td>
-                                    <td>{{$pending_request->company_name}}</td>
                                     <td>{{$pending_request->destination}}</td>
-                                    <td>{{date ("M. j, Y",strtotime($pending_request->date_from))}}</td>
-                                    <td>{{date ("M. j, Y",strtotime($pending_request->date_to))}}</td>
-                                    <td>{{$pending_request->purpose_of_travel}}</td>
                                     <td>
                                         @if($pending_request->status == 1)
                                             Pending For Approval
@@ -57,13 +47,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                            <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                            <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                             @if($pending_request->status == 2)
                                                 @if($pending_request->date_booked != null)
                                             
-                                                    <a data-toggle="modal" data-target="#reference{{$pending_request->id}}"  class="btn btn-success btn-sl" target="_1">✓ Reference Number</a>
+                                                    <a data-toggle="modal" data-target="#reference{{$pending_request->id}}"  class="btn btn-success btn-sm" target="_1">✓ Reference Number</a>
                                                     @else
-                                                    <a data-toggle="modal" data-target="#reference{{$pending_request->id}}"  class="btn btn-danger btn-sl" target="_1">X Reference Number</a>
+                                                    <a data-toggle="modal" data-target="#reference{{$pending_request->id}}"  class="btn btn-danger btn-sm" target="_1">X Reference Number</a>
                                                 @endif
                                             @endif
                                             @include('referenceView')
