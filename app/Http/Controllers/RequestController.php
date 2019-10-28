@@ -542,12 +542,24 @@ class RequestController extends Controller
     }
     public function request()
     {
-        $pending_requests= User_request::leftJoin('users','user_requests.requestor_id','=','users.id')
+        $pending_requests = User_request::with('approverInfo','approverInfo.approver')
+        ->leftJoin('users','user_requests.requestor_id','=','users.id')
         ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name')
+        ->where('status','1')
         ->orderBy('id','desc')
         ->get();
-        return view('request',['pending_requests' => $pending_requests ]);
+        $approves = User_request::leftJoin('users','user_requests.requestor_id','=','users.id')
+        ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name')
+        ->where('status','2')
+        ->where('reference_id','=',null)
+        ->orderBy('id','desc')
+        ->get();
+        return view('request',['pending_requests' => $pending_requests ,
+        'approves' => $approves
+        ]);
     }
 }

@@ -26,37 +26,52 @@
                 <div class="card">
                     <div class="content table-responsive table-full-width">
                         <table id="example" class="table table-striped table-bordered" style="width:100%;">
+                            Pending for Approval
                             <thead>
                                 <td>Requestor </td>
+                                <td>Traveler Name</td>
+                                <td>Approver</td>
                                 <td>Destination</td>
-                                <td width='20%'>Status</td>
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
                                 @foreach($pending_requests as $pending_request)
                                 <tr>
                                     <td>{{$pending_request->name}}</td>
+                                    <td>{{$pending_request->traveler_name}}</td>
+                                    <td>@if($pending_request['approverInfo'] != null) {{$pending_request['approverInfo']->approver['name']}} @endif</td>
                                     <td>{{$pending_request->destination}}</td>
-                                    <td>
-                                        @if($pending_request->status == 1)
-                                            Pending For Approval
-                                        @elseif($pending_request->status == 2)
-                                            Approved
-                                        @elseif($pending_request->status == 3)
-                                            Cancelled
-                                        @endif
-                                    </td>
+                                   
                                     <td>
                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
-                                            @if($pending_request->status == 2)
-                                                @if($pending_request->date_booked != null)
-                                            
-                                                    <a data-toggle="modal" data-target="#reference{{$pending_request->id}}"  class="btn btn-success btn-sm" target="_1">✓ Reference Number</a>
-                                                    @else
-                                                    <a data-toggle="modal" data-target="#reference{{$pending_request->id}}"  class="btn btn-danger btn-sm" target="_1">X Reference Number</a>
-                                                @endif
-                                            @endif
-                                            @include('referenceView')
+                                        
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="content table-responsive table-full-width">
+                        <table id="example1" class="table table-striped table-bordered" style="width:100%;">
+                            Pending for Booking
+                            <thead>
+                                <td>Requestor </td>
+                                <td>Traveler Name</td>
+                                <td>Destination</td>
+                                <td width='200px'>Action</td>
+                            </thead>
+                            <tbody>
+                                @foreach($approves as $approve)
+                                <tr>
+                                    <td>{{$approve->name}}</td>
+                                    <td>{{$approve->traveler_name}}</td>
+                                    <td>{{$approve->destination}}</td>
+                                    <td>
+                                            <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -74,6 +89,11 @@
 <script>
     $(document).ready(function() {
         $('#example').DataTable( {
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        } );
+    } );
+    $(document).ready(function() {
+        $('#example1').DataTable( {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
     } );
