@@ -95,10 +95,10 @@
                 Online Travel Portal 
             </div>
             <div class="links">
-                <a href="{{ url('/new-request') }}"  onclick = "show()">New Request</a>
+                <a href="{{ url('/new-request') }}"  onclick = "show()">Travel Request</a>
                 {{-- <a href="{{ url('/#')}}"  target="_">Request Status</a> --}}
-                <a href="{{ url('/inbox') }}"  onclick = "show()" >Inbox</a>
-                <a href="{{ asset('/manual.pdf') }}" target="_">Manual</a>
+                <a href="{{ url('/inbox') }}"  onclick = "show()" >Request Inbox</a>
+                <a href="{{ asset('/manual.pdf') }}" target="_">How to Use the Portal</a>
                 @if (Route::has('login'))
                 @auth
                 <a href="{{ route('logout') }}"  onclick="show(); logout();">Log Out</a>
@@ -111,7 +111,7 @@
                 @if (Auth::check())
                 @else
                 {{isset($user)}}
-                <a href="{{ url('/sign-up') }}"  onclick = "show()" >Sign Up</a>
+                {{-- <a href="{{ url('/sign-up') }}"  onclick = "show()" >Sign Up</a> --}}
                 @endif
             </div>
             <script type = "text/javascript">

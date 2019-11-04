@@ -41,10 +41,8 @@
                                     <td>{{$pending_request->traveler_name}}</td>
                                     <td>@if($pending_request['approverInfo'] != null) {{$pending_request['approverInfo']->approver['name']}} @endif</td>
                                     <td>{{$pending_request->destination}}</td>
-                                   
                                     <td>
                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
-                                        
                                     </td>
                                 </tr>
                                 @endforeach
@@ -71,7 +69,7 @@
                                     <td>{{$approve->traveler_name}}</td>
                                     <td>{{$approve->destination}}</td>
                                     <td>
-                                            <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach
