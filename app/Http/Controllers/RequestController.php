@@ -561,4 +561,20 @@ class RequestController extends Controller
         'approves' => $approves
         ]);
     }
+    public function bookedRequest ()
+    {
+        $bookedRequests = User_request::with('approverInfo','approverInfo.approver')
+        ->leftJoin('users','user_requests.requestor_id','=','users.id')
+        ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+        ->leftJoin('users as user_approver','user_requests.approved_by','=','user_approver.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name','user_approver.name as user_approver_name')
+        ->where('status','2')
+        ->where('reference_id','!=',null)
+        ->orderBy('id','desc')
+        ->get();
+        return view('view_booked_request',array(
+            'booked_requests' => $bookedRequests,
+        ));
+    }
 }

@@ -194,6 +194,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('/booked-request') }}"  onclick = "show()">
+                            <i class="pe-7s-check"></i>
+                            <p>Booked Request</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/company-list') }}"  onclick = "show()">
                             <i class="pe-7s-note2"></i>
                             <p>Company List</p>
