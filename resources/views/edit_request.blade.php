@@ -118,17 +118,17 @@
                                     <tr class='case'>
                                         <td style='width:30%;'>
                                             <select  name='origin[]'  class="chosen1 form-control"  autocomplete="off"  required>
-                                                <option value='{{$value->origin}}'>{{$origin_new_new[$key][0]->destination.'('.$origin_new_new[$key][0]->code.')'}}</option>
+                                                {{-- <option value='{{$value->origin}}'>{{$origin_new_new[$key][0]->destination.'('.$origin_new_new[$key][0]->code.')'}}</option> --}}
                                                 @foreach($destinations as $destination)
-                                                <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>
+                                                <option value='{{$destination->id}}' {{ ($destination->id == $value->origin) ? 'selected="selected"' : '' }}>{{$destination->destination.'('.$destination->code.')'}}</option>
                                                 @endforeach
                                             </select>
                                         </td>
                                         <td style='width:30%;'>
                                             <select  name='destinationall[]'  class="chosen1 form-control"  autocomplete="off"  required>
-                                                <option value='{{$value->destination}}'>{{$destination_new_new[$key][0]->destination.'('.$destination_new_new[$key][0]->code.')'}}</option>
+                                                {{-- <option value='{{$value->destination}}'>{{$destination_new_new[$key][0]->destination.'('.$destination_new_new[$key][0]->code.')'}}</option> --}}
                                                 @foreach($destinations as $destination)
-                                                <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>
+                                                <option value='{{$destination->id}}' {{ ($destination->id == $value->destination) ? 'selected="selected"' : '' }}>{{$destination->destination.'('.$destination->code.')'}}</option>
                                                 @endforeach
                                             </select>
                                         </td>

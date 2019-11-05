@@ -317,8 +317,7 @@ class RequestController extends Controller
         ->orderBy('company_name','asc')
         ->get();
         
-        $destinations = Destination::where('id' , '!=' , $users_request->destination)
-        ->orderBy('destination','asc')
+        $destinations = Destination::orderBy('destination','asc')
         ->get(['id','destination','code']);
         
         $origin_list = User_destination::where('request_id','=',$id)
