@@ -71,7 +71,7 @@
                                     <td>{{$approve->name}}</td>
                                     <td>{{$approve->traveler_name}}</td>
                                     <td>{{$approve->destination}}</td>
-                                    <td>{{date('M. d, Y',strtotime($pending_request->updated_at))}}</td>
+                                    <td>{{date('M. d, Y',strtotime($approve->updated_at))}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
