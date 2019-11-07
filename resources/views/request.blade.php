@@ -32,6 +32,7 @@
                                 <td>Traveler Name</td>
                                 <td>Approver</td>
                                 <td>Destination</td>
+                                <td>Date Created </td>
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
@@ -41,6 +42,7 @@
                                     <td>{{$pending_request->traveler_name}}</td>
                                     <td>@if($pending_request['approverInfo'] != null) {{$pending_request['approverInfo']->approver['name']}} @endif</td>
                                     <td>{{$pending_request->destination}}</td>
+                                    <td>{{date('M. d, Y',strtotime($pending_request->created_at))}}</td>
                                     <td>
                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
@@ -60,6 +62,7 @@
                                 <td>Requestor </td>
                                 <td>Traveler Name</td>
                                 <td>Destination</td>
+                                <td>Date Approved</td>
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
@@ -68,6 +71,7 @@
                                     <td>{{$approve->name}}</td>
                                     <td>{{$approve->traveler_name}}</td>
                                     <td>{{$approve->destination}}</td>
+                                    <td>{{date('M. d, Y',strtotime($pending_request->updated_at))}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                     </td>

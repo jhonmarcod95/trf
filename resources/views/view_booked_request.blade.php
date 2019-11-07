@@ -30,6 +30,7 @@
                             <thead>
                                 <td>Requestor </td>
                                 <td>Traveler Name</td>
+                                <td>Company</td>
                                 <td>Destination</td>
                                 <td>Approved By</td>
                                 <td>Reference Number</td>
@@ -42,13 +43,14 @@
                                 <tr>
                                     <td>{{$bookedRequest->name}}</td>
                                     <td>{{$bookedRequest->traveler_name}}</td>
+                                    <td>{{$bookedRequest->company_name}}</td>
                                     <td>{{$bookedRequest->destination}}</td>
                                     <td>{{$bookedRequest->user_approver_name}}</td>
                                     <td>{{$bookedRequest->reference_id}}</td>
                                     <td>{{$bookedRequest->date_booked}}</td>
                                     <td>{{$bookedRequest->amount}}</td>
                                     <td>
-                                        <a href="show-pdf/{{$bookedRequest->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$bookedRequest->id}}"  class="btn btn-info btn-sm" target="_"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach
