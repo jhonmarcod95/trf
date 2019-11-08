@@ -537,7 +537,7 @@ class RequestController extends Controller
         $users_request->save();
 
         $request->session()->flash('status','Successfully Enter reference number.');
-        return redirect('/approved');
+        return back();
     }
     public function request()
     {
