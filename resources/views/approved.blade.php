@@ -47,7 +47,7 @@
                                         @endif --}}
                                     </td>
                                 </tr>
-                                @include('reference')
+                                {{-- @include('reference') --}}
                                 @endforeach
                             </tfoot>
                         </table>
