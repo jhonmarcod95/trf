@@ -75,9 +75,10 @@
                                     <td>
                                         <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
                                         <a data-toggle="modal" data-target="#reference{{$approve->id}}"  class="btn btn-danger btn-sl" target="_1">Reference Number</a>
+                                        @include('reference_admin')
                                     </td>
                                 </tr>
-                                @include('reference_admin')
+                             
                                 @endforeach
                             </tfoot>
                         </table>

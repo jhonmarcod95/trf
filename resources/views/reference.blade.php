@@ -1,6 +1,6 @@
 
 {{-- edit Laborer --}}
-<div class="modal fade" id="reference{{$approved_request->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="reference{{$pending_request->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,32 +15,40 @@
                     </div>
                 </div>
             </div>
-            <form  method='POST' action='reference/{{$approved_request->id}}' onsubmit='show()'>
+            <form  method='POST' action='reference/{{$pending_request->id}}' onsubmit='show()'>
                 
                 <div class="modal-body">
                     {{ csrf_field() }}
                     <div class='row'>
-                        <div class='col-md-6'>
+                        <div class='col-md-3'>
                             <div class="form-group">
                                 Reference ID:
-                                <input name='reference_id' value='{{$approved_request->reference_id}}' class='form-control' required>
+                                <input name='reference_id[]' value='' class='form-control' required>
                             </div>
                         </div>
-                        <div class='col-md-6'>
+                        <div class='col-md-3'>
                             <div class="form-group">
                                 Amount:
-                                <input name='amount' type='number' value='{{$approved_request->amount}}' placeholder='0.00' step='0.01' class='form-control' required>
+                                <input name='amount[]' type='number' value='' placeholder='0.00' step='0.01' class='form-control' required>
                             </div>
                         </div>
-                    </div> 
-                    <div class='row'>
-                        <div class='col-md-6'>
+                        <div class='col-md-3'>
                             <div class="form-group">
                                 Date booked :
-                                <input type='date' name='date_booked'  value='{{$approved_request->date_booked}}' max="{{date('Y-m-d')}}" class='form-control' required>
+                                <input type='date' name='date_booked[]'  value='' max="{{date('Y-m-d')}}" class='form-control' required>
                             </div>
                         </div>
-                    </div> 
+                        <div class='col-md-3'>
+                            <div class="form-group">
+                                Type :
+                                <select class='form-control' placeholder='type' name='type[]' required>
+                                    <option value=''></option>
+                                    <option value='Cebu Pacific'>Cebu Pacific</option>
+                                    <option value='Philippine Airlines'>Philippine Airlines</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     
@@ -48,8 +56,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit"  class="btn btn-primary" >Save</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 </div>

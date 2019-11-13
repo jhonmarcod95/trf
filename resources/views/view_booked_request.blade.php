@@ -33,9 +33,6 @@
                                 <td>Company</td>
                                 <td>Destination</td>
                                 <td>Approved By</td>
-                                <td>Reference Number</td>
-                                <td>Date Booked</td>
-                                <td>Amount</td>
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
@@ -46,12 +43,14 @@
                                     <td>{{$bookedRequest->company_name}}</td>
                                     <td>{{$bookedRequest->destination}}</td>
                                     <td>{{$bookedRequest->user_approver_name}}</td>
-                                    <td>{{$bookedRequest->reference_id}}</td>
-                                    <td>{{$bookedRequest->date_booked}}</td>
-                                    <td>{{$bookedRequest->amount}}</td>
                                     <td>
+                                      
                                         <a href="show-pdf/{{$bookedRequest->id}}"  class="btn btn-info btn-sm" target="_"><i class='pe-7s-monitor'></i> View</a>
+                                        <a class="btn btn-success btn-sm" data-toggle="modal"  data-target="#referenceTicket{{$bookedRequest->id}}" ><i class='pe-7s-monitor'></i> View Ticket</a>
+                                        @include('viewTicket')
                                     </td>
+                                    
+               
                                 </tr>
                                 @endforeach
                             </tfoot>
@@ -62,7 +61,6 @@
     
         </div>
     </div>
-</div>
 </div>
 <script src="{{ asset('/datable/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('/datable/js/dataTables.bootstrap4.min.js')}}"></script>

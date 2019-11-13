@@ -21,6 +21,7 @@ use App\User_request;
 use App\User_destination;
 use App\User_approver;
 use App\User;
+use App\BookReference;
 use App\Notifications\RequestNotif;
 use App\Notifications\ForApprovalNotif;
 use App\Notifications\ApproveNotif;
@@ -145,7 +146,7 @@ class RequestController extends Controller
     }
     public function approved()
     {
-        $approved_requests= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        $approved_requests= User_request::doesntHave('bookReferences')->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->leftJoin('users', 'user_requests.approved_by', '=', 'users.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
@@ -530,11 +531,25 @@ class RequestController extends Controller
     }
     public function reference (Request $request,$requestID)
     {
-        $users_request = User_request::findOrFail($requestID);
-        $users_request->reference_id = $request->reference_id;
-        $users_request->date_booked = $request->date_booked;
-        $users_request->amount = $request->amount;
-        $users_request->save();
+
+        foreach($request->reference_id as $key => $reference_id)
+        {
+            $bookreference = new BookReference;
+            $bookreference->request_id = $requestID;
+            $bookreference->booking_id = $reference_id;
+            $bookreference->booking_type = $request->type[$key];
+            $bookreference->amount = $request->amount[$key];
+            $bookreference->date_booked = $request->date_booked[$key];
+            $bookreference->encode_by = auth()->user()->id;
+            
+            $original_name = str_replace(' ', '',$request->file_upload[$key]->getClientOriginalName());
+            $name = time().'_'.$original_name;
+            $request->file_upload[$key]->move(public_path().'/bookreferences/', $name);
+            $file_name = '/bookreferences/'.$name;
+            $bookreference->upload_file = $file_name;
+            $bookreference->save();
+        }
+   
 
         $request->session()->flash('status','Successfully Enter reference number.');
         return back();
@@ -549,12 +564,12 @@ class RequestController extends Controller
         ->where('status','1')
         ->orderBy('id','desc')
         ->get();
-        $approves = User_request::leftJoin('users','user_requests.requestor_id','=','users.id')
+        $approves = User_request::doesntHave('bookReferences')
+        ->leftJoin('users','user_requests.requestor_id','=','users.id')
         ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name')
         ->where('status','2')
-        ->where('reference_id','=',null)
         ->orderBy('id','desc')
         ->get();
         return view('request',['pending_requests' => $pending_requests ,
@@ -563,18 +578,53 @@ class RequestController extends Controller
     }
     public function bookedRequest ()
     {
-        $bookedRequests = User_request::with('approverInfo','approverInfo.approver')
+      
+        if(auth()->user()->role == 1)
+        {
+        $bookedRequests = User_request::with('approverInfo','approverInfo.approver','bookReferences')
+        ->whereHas('bookReferences')
         ->leftJoin('users','user_requests.requestor_id','=','users.id')
         ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->leftJoin('users as user_approver','user_requests.approved_by','=','user_approver.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name','user_approver.name as user_approver_name')
         ->where('status','2')
-        ->where('reference_id','!=',null)
         ->orderBy('id','desc')
         ->get();
+        }
+        else
+        {
+            $bookedRequests = User_request::with('approverInfo','approverInfo.approver','bookReferences')
+            ->whereHas('bookReferences')
+            ->leftJoin('users','user_requests.requestor_id','=','users.id')
+            ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+            ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+            ->leftJoin('users as user_approver','user_requests.approved_by','=','user_approver.id')
+            ->select('user_requests.*', 'destinations.destination', 'companies.company_name','users.name','user_approver.name as user_approver_name')
+            ->where('status','2')
+            ->where('requestor_id','=',auth()->user()->id)
+            ->orderBy('id','desc')
+            ->get();
+        }
         return view('view_booked_request',array(
             'booked_requests' => $bookedRequests,
+        ));
+    }
+    public function bookedHistory(Request $request)
+    {
+        $from = $request->from;
+        $to = $request->to;
+        $results = [];
+        if($from)
+        {
+        $results = BookReference::with('travelInfo','travelInfo.approverInfo','travelInfo.userInfo','travelInfo.companyInfo','travelInfo.approverInfo.approver')->whereBetween('date_booked',[$from,$to])->get();
+            // return ($results);
+        }
+        return view('view_booked_history',array(
+            'from' => $from,
+            'to' => $to,
+            'results' => $results,
+
         ));
     }
 }

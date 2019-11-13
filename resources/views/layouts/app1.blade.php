@@ -60,16 +60,16 @@
             display:none; 
         }
         .loader {
-			position: fixed;
-			left: 0px;
-			top: 0px;
-			width: 100%;
-			height: 100%;
-			z-index: 9999;
-			background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
-			opacity: .8;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url("{{ asset('/images/3.gif')}}") 50% 50% no-repeat rgb(249,249,249) ;
+            opacity: .8;
             background-size:200px 120px;
-		}
+        }
     </style>
     <style>
         .content input[type="search"] {
@@ -97,6 +97,12 @@
             opacity: 1;
             background: rgba(255, 255, 255, 0.23);
             
+        }
+        @media (min-width: 768px) {
+            .modal-xl {
+                width: 90%;
+                max-width:1200px;
+            }
         }
         /* The alert message box */
         
@@ -132,6 +138,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('/booked-request') }}"  onclick = "show()">
+                            <i class="pe-7s-check"></i>
+                            <p>Booked Request</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/cancelled-request') }}"  onclick = "show()">
                             <i class="pe-7s-close-circle"></i>
                             <p>Cancelled</p>
@@ -160,6 +172,12 @@
                         <a href="{{ url('/approved') }}"  onclick = "show()">
                             <i class="pe-7s-check"></i>
                             <p>Approved </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/booked-request') }}"  onclick = "show()">
+                            <i class="pe-7s-check"></i>
+                            <p>Booked Request</p>
                         </a>
                     </li>
                     <li>
@@ -200,6 +218,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('/booked-history') }}"  onclick = "show()">
+                            <i class="pe-7s-check"></i>
+                            <p>Booked History</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/company-list') }}"  onclick = "show()">
                             <i class="pe-7s-note2"></i>
                             <p>Company List</p>
@@ -217,7 +241,7 @@
                             <p>Employee List</p>
                         </a>
                     </li>
-                   
+                    
                     @endif
                     {{-- <li>
                         <a href="{{ url('/change-password') }}">

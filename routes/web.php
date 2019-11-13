@@ -91,5 +91,6 @@ Route::get('/request', 'RequestController@request');
 });
 Route::post('/reference/{requestID}', 'RequestController@reference');
 Route::get('/booked-request', 'RequestController@bookedRequest');
+Route::get('/booked-history', 'RequestController@bookedHistory');
 
 });
