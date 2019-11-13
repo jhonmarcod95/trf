@@ -35,6 +35,7 @@
                                 <td>Purpose</td>
                                 <td>Approved By</td>
                                 <td>Action</td>
+                                
                             </thead>
                             <tbody>
                                 @foreach($approved_requests as $approved_request)
