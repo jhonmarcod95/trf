@@ -11,6 +11,14 @@
 </div>
 </div>
 </nav>		
+<div class='row col-md-12'>
+        @if(session()->has('status'))
+        <div class="alert alert-success fade in col-md-6" style='margin-left:28px;margin-bottom:10px;margin-top:10px;'>
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>{{session()->get('status')}}</strong>
+        </div>
+        @endif
+    </div>
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -45,6 +53,8 @@
                                         @else
                                         <a data-toggle="modal" data-target="#reference{{$approved_request->id}}"  class="btn btn-success btn-sl" target="_1">Reference Number</a>
                                         @endif --}}
+                                        <a data-toggle="modal" data-target="#reference{{$approved_request->id}}"  class="btn btn-danger btn-sl" target="_1">Reference Number</a>
+                                        @include('reference')
                                     </td>
                                 </tr>
                                 {{-- @include('reference') --}}

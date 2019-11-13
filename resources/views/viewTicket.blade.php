@@ -37,13 +37,19 @@
                             {{$reference->date_booked}}
                         </div>
                     </div>
-                    <div class='col-md-3'>
+                    <div class='col-md-2'>
                         <div class="form-group">
                             File Ticket:<br>
-                            <a href='{{ URL::asset($reference->upload_file) }}' target=''>Attachment</a>
+                            <a href='{{ URL::asset($reference->upload_file) }}' target='_'>Attachment</a>
                         </div>
                     </div>
-                    <div class='col-md-3'>
+                    <div class='col-md-2'>
+                        <div class="form-group">
+                            Official Receipt:<br>
+                            <a href='{{ URL::asset($reference->upload_receipt) }}' target='_'>Attachment</a>
+                        </div>
+                    </div>
+                    <div class='col-md-2'>
                         <div class="form-group">
                             Type :<br>
                             {{$reference->booking_type}}
