@@ -38,13 +38,19 @@
                                     <input type='date' name='date_booked[]'  value='' max="{{date('Y-m-d')}}" class='form-control' required>
                                 </div>
                             </div>
-                            <div class='col-md-3'>
+                            <div class='col-md-2'>
                                 <div class="form-group">
                                     File Ticket:
                                     <input type='file' name='file_upload[]'  value=''  class='form-control' required>
                                 </div>
                             </div>
-                            <div class='col-md-3'>
+                            <div class='col-md-2'>
+                                <div class="form-group">
+                                    OR :
+                                    <input type='file' name='file_upload_or[]'  value=''  class='form-control' required>
+                                </div>
+                            </div>
+                            <div class='col-md-2'>
                                 <div class="form-group">
                                     Type :
                                     <select class='form-control' placeholder='type' name='type[]' required>
@@ -78,8 +84,9 @@
             newBookingReference += "<div class='col-md-2'><div class='form-group'> Reference ID: <input name='reference_id[]'  class='form-control' required>  </div></div>";
             newBookingReference += "<div class='col-md-2'><div class='form-group'>  Amount:  <input name='amount[]' type='number' value='' placeholder='0.00' step='0.01' class='form-control' required>  </div></div>";
             newBookingReference += "<div class='col-md-2'><div class='form-group'> Date booked : <input type='date' name='date_booked[]'  value='' max='{{date('Y-m-d')}}' class='form-control' required> </div></div>";
-            newBookingReference += "<div class='col-md-3'><div class='form-group'>  File Ticket: <input type='file' name='file_upload[]'  value=''  class='form-control' required></div></div>";
-            newBookingReference += "<div class='col-md-2'><div class='form-group'> Type : <select class='form-control' placeholder='type' name='type[]' required><option value=''></option>  <option value='Cebu Pacific'>Cebu Pacific</option><option value='Philippine Airlines'>Philippine Airlines</option></select></div></div><div class='col-md-1'><div class='form-group'>	&nbsp; <span class='form-control' ><a  onclick='removeRef("+idBookingRef+")' href='#' class='text-danger'>X</a></span><div></div></div>";
+            newBookingReference += "<div class='col-md-2'><div class='form-group'>  File Ticket: <input type='file' name='file_upload[]'  value=''  class='form-control' required></div></div>";
+            newBookingReference += "<div class='col-md-2'><div class='form-group'>  OR: <input type='file' name='file_upload_or[]'  value=''  class='form-control' required></div></div>";
+            newBookingReference += "<div class='col-md-1'><div class='form-group'> Type : <select class='form-control' placeholder='type' name='type[]' required><option value=''></option>  <option value='Cebu Pacific'>Cebu Pacific</option><option value='Philippine Airlines'>Philippine Airlines</option></select></div></div><div class='col-md-1'><div class='form-group'>	&nbsp; <span class='form-control' ><a  onclick='removeRef("+idBookingRef+")' href='#' class='text-danger'>X</a></span><div></div></div>";
             $("#booking-reference"+id).append(newBookingReference); 
     }
     function removeRef(id)

@@ -76,15 +76,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-2">
-                                        Baggage Allowance: </h6>
-                                        <select  name='kg'  class="form-control"  autocomplete="off"  required>
-                                            <option value='0' {{ (Input::old("kg") == 0 ? "selected":"") }} >0 Kg</option>
-                                            <option value='20' {{ (Input::old("kg") == 20 ? "selected":"") }}>20 Kg</option>
-                                            <option value='32' {{ (Input::old("kg") == 32 ? "selected":"") }}>32 Kg</option>
-                                            <option value='40'  {{ (Input::old("kg") == 40 ? "selected":"") }}>40 Kg</option>
-                                        </select>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5">
@@ -118,10 +109,11 @@
                                         <th>ORIGIN:</th>
                                         <th>DESTINATION:</th>
                                         <th>Date of Travel</th>
-                                        <th colspan='2'>Appointment Time</th>
+                                        <th colspan='1'>Baggage Allowance</th>
+                                        <th colspan='2'>Flight Time</th>
                                     </tr>
                                     <tr class='case'>
-                                        <td  style='width:30%;'>
+                                        <td  style='width:20%;'>
                                             <select  name='origin[]'  class="chosen form-control"  autocomplete="off" >
                                                 <option value=''>Choose Origin</option>
                                                 @foreach($destinations as $destination)
@@ -129,7 +121,7 @@
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td  style='width:30%;'>
+                                        <td  style='width:20%;'>
                                             <select  name='destinationall[]'  class="chosen form-control"  autocomplete="off" >
                                                 <option value=''>Choose Destination</option>
                                                 @foreach($destinations as $destination)
@@ -137,8 +129,15 @@
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input id='origin_date' onkeydown='return false' value="{{ old('date_of_travel.0') }}"  class="form-control" type='date' name='date_of_travel[]' required/></td>
-                                        <td colspan='2'><input id='appointment' class="form-control" type='time' value="{{ old('appointment.0') }}"  name='appointment[]' required/></td>
+                                        <td style='width:10%;'><input id='origin_date' onkeydown='return false' value="{{ old('date_of_travel.0') }}"  class="form-control" type='date' name='date_of_travel[]' required/></td>
+                                        <td colspan='1' ><div id='kg1'>  <select  name='kg[]'  style='width:100px;'  class="form-control" onchange="kg1()"  autocomplete="off"  required>
+                                            <option value='0' {{ (Input::old("kg[0]") == 0 ? "selected":"") }} >0 Kg</option>
+                                            <option value='20' {{ (Input::old("kg[0]") == 20 ? "selected":"") }}>20 Kg</option>
+                                            <option value='32' {{ (Input::old("kg[0]") == 32 ? "selected":"") }}>32 Kg</option>
+                                            <option value='40'  {{ (Input::old("kg[0]") == 40 ? "selected":"") }}>40 Kg</option>
+                                        </select></div></td>
+                                        <td colspan='2' style='width:10%;'><input id='appointment' class="form-control" type='time' value="{{ old('appointment.0') }}"  name='appointment[]' required/></td>
+                                      
                                     </tr>
                                     {{-- <tr class='case'>
                                         <td style='width:30%;'>
@@ -172,7 +171,6 @@
                                 <div class="clearfix"></div>
                             </form>
                         </div>
-                        
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $(".addmore").on('click', function () {
@@ -192,7 +190,7 @@
                                         document.getElementById("add_more").disabled = true;
                                     }
                                     var data = "<tr id='data' class='case'>";
-                                        data += "<td style='width:30%;'><select  name='origin[]' class='chosen form-control'  autocomplete='off'  ><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td style='width:30%;'><select  name='destinationall[]'  class='form-control chosen'  data-live-search='true' autocomplete='off' ><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input  onkeydown='return false'   class='form-control travel_date' type='date' min='"+ maxDate + "' name='date_of_travel[]' required/></td><td colspan='1'><input class='form-control' type='time' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='{{URL::asset('login_css/remove.png')}}'/></a></td></tr>";
+                                        data += "<td ><select  name='origin[]' class='chosen form-control'  autocomplete='off'  ><option value=''>Choose Origin</option>@foreach($destinations as $destination)<option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td ><select  name='destinationall[]'  class='form-control chosen'  data-live-search='true' autocomplete='off' ><option value=''>Choose Destination</option>@foreach($destinations as $destination) <option value='{{$destination->id}}'>{{$destination->destination.'('.$destination->code.')'}}</option>@endforeach</select></td><td><input  onkeydown='return false'   class='form-control travel_date' type='date' min='"+ maxDate + "' name='date_of_travel[]' required/></td><td colspan='1'>  <select  name='kg[]'  class='form-control' style='width:100px;' autocomplete='off'  required><option value='0'>0 Kg</option> <option value='20'>20 Kg</option><option value='32' >32 Kg</option><option value='40'  >40 Kg</option></select></td><td colspan='1'><input class='form-control' type='time' name='appointment[]' required/></td><td align='center' style='border:0;'><a  href='javascript:void(0);' class='removeButton'><img width='20px' height='20px' src='{{URL::asset('login_css/remove.png')}}'/></a></td></tr>";
                                         $('#form_table').append(data);
                                         count++;
                                         $(".chosen").chosen();

@@ -544,8 +544,13 @@ class RequestController extends Controller
             
             $original_name = str_replace(' ', '',$request->file_upload[$key]->getClientOriginalName());
             $name = time().'_'.$original_name;
-            $request->file_upload[$key]->move(public_path().'/bookreferences/', $name);
-            $file_name = '/bookreferences/'.$name;
+            $request->file_upload[$key]->move(public_path().'/bookrefer/', $name);
+            $file_name = '/bookrefer/'.$name;
+            $original_name1 = str_replace(' ', '',$request->file_upload_or[$key]->getClientOriginalName());
+            $name1 = time().'_'.$original_name1;
+            $request->file_upload_or[$key]->move(public_path().'/bookor/', $name1);
+            $file_name1 = '/bookor/'.$name1;
+            $bookreference->upload_receipt = $file_name1;
             $bookreference->upload_file = $file_name;
             $bookreference->save();
         }

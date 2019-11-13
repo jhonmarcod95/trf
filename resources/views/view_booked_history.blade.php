@@ -68,7 +68,8 @@
                                     <td>Booked Date</td>
                                     <td>Amount</td>
                                     <td>Type</td>
-                                    <td>Attachment</td>
+                                    <td>Ticket</td>
+                                    <td>Official Receipt</td>
                                 </thead>
                                 <tbody>
                                     @foreach($results as $result)
@@ -80,7 +81,8 @@
                                         <td>{{$result->date_booked}}</td>
                                         <td>{{$result->amount}}</td>
                                         <td>{{$result->booking_type}}</td>
-                                        <td><a href='{{ URL::asset($result->upload_file) }}' target=''>Attachment</a></td>
+                                        <td><a href='{{ URL::asset($result->upload_file) }}' target=''>Download</a></td>
+                                        <td><a href='{{ URL::asset($result->upload_receipt) }}' target=''>Download</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
