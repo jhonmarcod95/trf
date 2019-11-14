@@ -39,7 +39,7 @@
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
-                                @foreach($pending_requests as $pending_request)
+                                @foreach($pending_requests as $key => $pending_request)
                                 <tr>
                                     <td>{{$pending_request->traveler_name}}</td>
                                     <td>{{$pending_request->company_name}}</td>
@@ -48,9 +48,11 @@
                                     <td>{{date ("M. j, Y",strtotime($pending_request->date_to))}}</td>
                                     <td>{{$pending_request->purpose_of_travel}}</td>
                                     <td>
-                                        <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" onclick='show()'>
+                                        {{-- <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" onclick='show()'>
                                             <i class='pe-7s-edit'></i> Edit
-                                        </a>
+                                        </a> --}}
+                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" target="_{{$key+1}}"><i class='pe-7s-monitor'></i> View</a>
+                                       
                                         <a href="#cancel_request{{$pending_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
                                             Cancel
                                         </a>

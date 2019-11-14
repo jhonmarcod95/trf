@@ -101,26 +101,21 @@ class RequestController extends Controller
     }
     public function for_approval()
     {
-        $pending_requests=[];
-        $userapprover=[];
+     
         
-        $user_approver = User_approver::where('approver_id','=',auth()->user()->id)->get();
-        if($user_approver){
-            foreach($user_approver as $approver){
-                $pending_request= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
-                ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
-                ->leftJoin('users', 'user_requests.requestor_id', '=', 'users.id')
-                ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
-                ->where('requestor_id','=', $approver->user_id)
-                ->where('status','=','1')
-                ->get();
-                $pending_requests[]=$pending_request;
-                
-            }
-            
-        }
-        
-        
+        $user_approver = User_approver::where('approver_id','=',auth()->user()->id)->get()->pluck('user_id');
+    
+        $userapprover = $user_approver->toArray();
+  
+        $pending_requests = User_request::
+        with('baggageAllowance','baggageAllowance.destinationInfo','baggageAllowance.originInfo')
+        ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
+        ->leftJoin('users', 'user_requests.requestor_id', '=', 'users.id')
+        ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
+        ->whereIn('requestor_id', $userapprover)
+        ->where('status','=','1')
+        ->get();
         return view('for_approval',['pending_requests' => $pending_requests ]);
     }
     public function cancelled_request()
@@ -179,11 +174,12 @@ class RequestController extends Controller
             'origin' => $origin_list,
             'origing_new_new' =>$origing_new_new,
             
-        )); 
+        ))->setPaper('letter', 'landscape');; 
         return $pdf->stream('trf.pdf');
     }
     public function save_new_request(Request $request)
     {   
+        // dd($request->all());
         $this->validate(request(),[
             'company_name' => 'required',
             'date_request' => 'required',
@@ -227,7 +223,6 @@ class RequestController extends Controller
         $traveler_name=$request->input('traveler_name');
         $contact_number=$request->input('contact_number');
         $destination=$request->input('destination');
-        $kg=$request->input('kg');
         $budget_line_code=$request->input('budget_line_code');
         $budget_approved=$request->input('budget_approved');
         $budget_available=$request->input('budget_available');
@@ -248,7 +243,6 @@ class RequestController extends Controller
         $data->destination = $destination;
         $data->date_from = $firstEle;
         $data->date_to = $lastEle;
-        $data->baggage_allowance = $kg;
         $data->budget_code_line = $budget_line_code;
         $data->budget_code_approved = $budget_approved;
         $data->budget_available = $budget_available;
@@ -266,6 +260,11 @@ class RequestController extends Controller
             $data1->destination = $destinationalls[$key];
             $data1->date_of_travel = $date_of_travels[$key];
             $data1->time_appointment = $appointments[$key];
+            $data1->baggage_allowance = $request->kg[$key];
+            if (array_key_exists($key,$request->reason))
+            {
+                $data1->reason  = $request->reason[$key];
+            }
             $data1->request_id = $id->id;
             $data1->save();
         }
@@ -631,5 +630,32 @@ class RequestController extends Controller
             'results' => $results,
 
         ));
+    }
+    public function approveRequest(Request $request,$requestID)
+    {
+        if($request->action)
+        {
+            foreach($request->action as $key => $action)
+            {
+                $userDestination = User_destination::findOrfail($key);
+                $userDestination->status = $action;
+                $userDestination->action_by = auth()->user()->id;
+            }
+        }
+        $users_request = User_request::findOrFail($requestID);
+        $user_id=$users_request->requestor_id;
+        $user = User::findOrFail($user_id);
+        if($users_request) {
+            $users_request->status = 2;
+            $users_request->approved_by = auth()->user()->id;
+            $users_request->save();
+        }
+        $destination_name = Destination::where('id','=',$users_request->destination)->get();
+        $new_destination = $destination_name[0]->destination;
+        $user->notify(new ApproveNotif($users_request,$new_destination));
+        $user_book = User::where('cebu_email',1)->first();
+        $user_book->notify(new ApprovedBooking($users_request,$new_destination));
+        $request->session()->flash('status', ''.$users_request->traveler_name.' Request has been Approved!');
+        return redirect('/for-approval');
     }
 }

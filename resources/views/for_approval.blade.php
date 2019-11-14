@@ -15,7 +15,7 @@
     {{ csrf_field() }}
     <div class='row col-md-12'>
         <div class="col-md-5" style='margin-left:28px;margin-bottom:10px;margin-top:10px;'>
-            <input type='submit' name='action' class="btn btn-success" value='Approve'>
+            {{-- <input type='submit' name='action' class="btn btn-success" value='Approve'> --}}
         </div>
         @if(session()->has('status'))
         <div class="alert alert-success fade in col-md-6" style='margin-top:10px;float:right'>
@@ -38,7 +38,9 @@
                         <div class="content table-responsive table-full-width">
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
-                                    <td><input type="checkbox" id="select_all" /></td>
+                                    <td>
+                                        {{-- <input type="checkbox" id="select_all" /> --}}
+                                    </td>
                                     <td>Requestor</td>
                                     <td>Traveler</td>
                                     <td>Company</td>
@@ -52,12 +54,12 @@
                                 
                                 <tbody>
                                     
-                                    @foreach($pending_requests as $request)
-                                    
-                                    @if(!$request->isEmpty())
-                                    @foreach($request as $key => $pending_request)
+                                 
+                                    @foreach($pending_requests as $key => $pending_request)
                                     <tr>
-                                        <td><input class="checkbox1" type="checkbox" name="array[]" value='{{$pending_request->id}}' ></td>
+                                        <td>
+                                            {{-- <input class="checkbox1" type="checkbox" name="array[]" value='{{$pending_request->id}}' > --}}
+                                        </td>
                                         <td>{{$pending_request->name}}</td>
                                         <td>{{$pending_request->traveler_name}}</td>
                                         <td>{{$pending_request->company_name}}</td>
@@ -66,14 +68,14 @@
                                         <td>{{date ("M. j, Y",strtotime($pending_request->date_to))}}</td>
                                         <td width='15%'>{{$pending_request->purpose_of_travel}}</td>
                                         <td>
-                                        <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" target="_{{$key+1}}"><i class='pe-7s-monitor'></i> View</a>
-                                            <a href="approve-request/{{$pending_request->id}}" class="btn btn-success btn-sm" onclick='show()'> <span class="pe-7s-check"></span>Approve</a>
+                                        {{-- <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" target="_{{$key+1}}"><i class='pe-7s-monitor'></i> View</a> --}}
+                                            {{-- <a href="approve-request/{{$pending_request->id}}" data-toggle="modal"  data-target="#referenceTicket{{$bookedRequest->id}}"   class="btn btn-success btn-sm" > <span class="pe-7s-check"></span>Approve</a> --}}
+                                            <a data-toggle="modal"  data-target="#pending_request{{$pending_request->id}}"   class="btn btn-success btn-sm" > <span class="pe-7s-check"></span>Approve</a>
                                             <a href="#disapprove{{$pending_request->id}}"   data-toggle="modal" class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>Disapprove</a>
                                             @include('modal')
+                                            @include('approval_page')
                                         </td>
                                     </tr>
-                                    @endforeach
-                                    @endif
                                     @endforeach
                                 </tfoot>
                             </table>

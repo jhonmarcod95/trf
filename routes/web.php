@@ -45,7 +45,7 @@ Route::post('/save-edit-profile', 'AccountController@save_edit_profile');
 Route::get('/cancel-request/{id}', 'RequestController@cancel_request');
 Route::get('/user-account', 'AccountController@view_account');
 Route::post('/cancel-request/{id}', 'RequestController@save_cancel_request');
-
+Route::post('approve-request/{requestID}','RequestController@approveRequest');
 Route::group( ['middleware' => ['user']], function()
 {
 

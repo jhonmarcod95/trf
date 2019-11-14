@@ -33,7 +33,7 @@
                                 <td>Approver</td>
                                 <td>Destination</td>
                                 <td>Date Created </td>
-                                <td width='200px'>Action</td>
+                                {{-- <td width='200px'>Action</td> --}}
                             </thead>
                             <tbody>
                                 @foreach($pending_requests as $pending_request)
@@ -43,9 +43,9 @@
                                     <td>@if($pending_request['approverInfo'] != null) {{$pending_request['approverInfo']->approver['name']}} @endif</td>
                                     <td>{{$pending_request->destination}}</td>
                                     <td>{{date('M. d, Y',strtotime($pending_request->created_at))}}</td>
-                                    <td>
+                                    {{-- <td>
                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tfoot>
@@ -74,7 +74,7 @@
                                     <td>{{date('M. d, Y',strtotime($approve->updated_at))}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
-                                        <a data-toggle="modal" data-target="#reference{{$approve->id}}"  class="btn btn-danger btn-sl" target="_1">Reference Number</a>
+                                        <a data-toggle="modal" data-target="#reference{{$approve->id}}"  class="btn btn-danger btn-sm" target="_1">Reference Number</a>
                                         @include('reference_admin')
                                     </td>
                                 </tr>

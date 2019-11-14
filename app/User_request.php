@@ -28,4 +28,8 @@ class User_request extends Model
     {
         return $this->hasOne(Destination::class,'id','destination');
     }
+    public function baggageAllowance()
+    {
+        return $this->hasMany(User_destination::class,'request_id','id');
+    }
 }

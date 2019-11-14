@@ -73,9 +73,11 @@
             <td colspan='2'  width='50%' class="aligntop">
                 Purpose of Travel:  {{ $data_list[0]->purpose_of_travel}}
             </td>
+            @if($data_list[0]->baggage_allowance != null)
             <td colspan='2'  class="aligntop">
                 Baggage Allowance: {{ $data_list[0]->baggage_allowance}} Kg
             </td>
+            @endif
         </tr>
     </table>
     <br>
@@ -129,7 +131,10 @@
                                 Date of Travel
                             </td>
                             <td>
-                                Appointment Time
+                                Baggage
+                            </td>
+                            <td>
+                                Flight Time
                             </td>
                         </tr>
                         @foreach($origin as $key => $value)
@@ -141,7 +146,17 @@
                                 {{date ("F j, Y",strtotime($value->date_of_travel))}}
                             </td>
                             <td>
-                                {{$value->time_appointment}}
+                                @if(($value->status == null) || ($value->baggabaggage_allowance == "Approve"))
+                                    @if($value->baggage_allowance == null)
+                                    0 KG
+                                    @else
+                                    {{$value->baggage_allowance}} KG
+                                    @endif
+                                @else
+                                    0 KG
+                                @endif
+                            <td>
+                                {{date('h:m a',strtotime($value->time_appointment))}}
                             </td>
                         </tr>
                         @endforeach
