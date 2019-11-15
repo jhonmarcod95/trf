@@ -16,6 +16,7 @@ Route::post('logout', function(){
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/reports','RequestController@bookedHistoryOutside');
 Auth::routes();
 Route::get('/home', function () {
     return view('welcome');

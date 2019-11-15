@@ -614,6 +614,23 @@ class RequestController extends Controller
             'booked_requests' => $bookedRequests,
         ));
     }
+    public function bookedHistoryOutside(Request $request)
+    {
+        $from = $request->from;
+        $to = $request->to;
+        $results = [];
+        if($from)
+        {
+        $results = BookReference::with('travelInfo','travelInfo.approverInfo','travelInfo.userInfo','travelInfo.companyInfo','travelInfo.approverInfo.approver')->whereBetween('date_booked',[$from,$to])->get();
+            // return ($results);
+        }
+        return view('outsideReport',array(
+            'from' => $from,
+            'to' => $to,
+            'results' => $results,
+
+        ));
+    }
     public function bookedHistory(Request $request)
     {
         $from = $request->from;

@@ -1,4 +1,4 @@
-@extends('layouts.app1')
+@extends('layouts.app2')
 @section('content')
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-left">
