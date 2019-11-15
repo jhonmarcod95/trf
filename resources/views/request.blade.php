@@ -61,7 +61,7 @@
                             <thead>
                                 <td>Requestor </td>
                                 <td>Traveler Name</td>
-                                <td>Destination</td>
+                                <td>Approved By</td>
                                 <td>Date Approved</td>
                                 <td width='200px'>Action</td>
                             </thead>
@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>{{$approve->name}}</td>
                                     <td>{{$approve->traveler_name}}</td>
-                                    <td>{{$approve->destination}}</td>
+                                    <td>{{$approve->approveBy->name}}</td>
                                     <td>{{date('M. d, Y',strtotime($approve->updated_at))}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_blank"><i class='pe-7s-monitor'></i> View</a>

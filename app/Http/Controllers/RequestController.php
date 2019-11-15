@@ -141,7 +141,8 @@ class RequestController extends Controller
     }
     public function approved()
     {
-        $approved_requests= User_request::doesntHave('bookReferences')->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        $approved_requests= User_request::doesntHave('bookReferences')
+        ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->leftJoin('users', 'user_requests.approved_by', '=', 'users.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
@@ -574,6 +575,7 @@ class RequestController extends Controller
         ->orderBy('id','desc')
         ->get();
         $approves = User_request::doesntHave('bookReferences')
+        ->with('approveBy')
         ->leftJoin('users','user_requests.requestor_id','=','users.id')
         ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')

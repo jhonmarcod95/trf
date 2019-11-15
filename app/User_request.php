@@ -32,4 +32,8 @@ class User_request extends Model
     {
         return $this->hasMany(User_destination::class,'request_id','id');
     }
+    public function approveBy()
+    {
+        return $this->hasOne(User::class,'id','approved_by');
+    }
 }
