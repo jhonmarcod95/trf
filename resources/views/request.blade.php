@@ -73,7 +73,7 @@
                                     <td>{{$approve->destination}}</td>
                                     <td>{{date('M. d, Y',strtotime($approve->updated_at))}}</td>
                                     <td>
-                                        <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$approve->id}}"  class="btn btn-info btn-sm" target="_blank"><i class='pe-7s-monitor'></i> View</a>
                                         <a data-toggle="modal" data-target="#reference{{$approve->id}}"  class="btn btn-danger btn-sm" target="_1">Reference Number</a>
                                         @include('reference_admin')
                                     </td>

@@ -83,8 +83,8 @@
                                         <td>{{$result->date_booked}}</td>
                                         <td>{{$result->amount}}</td>
                                         <td>{{$result->booking_type}}</td>
-                                        <td><a href='{{ URL::asset($result->upload_file) }}' target='_'>Download</a></td>
-                                        <td><a href='{{ URL::asset($result->upload_receipt) }}' target='_'>Download</a></td>
+                                        <td><a href='{{ URL::asset($result->upload_file) }}' target="_blank">Download</a></td>
+                                        <td><a href='{{ URL::asset($result->upload_receipt) }}' target="_blank">Download</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

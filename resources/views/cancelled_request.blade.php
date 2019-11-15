@@ -42,7 +42,7 @@
                                     <td>{{$cancel_request->name}}</td>
                                     <td>{{$cancel_request->remarks}}</td>
                                     <td>
-                                        <a href="show-pdf/{{$cancel_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$cancel_request->id}}"  class="btn btn-info btn-sl" target="_blank"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -41,7 +41,7 @@
                                     <td>{{date ("M j, Y",strtotime($approved_request->created_at))}}</td>
                                     <td>{{date ("M j, Y",strtotime($approved_request->updated_at))}}</td>
                                     <td>
-                                        <a href="show-pdf/{{$approved_request->id}}"  class="btn btn-info btn-sl" target="_1"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$approved_request->id}}"  class="btn btn-info btn-sl" target="_blank"><i class='pe-7s-monitor'></i> View</a>
                                     </td>
                                 </tr>
                                 @endforeach

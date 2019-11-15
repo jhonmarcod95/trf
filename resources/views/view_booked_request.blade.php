@@ -36,7 +36,7 @@
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
-                                @foreach($booked_requests as $bookedRequest)
+                                @foreach($booked_requests as $key => $bookedRequest)
                                 <tr>
                                     <td>{{$bookedRequest->name}}</td>
                                     <td>{{$bookedRequest->traveler_name}}</td>
@@ -45,7 +45,7 @@
                                     <td>{{$bookedRequest->user_approver_name}}</td>
                                     <td>
                                       
-                                        <a href="show-pdf/{{$bookedRequest->id}}"  class="btn btn-info btn-sm" target="_"><i class='pe-7s-monitor'></i> View</a>
+                                        <a href="show-pdf/{{$bookedRequest->id}}"  class="btn btn-info btn-sm" target="_blank"><i class='pe-7s-monitor'></i> View</a>
                                         <a class="btn btn-success btn-sm" data-toggle="modal"  data-target="#referenceTicket{{$bookedRequest->id}}" ><i class='pe-7s-monitor'></i> View Ticket</a>
                                         @include('viewTicket')
                                     </td>

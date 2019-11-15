@@ -51,7 +51,7 @@
                                         {{-- <a href="edit-request/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" onclick='show()'>
                                             <i class='pe-7s-edit'></i> Edit
                                         </a> --}}
-                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" target="_{{$key+1}}"><i class='pe-7s-monitor'></i> View</a>
+                                             <a href="show-pdf/{{$pending_request->id}}"  class="btn btn-info btn-sl btn-sm" target="_blank"><i class='pe-7s-monitor'></i> View</a>
                                        
                                         <a href="#cancel_request{{$pending_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
                                             Cancel
