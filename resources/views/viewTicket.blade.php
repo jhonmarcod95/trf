@@ -40,13 +40,13 @@
                     <div class='col-md-2'>
                         <div class="form-group">
                             File Ticket:<br>
-                            <a href='{{ URL::asset($reference->upload_file) }}' target='_'>Attachment</a>
+                            <a href='{{ URL::asset($reference->upload_file) }}' target='_blank'>Attachment</a>
                         </div>
                     </div>
                     <div class='col-md-2'>
                         <div class="form-group">
                             Official Receipt:<br>
-                            <a href='{{ URL::asset($reference->upload_receipt) }}' target='_'>Attachment</a>
+                            <a href='{{ URL::asset($reference->upload_receipt) }}' target='_blank'>Attachment</a>
                         </div>
                     </div>
                     <div class='col-md-2'>
