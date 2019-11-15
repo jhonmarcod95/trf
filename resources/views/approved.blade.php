@@ -52,7 +52,7 @@
                                         <a href="#cancel_request{{$approved_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
                                             Cancel
                                         </a>
-                                        @include('cance_modal')
+                                        @include('cancel_modal')
                                         {{-- @if($approved_request->date_booked != null)
                                         <a data-toggle="modal" data-target="#reference{{$approved_request->id}}"  class="btn btn-danger btn-sl" target="_1">Reference Number</a>
                                         @else
