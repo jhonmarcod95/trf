@@ -263,9 +263,12 @@ class RequestController extends Controller
             $data1->date_of_travel = $date_of_travels[$key];
             $data1->time_appointment = $appointments[$key];
             $data1->baggage_allowance = $request->kg[$key];
+            if ($request->reason != null)
+            {
             if (array_key_exists($key,$request->reason))
             {
                 $data1->reason  = $request->reason[$key];
+            }
             }
             $data1->request_id = $id->id;
             $data1->save();
@@ -348,97 +351,97 @@ class RequestController extends Controller
     }
     public function save_edit_request(Request $request, $id)
     {
-        $this->validate(request(),[
-            'company_name' => 'required',
-            'date_request' => 'required',
-            'birthdate' => 'required',
-            'contact_number' => 'required|min:13|numeric',
-            'purpose_of_travel' => 'required|max:255',
-            'traveler_name' => 'required',
-            'destination' => 'required',
-            'kg' => 'required',
-            'origin' => 'required|array|between:2,10',
-            'destinationall' => 'required|array|between:2,10',
-            'destinationall.*' => 'required|different:origin.*',
-            'budget_line_code' => 'required',
-            'date_of_travel' => 'required|array|between:2,10',
-            'appointment' => 'required|array|between:2,10',
-            ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
-        );
-        foreach($request->input('origin') as $key => $origin)
-        {
-            if($key != 0)
-            {
-                $new_key = $key - 1 ;
-                $this->validate(request(),[
-                    'date_of_travel.'.$key => 'after_or_equal:date_of_travel.'.$new_key,
-                    ] ,['date_of_travel.'.$key.'.after_or_equal' => 'Please Check Date of Travel Bellow. The Origin Date must be Equal or After the Next Date/s',]
-                );
-            }
-        }
-        $data =  User_request::find($id); 
-        $company_name=$request->input('company_name');
-        $date_request=$request->input('date_request');
-        $birthdate=$request->input('birthdate');
-        $purpose_of_travel=$request->input('purpose_of_travel');
-        $traveler_name=$request->input('traveler_name');
-        $contact_number=$request->input('contact_number');
-        $destination=$request->input('destination');
-        $baggage=$request->input('baggage');
-        $kg=$request->input('kg');
-        $budget_line_code=$request->input('budget_line_code');
-        $budget_approved=$request->input('budget_approved');
-        $budget_available=$request->input('budget_available');
-        $gl_account=$request->input('gl_account');
-        $cost_center=$request->input('cost_center');
-        $origins=$request->input('origin');
-        $destinationalls=$request->input('destinationall');
-        $date_of_travels=$request->input('date_of_travel');
-        $appointments=$request->input('appointment');
-        $firstEle = $date_of_travels[0];
-        $lastEle = $date_of_travels[count($date_of_travels) - 1];
-        $data->company_name = $company_name;
-        $data->request_date = $date_request;
-        $data->birth_date = $birthdate;
-        $data->purpose_of_travel = $purpose_of_travel;
-        $data->contact_number = $contact_number;
-        $data->destination = $destination;
-        $data->date_from = $firstEle;
-        $data->date_to = $lastEle;
-        $data->baggage_allowance = $kg;
-        $data->budget_code_line = $budget_line_code;
-        $data->budget_code_approved = $budget_approved;
-        $data->budget_available = $budget_available;
-        $data->gl_account = $gl_account;
-        $data->cost_center = $cost_center;
-        $data->traveler_name = $traveler_name;
-        $data->save();
-        $delete_data = User_destination::where('request_id',$id)->get();
-        foreach($delete_data as $delete_d){
-            $delete_data1 = User_destination::find($delete_d->id);
-            $delete_data1->delete();
-        }
-        foreach($origins as $key => $origin)
-        {   
-            $data1 = new User_destination;
-            $data1->origin = $origin;
-            $data1->destination = $destinationalls[$key];
-            $data1->date_of_travel = $date_of_travels[$key];
-            $data1->time_appointment = $appointments[$key];
-            $data1->request_id = $id;
-            $data1->save();
-        }
-        $user = auth()->user();
-        $destination_name = Destination::where('id','=',$data->destination)->get();
-        $new_destination = $destination_name[0]->destination;
-        $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
-        if(!$approver1->isEmpty()){
-            $approver= User::where('id','=',$approver1[0]->approver_id)->get();
-            $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
-        }
-        $user->notify(new EditRequestNotif($data, $new_destination));
-        $request->session()->flash('status', ''.$data->traveler_name.' Request has been Updated');
-        return redirect('/pending-request');
+        // $this->validate(request(),[
+        //     'company_name' => 'required',
+        //     'date_request' => 'required',
+        //     'birthdate' => 'required',
+        //     'contact_number' => 'required|min:13|numeric',
+        //     'purpose_of_travel' => 'required|max:255',
+        //     'traveler_name' => 'required',
+        //     'destination' => 'required',
+        //     'kg' => 'required',
+        //     'origin' => 'required|array|between:2,10',
+        //     'destinationall' => 'required|array|between:2,10',
+        //     'destinationall.*' => 'required|different:origin.*',
+        //     'budget_line_code' => 'required',
+        //     'date_of_travel' => 'required|array|between:2,10',
+        //     'appointment' => 'required|array|between:2,10',
+        //     ] ,['destinationall.*.different'    => 'Destination and Origin must be different.',]
+        // );
+        // foreach($request->input('origin') as $key => $origin)
+        // {
+        //     if($key != 0)
+        //     {
+        //         $new_key = $key - 1 ;
+        //         $this->validate(request(),[
+        //             'date_of_travel.'.$key => 'after_or_equal:date_of_travel.'.$new_key,
+        //             ] ,['date_of_travel.'.$key.'.after_or_equal' => 'Please Check Date of Travel Bellow. The Origin Date must be Equal or After the Next Date/s',]
+        //         );
+        //     }
+        // }
+        // $data =  User_request::find($id); 
+        // $company_name=$request->input('company_name');
+        // $date_request=$request->input('date_request');
+        // $birthdate=$request->input('birthdate');
+        // $purpose_of_travel=$request->input('purpose_of_travel');
+        // $traveler_name=$request->input('traveler_name');
+        // $contact_number=$request->input('contact_number');
+        // $destination=$request->input('destination');
+        // $baggage=$request->input('baggage');
+        // $kg=$request->input('kg');
+        // $budget_line_code=$request->input('budget_line_code');
+        // $budget_approved=$request->input('budget_approved');
+        // $budget_available=$request->input('budget_available');
+        // $gl_account=$request->input('gl_account');
+        // $cost_center=$request->input('cost_center');
+        // $origins=$request->input('origin');
+        // $destinationalls=$request->input('destinationall');
+        // $date_of_travels=$request->input('date_of_travel');
+        // $appointments=$request->input('appointment');
+        // $firstEle = $date_of_travels[0];
+        // $lastEle = $date_of_travels[count($date_of_travels) - 1];
+        // $data->company_name = $company_name;
+        // $data->request_date = $date_request;
+        // $data->birth_date = $birthdate;
+        // $data->purpose_of_travel = $purpose_of_travel;
+        // $data->contact_number = $contact_number;
+        // $data->destination = $destination;
+        // $data->date_from = $firstEle;
+        // $data->date_to = $lastEle;
+        // $data->baggage_allowance = $kg;
+        // $data->budget_code_line = $budget_line_code;
+        // $data->budget_code_approved = $budget_approved;
+        // $data->budget_available = $budget_available;
+        // $data->gl_account = $gl_account;
+        // $data->cost_center = $cost_center;
+        // $data->traveler_name = $traveler_name;
+        // $data->save();
+        // $delete_data = User_destination::where('request_id',$id)->get();
+        // foreach($delete_data as $delete_d){
+        //     $delete_data1 = User_destination::find($delete_d->id);
+        //     $delete_data1->delete();
+        // }
+        // foreach($origins as $key => $origin)
+        // {   
+        //     $data1 = new User_destination;
+        //     $data1->origin = $origin;
+        //     $data1->destination = $destinationalls[$key];
+        //     $data1->date_of_travel = $date_of_travels[$key];
+        //     $data1->time_appointment = $appointments[$key];
+        //     $data1->request_id = $id;
+        //     $data1->save();
+        // }
+        // $user = auth()->user();
+        // $destination_name = Destination::where('id','=',$data->destination)->get();
+        // $new_destination = $destination_name[0]->destination;
+        // $approver1 = User_approver::where('user_id','=',auth()->user()->id)->get();
+        // if(!$approver1->isEmpty()){
+        //     $approver= User::where('id','=',$approver1[0]->approver_id)->get();
+        //     $approver[0]->notify(new ForApprovalNotif($data,  $new_destination));
+        // }
+        // $user->notify(new EditRequestNotif($data, $new_destination));
+        // $request->session()->flash('status', ''.$data->traveler_name.' Request has been Updated');
+        // return redirect('/pending-request');
         
     }
     public function approved_history()
