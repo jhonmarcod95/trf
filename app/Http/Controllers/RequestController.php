@@ -152,6 +152,8 @@ class RequestController extends Controller
     }
     public function pdf ($id)
     {
+
+        $origing_new_new = [];
         $data_list= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->leftJoin('users', 'user_requests.requestor_id', '=', 'users.id')
