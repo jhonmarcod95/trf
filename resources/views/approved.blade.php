@@ -49,10 +49,10 @@
                                     <td>{{$approved_request->name}}</td>
                                     <td>
                                         <a href="show-pdf/{{$approved_request->id}}"  class="btn btn-info btn-sl" target="_blank"><i class='pe-7s-monitor'></i> View</a>
-                                        <a href="#cancel_request{{$pending_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
+                                        <a href="#cancel_request{{$approved_request->id}}"  data-toggle="modal"  class="btn btn-danger btn-sm"><span class="pe-7s-close"></span>
                                             Cancel
                                         </a>
-                                        @include('modal')
+                                        @include('cance_modal')
                                         {{-- @if($approved_request->date_booked != null)
                                         <a data-toggle="modal" data-target="#reference{{$approved_request->id}}"  class="btn btn-danger btn-sl" target="_1">Reference Number</a>
                                         @else
