@@ -657,13 +657,15 @@ class RequestController extends Controller
     }
     public function approveRequest(Request $request,$requestID)
     {
-        if($request->action)
+        
+        if($request->action != null)
         {
             foreach($request->action as $key => $action)
             {
                 $userDestination = User_destination::findOrfail($key);
                 $userDestination->status = $action;
                 $userDestination->action_by = auth()->user()->id;
+                $userDestination->save();
             }
         }
         $users_request = User_request::findOrFail($requestID);

@@ -156,7 +156,7 @@
                                     0 KG
                                 @endif
                             <td>
-                                {{date('h:m a',strtotime($value->time_appointment))}}
+                                {{date('h:i a',strtotime($value->time_appointment))}}
                             </td>
                         </tr>
                         @endforeach

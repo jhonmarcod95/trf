@@ -28,6 +28,7 @@
                         <table id="example" class="table table-striped table-bordered" style="width:100%;">
                           
                             <thead>
+                                <td>Id </td>
                                 <td>Requestor </td>
                                 <td>Traveler Name</td>
                                 <td>Company</td>
@@ -38,6 +39,7 @@
                             <tbody>
                                 @foreach($booked_requests as $key => $bookedRequest)
                                 <tr>
+                                    <td>{{$bookedRequest->id}}</td>
                                     <td>{{$bookedRequest->name}}</td>
                                     <td>{{$bookedRequest->traveler_name}}</td>
                                     <td>{{$bookedRequest->company_name}}</td>

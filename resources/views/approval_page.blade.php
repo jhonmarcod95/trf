@@ -180,7 +180,7 @@
                         </div>
                         <div class='col-md-2'>
                             <div class="form-group">                     
-                                {{date('h:m a',strtotime($baggage_allowance->time_appointment))}}
+                                {{date('h:i a',strtotime($baggage_allowance->time_appointment))}}
                             </div>
                         </div>
                         @if(($baggage_allowance->baggage_allowance != 0) || ($baggage_allowance->baggage_allowance != null))
