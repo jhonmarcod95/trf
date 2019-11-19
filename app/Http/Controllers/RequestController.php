@@ -155,7 +155,9 @@ class RequestController extends Controller
     {
 
         $origing_new_new = [];
-        $data_list= User_request::leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
+        $data_list= User_request::
+        with('approveBy')
+        ->leftJoin('companies', 'user_requests.company_name', '=', 'companies.id')
         ->leftJoin('destinations', 'user_requests.destination', '=', 'destinations.id')
         ->leftJoin('users', 'user_requests.requestor_id', '=', 'users.id')
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
@@ -217,6 +219,16 @@ class RequestController extends Controller
                 );
             }
         }
+        $oldRequest = User_request::orderBy('id','desc')->first();
+
+        if(date('Y',strtotime($oldRequest->created_at)) != date('Y'))
+        {
+            $trf_number = 1;
+        }
+        else
+        {
+            $trf_number = $oldRequest->trf_number + 1;
+        }
         $data = new User_request;
         $user_id=auth()->user()->id;
         $company_name=$request->input('company_name');
@@ -254,6 +266,7 @@ class RequestController extends Controller
         $data->status = 1;
         $data->traveler_name = $traveler_name;
         $data->approved_by = 0;
+        $data->trf_number = $trf_number;
         $data->save();
         $id = User_request::all()->last();
         foreach($origins as $key => $origin)
@@ -628,7 +641,7 @@ class RequestController extends Controller
         $results = [];
         if($from)
         {
-        $results = BookReference::with('travelInfo','travelInfo.approverInfo','travelInfo.userInfo','travelInfo.companyInfo','travelInfo.approverInfo.approver')->whereBetween('date_booked',[$from,$to])->get();
+        $results = BookReference::with('travelInfo','travelInfo.approveBy','travelInfo.approverInfo','travelInfo.userInfo','travelInfo.companyInfo','travelInfo.approverInfo.approver')->whereBetween('date_booked',[$from,$to])->get();
             // return ($results);
         }
         return view('outsideReport',array(
@@ -645,7 +658,7 @@ class RequestController extends Controller
         $results = [];
         if($from)
         {
-        $results = BookReference::with('travelInfo','travelInfo.approverInfo','travelInfo.userInfo','travelInfo.companyInfo','travelInfo.approverInfo.approver')->whereBetween('date_booked',[$from,$to])->get();
+        $results = BookReference::with('travelInfo','travelInfo.approveBy','travelInfo.approverInfo','travelInfo.userInfo','travelInfo.companyInfo','travelInfo.approverInfo.approver')->whereBetween('date_booked',[$from,$to])->get();
             // return ($results);
         }
         return view('view_booked_history',array(

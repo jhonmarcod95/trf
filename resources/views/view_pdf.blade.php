@@ -31,10 +31,57 @@
 <body>
     <table cellspacing='0'  width="100%"  >
         <tr>
-            <td class="wrapword" colspan='4' >
+            <td class="wrapword" colspan='2' >
                 <b>TRAVEL REQUEST FORM</b>
                 <br>
                 <h6><i>LFHR-F-001 rev. 00 Effective date: 01 July 2013</i></h6>
+            </td>
+            @if(date('Y') == '2019')
+            @php
+            $length = strlen($data_list[0]->trf_number);
+            if($length == 1)
+            {
+                $reference_id = "00".$data_list[0]->trf_number;
+            }
+            elseif($length == 2)
+            {
+                $reference_id = "0".$data_list[0]->trf_number;
+            }
+            
+            else
+            {
+                $reference_id = $data_list[0]->trf_number;
+            }
+            @endphp
+            @else
+            @php
+            $length = strlen($data_list[0]->trf_number);
+            
+            if($length == 1)
+            {
+                $reference_id = "0000".$data_list[0]->trf_number;
+            }
+            elseif($length == 2)
+            {
+                $reference_id = "000".$data_list[0]->trf_number;
+            }
+            elseif($length == 3)
+            {
+                $reference_id = "00".$data_list[0]->trf_number;
+            }
+            elseif($length == 4)
+            {
+                $reference_id = "0".$data_list[0]->trf_number;
+            }
+            else
+            {
+                $reference_id = $data_list[0]->trf_number;
+            }
+            @endphp
+            @endif
+            <td class="wrapword" colspan='2' >
+                <b>TRF-{{date('Y',strtotime($data_list[0]->created_at))}}-{{$reference_id}}</b>
+                
             </td>
         </tr>
         <tr>
@@ -118,7 +165,11 @@
                                 Cost Center:  {{ $data_list[0]->cost_center}}
                             </td>
                         </tr>
-                        
+                        <tr>
+                                <td class="wrapword">
+                                   Approved By:  {{ $data_list[0]->name}}
+                                </td>
+                            </tr>
                     </table>
                 </td>
                 <td class="wrapword" style="vertical-align:top" >

@@ -28,7 +28,7 @@
                         <table id="example" class="table table-striped table-bordered" style="width:100%;">
                           
                             <thead>
-                                <td>Id </td>
+                                <td>TRF Number </td>
                                 <td>Requestor </td>
                                 <td>Traveler Name</td>
                                 <td>Company</td>
@@ -37,9 +37,51 @@
                                 <td width='200px'>Action</td>
                             </thead>
                             <tbody>
+                                
                                 @foreach($booked_requests as $key => $bookedRequest)
+                                @if(date('Y') == '2019')
+                                @php
+                                $length = strlen($bookedRequest->trf_number);
+                                if($length == 1)
+                                {
+                                    $reference_id = "00".$bookedRequest->trf_number;
+                                }
+                                elseif($length == 2)
+                                {
+                                    $reference_id = "0".$bookedRequest->trf_number;
+                                }
+                                else
+                                {
+                                    $reference_id = $bookedRequest->trf_number;
+                                }
+                                @endphp
+                                @else
+                                @php
+                                $length = strlen($bookedRequest->trf_number);
+                                if($length == 1)
+                                {
+                                    $reference_id = "0000".$bookedRequest->trf_number;
+                                }
+                                elseif($length == 2)
+                                {
+                                    $reference_id = "000".$bookedRequest->trf_number;
+                                }
+                                elseif($length == 3)
+                                {
+                                    $reference_id = "00".$bookedRequest->trf_number;
+                                }
+                                elseif($length == 4)
+                                {
+                                    $reference_id = "0".$bookedRequest->trf_number;
+                                }
+                                else
+                                {
+                                    $reference_id = $bookedRequest->trf_number;
+                                }
+                                @endphp
+                                @endif
                                 <tr>
-                                    <td>{{$bookedRequest->id}}</td>
+                                        <td width='130px;'>TRF-{{date('Y',strtotime($bookedRequest->created_at))}}-{{$reference_id}}</td>
                                     <td>{{$bookedRequest->name}}</td>
                                     <td>{{$bookedRequest->traveler_name}}</td>
                                     <td>{{$bookedRequest->company_name}}</td>

@@ -68,8 +68,50 @@
                             </thead>
                             <tbody>
                                 @foreach($approves as $approve)
+                                @if(date('Y') == '2019')
+                                @php
+                                $length = strlen($approve->trf_number);
+                                if($length == 1)
+                                {
+                                    $reference_id = "00".$approve->trf_number;
+                                }
+                                elseif($length == 2)
+                                {
+                                    $reference_id = "0".$approve->trf_number;
+                                }
+                              
+                                else
+                                {
+                                    $reference_id = $approve->trf_number;
+                                }
+                                @endphp
+                                @else
+                                @php
+                                $length = strlen($approve->trf_number);
+                                if($length == 1)
+                                {
+                                    $reference_id = "0000".$approve->trf_number;
+                                }
+                                elseif($length == 2)
+                                {
+                                    $reference_id = "000".$approve->trf_number;
+                                }
+                                elseif($length == 3)
+                                {
+                                    $reference_id = "00".$approve->trf_number;
+                                }
+                                elseif($length == 4)
+                                {
+                                    $reference_id = "0".$approve->trf_number;
+                                }
+                                else
+                                {
+                                    $reference_id = $approve->trf_number;
+                                }
+                                @endphp
+                                @endif
                                 <tr>
-                                    <td>{{$approve->id}}</td>
+                                    <td width='130px;'>TRF-{{date('Y',strtotime($approve->created_at))}}-{{$reference_id}}</td>
                                     <td>{{$approve->name}}</td>
                                     <td>{{$approve->traveler_name}}</td>
                                     <td>{{$approve->approveBy->name}}</td>

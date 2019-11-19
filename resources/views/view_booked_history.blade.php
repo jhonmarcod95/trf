@@ -22,7 +22,6 @@
 
 
 <div class="content">
-    
     <div class="container-fluid">
         <form  method="GET" action="" onsubmit= "show()">
             <div class="row">
@@ -61,10 +60,12 @@
                             <table id="example" class="table table-striped table-bordered" style="width:100%;">
                                 
                                 <thead>
+                                    <td width='150px;'>TRF Number </td>
                                     <td>Requestor </td>
                                     <td>Traveler Name</td>
                                     <td>Budget Code</td>
                                     <td>Company</td>
+                                    <td>Approved By</td>
                                     <td>Reference Number</td>
                                     <td>Booked Date</td>
                                     <td>Amount</td>
@@ -73,12 +74,56 @@
                                     <td>Official Receipt</td>
                                 </thead>
                                 <tbody>
-                                    @foreach($results as $result)
+                                    @foreach($results as $result)   
+                                    @if(date('Y') == '2019')
+                                    @php
+                                    $length = strlen($result->travelInfo->trf_number);
+                                    if($length == 1)
+                                    {
+                                        $reference_id = "00".$result->travelInfo->trf_number;
+                                    }
+                                    elseif($length == 2)
+                                    {
+                                        $reference_id = "0".$result->travelInfo->trf_number;
+                                    }
+                                  
+                                    else
+                                    {
+                                        $reference_id = $result->travelInfo->trf_number;
+                                    }
+                                    @endphp
+                                    @else
+                                    @php
+                                    $length = strlen($result->travelInfo->trf_number);
+                                    if($length == 1)
+                                    {
+                                        $reference_id = "0000".$result->travelInfo->trf_number;
+                                    }
+                                    elseif($length == 2)
+                                    {
+                                        $reference_id = "000".$result->travelInfo->trf_number;
+                                    }
+                                    elseif($length == 3)
+                                    {
+                                        $reference_id = "00".$result->travelInfo->trf_number;
+                                    }
+                                    elseif($length == 4)
+                                    {
+                                        $reference_id = "0".$result->travelInfo->trf_number;
+                                    }
+                                    else
+                                    {
+                                        $reference_id = $result->travelInfo->trf_number;
+                                    }
+                                    @endphp
+                                    @endif
                                     <tr>
+                                            <td width='130px;'>TRF-{{date('Y',strtotime($result->created_at))}}-{{$reference_id}}</td>
                                         <td>{{$result->travelInfo->userInfo->name}}</td>
                                         <td>{{$result->travelInfo->traveler_name}}</td>
                                         <td>{{$result->travelInfo->budget_code_line}}</td>
                                         <td>{{$result->travelInfo->companyInfo->company_name}}</td>
+                                        <td>{{$result->travelInfo->approveBy->name}}</td>
                                         <td>{{$result->booking_id}}</td>
                                         <td>{{$result->date_booked}}</td>
                                         <td>{{$result->amount}}</td>
