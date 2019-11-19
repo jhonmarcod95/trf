@@ -59,7 +59,7 @@
                         <table id="example1" class="table table-striped table-bordered" style="width:100%;">
                             Pending for Booking
                             <thead>
-                                <td>Id </td>
+                                <td>TRF Number </td>
                                 <td>Requestor </td>
                                 <td>Traveler Name</td>
                                 <td>Approved By</td>
