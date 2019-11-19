@@ -163,7 +163,6 @@ class RequestController extends Controller
         ->select('user_requests.*', 'destinations.destination', 'companies.company_name', 'users.name')
         ->where('user_requests.id','=',$id)
         ->get();
-        
         $origin_list= User_destination::leftJoin('destinations','user_destinations.destination','=','destinations.id')
         ->where('request_id','=',$id)
         ->get();

@@ -167,7 +167,7 @@
                         </tr>
                         <tr>
                                 <td class="wrapword">
-                                   Approved By:  {{ $data_list[0]->name}}
+                                   Approved By:  @if($data_list[0]->approveBy != null){{$data_list[0]->approveBy->name}}@endif
                                 </td>
                             </tr>
                     </table>
