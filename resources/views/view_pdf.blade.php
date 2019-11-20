@@ -197,7 +197,7 @@
                                 {{date ("F j, Y",strtotime($value->date_of_travel))}}
                             </td>
                             <td>
-                                @if(($value->status == null) || ($value->baggabaggage_allowance == "Approve"))
+                                @if($value->status == "Approve")
                                     @if($value->baggage_allowance == null)
                                     0 KG
                                     @else
