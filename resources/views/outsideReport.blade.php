@@ -72,7 +72,7 @@
                                     <td>Type</td>
                                     <td>Ticket</td>
                                     <td>Official Receipt</td>
-                                    <td>Action</td>
+                                    <td>TRF</td>
                                 </thead>
                                 <tbody>
                                     @foreach($results as $result)   
