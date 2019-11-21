@@ -72,6 +72,7 @@
                                     <td>Type</td>
                                     <td>Ticket</td>
                                     <td>Official Receipt</td>
+                                    <td>Action</td>
                                 </thead>
                                 <tbody>
                                     @foreach($results as $result)   
@@ -130,6 +131,8 @@
                                         <td>{{$result->booking_type}}</td>
                                         <td><a href='{{ URL::asset($result->upload_file) }}' target="_blank">Download</a></td>
                                         <td><a href='{{ URL::asset($result->upload_receipt) }}' target="_blank">Download</a></td>
+                                        <td>   <a href="show-pdf/{{$result->travelInfo->id}}"  class="btn btn-info btn-sm" target="_blank"><i class='pe-7s-monitor'></i> View</a></td>
+                                        
                                     </tr>
                                     @endforeach
                                 </tbody>

@@ -23,7 +23,7 @@ Route::get('/home', function () {
 });
 Route::get('/sign-up', 'AccountController@sign_up');
 Route::post('/sign-up', 'AccountController@save_sign_up');
-
+Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::group( ['middleware' => 'auth'], function()
 {
 //Account
@@ -38,7 +38,7 @@ Route::post('/new-request', 'RequestController@new_form');
 Route::get('/new-request', 'RequestController@login');
 Route::post('/save-new-request', 'RequestController@save_new_request');
 Route::get('/pending-request', 'RequestController@pending_list');
-Route::get('/show-pdf/{id}', 'RequestController@pdf');
+// Route::get('/show-pdf/{id}', 'RequestController@pdf');
 Route::get('/pending-request', 'RequestController@pending_list');
 // Route::get('/edit-request/{id}', 'RequestController@edit_request');
 // Route::post('/edit-request/{id}', 'RequestController@save_edit_request');
