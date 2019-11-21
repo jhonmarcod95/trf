@@ -208,6 +208,16 @@
                 //return (sa);
             }
         </script>
+        <script src="{{ asset('/datable/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{ asset('/datable/js/dataTables.bootstrap4.min.js')}}"></script>
+        <script>
+            $(document).ready(function() {
+                $('#example').DataTable( {
+                    "lengthMenu": [[-1], [ "All"]]
+                } );
+            } );
+           
+        </script>  
         @endsection
         
         
