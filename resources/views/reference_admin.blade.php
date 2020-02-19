@@ -22,7 +22,7 @@
                         <div class='row' id='1'>
                             <div class='col-md-2'>
                                 <div class="form-group">
-                                    Reference ID:
+                                    Booking Reference:
                                     <input name='reference_id[]'  type='text' value='' class='form-control' required>
                                 </div>
                             </div>
