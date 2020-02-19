@@ -52,7 +52,7 @@
                             </div>
                             <div class='col-md-2'>
                                 <div class="form-group">
-                                    Type :
+                                    Airline :
                                     <select class='form-control' placeholder='type' name='type[]' required>
                                         <option value=''></option>
                                         <option value='Cebu Pacific'>Cebu Pacific</option>
